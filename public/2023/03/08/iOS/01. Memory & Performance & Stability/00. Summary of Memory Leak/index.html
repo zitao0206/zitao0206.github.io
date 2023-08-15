@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. Questions about Memory leak (memory leak), if the interview was asked this question and such questions, mainly related to the following 3 a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. Summary Of Memory Leak">
+<meta property="og:url" content="https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&%20Performance%20&%20Stability/00.%20Summary%20of%20Memory%20Leak/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. Questions about Memory leak (memory leak), if the interview was asked this question and such questions, mainly related to the following 3 a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-08T19:46:59.000Z">
+<meta property="article:modified_time" content="2023-08-15T17:33:42.218Z">
+<meta property="article:author" content="zitao0206">
+<meta property="article:tag" content="memory">
+<meta property="article:tag" content="leak">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. Summary Of Memory Leak</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/03/09/Swift/06.%20Collections/00.%20Zip%20Function/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/03/08/Swift/05.%20Protocols/01.%20Associatedtype/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&text=00. Summary Of Memory Leak"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&is_video=false&description=00. Summary Of Memory Leak"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Summary Of Memory Leak&body=Check out this article: https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&name=00. Summary Of Memory Leak&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&t=00. Summary Of Memory Leak"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Common-scenarios-for-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text"> Common scenarios for Memory Leak</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-locate-and-solve-the-memory-leak"><span class="toc-number">2.</span> <span class="toc-text"> How to locate and solve the memory leak</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-avoid-Memory-Leak"><span class="toc-number">3.</span> <span class="toc-text">How to avoid Memory Leak?</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. Summary Of Memory Leak
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zitao0206</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-08T19:46:59.000Z" class="dt-published" itemprop="datePublished">2023-03-08</time>
+        
+        (Updated: <time datetime="2023-08-15T17:33:42.218Z" class="dt-updated" itemprop="dateModified">2023-08-15</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/01-Memory-Performance-Stability/">01. Memory & Performance & Stability</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/leak/" rel="tag">leak</a>, <a class="p-category" href="/tags/memory/" rel="tag">memory</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>Questions about Memory leak (memory leak), if the interview was asked this question and such questions, mainly related to the following 3 aspects.</p>
+<ul>
+<li>What are the common scenarios of memory leaks, and list a few common examples?</li>
+<li>How to locate and solve memory leaks that actually occur during development?</li>
+<li>How to avoid memory leaks in development and what are the methods?</li>
+</ul>
+<p>Below we summarize these 3 aspects respectively.</p>
+<h4 id="Common-scenarios-for-Memory-Leak"><a href="#Common-scenarios-for-Memory-Leak" class="headerlink" title=" Common scenarios for Memory Leak"></a><font size=3 color=#4169E1> Common scenarios for Memory Leak</font></h4><p><strong>1. Circular References</strong><br>Under the ARC mechanism, circular references are a major cause of memory leaks, and it is also divided into many specific scenarios, such as</p>
+<ul>
+<li>Circular references between two class objects.</li>
+<li>Circular reference problems in Blocks (including GCD or other system Blocks, etc.).</li>
+<li>Circular reference problem in Timer. </li>
+<li>Circular reference problem brought by delegate.</li>
+<li>Scenarios such as property observation and listening classes.</li>
+</ul>
+<p><strong>2. improper object life cycle management</strong><br>This kind needs to be analyzed in the context of actual business problems, e.g.</p>
+<ul>
+<li>Static fields or other global objects lead to improper holding causing memory leaks.</li>
+<li>The reference relationship of collection classes, etc. is improper or not released in time, etc.</li>
+</ul>
+<p><strong>3. untimely release of objects</strong><br>Some objects require manual memory release, such as the Core Foundation (CF) and Core Graphics (CG) framework objects. If these objects are not released in time, it may lead to memory leaks.   </p>
+<p><strong>4. Untimely closure or release of resources</strong><br>Untimely closure (or failure to release) of resource classes is also a common memory leak scenario, for example</p>
+<ul>
+<li>The file is opened (FileHandle) and not closed in time.</li>
+<li>The URLSession object of a network request is not released in time.</li>
+</ul>
+<h4 id="How-to-locate-and-solve-the-memory-leak"><a href="#How-to-locate-and-solve-the-memory-leak" class="headerlink" title=" How to locate and solve the memory leak"></a><font size=3 color=#4169E1> How to locate and solve the memory leak</font></h4><p>In fact, after finding the problem, it is basically easy to solve, for example:</p>
+<p>Circular reference means to break the cycle by using weak; If the life cycle of the object is improper, the holder can be changed or the code needs to be redesigned; CF or CG objects need to be released manually; The occupation of resource class also needs to be released manually in time.</p>
+<p>But the main problem is how to find the leaked code.</p>
+<p><strong><strong><font size=3>1. Manual debugging method</font></strong>  </strong></p>
+<p>When we realize that there is a leak, there are usually obvious symptoms, such as VC Pop failure.</p>
+<p>If we are familiar with the code, generally, I believe many people will directly find the code for manual debugging. Common means include:</p>
+<ul>
+<li>Override dealloc or deinit methods</li>
+</ul>
+<p>We can try to add a log to the dealloc or deinit method breakpoint of some classes. If there is no expected execution, it is a suspected leak point.</p>
+<ul>
+<li>Manually check reference count</li>
+</ul>
+<p>Manually checking the reference count of an object can help us find out whether there is a memory leak caused by a reference count error. We can manually check the reference count of an object using the retentCount property in Objective-C or Swift.</p>
+<ul>
+<li>Write some extra test code</li>
+</ul>
+<p>If the memory leak point is relatively obscure, it can be reproduced by writing code of some test cases, such as 9999 consecutive cycles to expand the problem and cause memory exhaustion and crash, and then locate the code according to the stack, which is also a common method to locate probabilistic crashes;</p>
+<ul>
+<li>One-by-one ranking method</li>
+</ul>
+<p>Comment out the code of the problem one by one until the problem point is found. Similar methods are often used to troubleshoot the crash problem during development. Although it looks very low, it is very effective.</p>
+<p><strong><strong><font size=3>2. Tools</font></strong>  </strong></p>
+<p>There are many ways to use this, such as:</p>
+<ul>
+<li><p>Instruments toolbox, which uses Leaks tool or memory debugger Analyze to analyze;</p>
+</li>
+<li><p>The Memory Graph in Xcode Memory Debugger can help us analyze the memory reference relationship of objects and find circular references and memory leaks.</p>
+</li>
+<li><p>Third-party detection tools, such as MLeaksFinder, FBRetainCycleDetector, LeakDetector, HeapInspector, etc.</p>
+</li>
+<li><p>Static analysis tools, such as Clang static analyzer, Infer, OCLint, SwiftLint and other tools. These tools generally find some memory leak code incidentally, which can give us some tips or warnings.</p>
+</li>
+</ul>
+<h4 id="How-to-avoid-Memory-Leak"><a href="#How-to-avoid-Memory-Leak" class="headerlink" title="How to avoid Memory Leak?"></a><font size=3 color=#4169E1>How to avoid Memory Leak?</font></h4><p>In actual development, it is unlikely that writing a piece of code to run the tools of Instrument immediately, even some MLeaksFinder these often false alarm tools are too annoying to close directly.<br>Then How can we avoid and minimize the generation of problem code?</p>
+<p>First, there should be some risk awareness. For example, Timer since the choice of it, you should know that its biggest risk is easy to cause memory problems. Know by heart some scenarios that can easily lead to leaks. Also, for example, be careful with global variables or single instances, etc.</p>
+<p>Second, get into some habits. For example, after writing a piece of code or receiving a piece of code, make sure the object is expected to be released at the dealloc or deinit breakpoint. Also for example, Swift as far as possible to take the value type, rather than reference types; development after self-test, some memory detection tools are turned on as an aid to detection.</p>
+<p>Third, good system design. Some business scenarios are easy to generate leakage, for example, once I participated in the development of a live business, the room VC and the room’s only data model object dataModel is easy to refer to each other, because the dataModel carries a lot of business information, the business is extremely dependent on the dataModel, the object is therefore also passed very deep and wide, and a circular reference occurs easily. For this kind of improper design at the beginning, only a patch can be fixed later (maintain a dataModel weak reference collection, each time you use the id to query and get the corresponding room dataModel object, the business only needs to maintain an id String object or a dictionary object to store the least information). Similar business scenarios are commodity detail pages and so on.</p>
+<p>Fourth, the regular project code to do a “physical examination”, the general project volume is larger, this is very necessary, run the Instrumentation or Memory Graph, almost every time there are gains.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Common-scenarios-for-Memory-Leak"><span class="toc-number">1.</span> <span class="toc-text"> Common scenarios for Memory Leak</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-locate-and-solve-the-memory-leak"><span class="toc-number">2.</span> <span class="toc-text"> How to locate and solve the memory leak</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#How-to-avoid-Memory-Leak"><span class="toc-number">3.</span> <span class="toc-text">How to avoid Memory Leak?</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&text=00. Summary Of Memory Leak"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&is_video=false&description=00. Summary Of Memory Leak"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Summary Of Memory Leak&body=Check out this article: https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&title=00. Summary Of Memory Leak"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&name=00. Summary Of Memory Leak&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/08/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/00.%20Summary%20of%20Memory%20Leak/&t=00. Summary Of Memory Leak"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    zitao0206
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

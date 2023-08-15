@@ -17,8 +17,8 @@ nav:
   Home: /      #主页
   Categories: /categories #分类
   Tags: /tags   #标签
-  Archives: /archives   #归档
   Search: /search #搜索
+  Archives: /archives   #归档
   Projects: https://github.com/zitao0206
   About: /about   ##关于
 
@@ -144,7 +144,7 @@ page_width: 48
 ##############################################################################
 
 # Enable or disable the RSS feed.
-rss: true
+rss: false
 
 # Turn your web pages into graph objects (see http://ogp.me).
 open_graph:
@@ -177,22 +177,22 @@ utterances:
 
 # Fill in your Google Analytics tracking ID to enable Google Analytics.
 google_analytics:
-  enabled: true
+  enabled: false
   id: UA-86660611-1
 
 # Fill in your Baidu Analytics tracking ID to enable Baidu Analytics.
 baidu_analytics:
-  enabled: true
+  enabled: false
   id: 2e6da3c375c8a87f5b664cea6d4cb29c
 
 # Fill in your Cloudflare Analytics tracking ID to enable Cloudflare Analytics.
 cloudflare_analytics:
-  enabled: true
+  enabled: false
   id: 0dabb6e21848405483a237e6a7b6ed04
 
 # Fill in your Umami Analytics tracking ID to enable Umami Analytics.
 umami_analytics:
-  enabled: true
+  enabled: false
   id: e77e68be-f6e4-4br3-9365-2b76b57cd571
   host: https://analytics.domain.com
   script_name: umami.js
