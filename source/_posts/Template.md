@@ -11,11 +11,11 @@ tags:
 
 This is a template for other documents.
 
-#### <font size=3 color=#4169E1> 1. "Unrecognized selector sent to instance" </font> 
+#### <font size=3 color=#4169E1>1. "Unrecognized selector sent to instance"</font> 
 
 Unrecognized selector sent to instance
 
-#### <font size=3 color=#4169E1> 2. "EXC_BAD_ACCESS" </font> 
+#### <font size=3 color=#4169E1>2. "EXC_BAD_ACCESS"</font> 
 
 EXC_BAD_ACCESS...
 
