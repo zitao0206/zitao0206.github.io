@@ -184,7 +184,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p><font color=gray size=2><em>It will take about 1 minutes to finish reading this article.</em></font></p>
+    <p><font color="gray" size="2"><em>It will take about 1 minutes to finish reading this article.</em></font></p>
 <p>We can print the memory address of a variable like this:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="number">100</span></span><br><span class="line"><span class="built_in">withUnsafePointer</span>(to: <span class="operator">&amp;</span>a) &#123;ptr <span class="keyword">in</span> <span class="built_in">print</span>(ptr)&#125;</span><br><span class="line"><span class="comment">//result: 0x00007ff7bfeff210</span></span><br></pre></td></tr></table></figure>
 <p>Or using the following method is OK:</p>

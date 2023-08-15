@@ -185,7 +185,7 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p><font color=gray size=2><em>It will take about 1 minutes to finish reading this article.</em></font></p>
+    <p><font color="gray" size="2"><em>It will take about 1 minutes to finish reading this article.</em></font></p>
 <p>In Swift, we use the lazy keyword before the property to simply implement delayed loading, for example:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">lazy</span> <span class="keyword">var</span> str: <span class="type">String</span> <span class="operator">=</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> str <span class="operator">=</span> <span class="string">&quot;Hello&quot;</span> </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Only access the output for the first time&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> str</span><br><span class="line">&#125;()</span><br></pre></td></tr></table></figure>
 <p>This style of writing is similar to closure, but it is actually an kind of anonymous function. We can use anonymous functions to initilize data. As shown below, it is an anoymous function creation call operation:</p>
