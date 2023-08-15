@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article.  1. “Unrecognized selector sent to instance” Problem analysis：“unrecognized selector sent to instance” is an Objective-C exception that ind">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01. Common Crash Scenarios">
+<meta property="og:url" content="https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&%20Performance%20&%20Stability/01.%20Common%20Crash%20Scenarios/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article.  1. “Unrecognized selector sent to instance” Problem analysis：“unrecognized selector sent to instance” is an Objective-C exception that ind">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Memory&Performance&Stability/001.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Memory&Performance&Stability/002.jpeg">
+<meta property="article:published_time" content="2023-03-10T19:46:59.000Z">
+<meta property="article:modified_time" content="2023-08-15T17:35:32.834Z">
+<meta property="article:author" content="zitao0206">
+<meta property="article:tag" content="crash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/iOS/Memory&Performance&Stability/001.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>01. Common Crash Scenarios</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/08/15/Template/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/03/10/Swift/07.%20Hybrid%20Programming/00.%20Call%20the%20Macro%20definition%20of%20Objective-C%20in%20Swift/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&text=01. Common Crash Scenarios"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&is_video=false&description=01. Common Crash Scenarios"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. Common Crash Scenarios&body=Check out this article: https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&name=01. Common Crash Scenarios&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&t=01. Common Crash Scenarios"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E2%80%9CUnrecognized-selector-sent-to-instance%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text"> 1. “Unrecognized selector sent to instance” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E2%80%9CEXC-BAD-ACCESS%E2%80%9D"><span class="toc-number">2.</span> <span class="toc-text"> 2. “EXC_BAD_ACCESS” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Caused-by-Collection-Related"><span class="toc-number">3.</span> <span class="toc-text"> 3. Caused by Collection Related </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E2%80%9COut-of-Memory%E2%80%9D"><span class="toc-number">4.</span> <span class="toc-text"> 4. “Out of Memory” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E2%80%9CType-Cast-Exception%E2%80%9Dor-%E2%80%9CType-Mismatch%E2%80%9D"><span class="toc-number">5.</span> <span class="toc-text"> 5. “Type Cast Exception”or “Type Mismatch” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Caused-by-Deadlock"><span class="toc-number">6.</span> <span class="toc-text"> 6. Caused by Deadlock </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-Caused-by-Stack-Overflow"><span class="toc-number">7.</span> <span class="toc-text"> 7. Caused by Stack Overflow </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-Caused-by-KVO"><span class="toc-number">8.</span> <span class="toc-text"> 8. Caused by KVO </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-Caused-by-Multi-threaded"><span class="toc-number">9.</span> <span class="toc-text"> 9. Caused by Multi-threaded </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-Caused-by-Long-connection-of-Socket"><span class="toc-number">10.</span> <span class="toc-text"> 10. Caused by Long connection of Socket </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-Caused-by-Watch-Dog-Timeout"><span class="toc-number">11.</span> <span class="toc-text"> 11. Caused by Watch Dog Timeout </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">12.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        01. Common Crash Scenarios
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zitao0206</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-10T19:46:59.000Z" class="dt-published" itemprop="datePublished">2023-03-10</time>
+        
+        (Updated: <time datetime="2023-08-15T17:35:32.834Z" class="dt-updated" itemprop="dateModified">2023-08-15</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/01-Memory-Performance-Stability/">01. Memory & Performance & Stability</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/crash/" rel="tag">crash</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<h4 id="1-“Unrecognized-selector-sent-to-instance”"><a href="#1-“Unrecognized-selector-sent-to-instance”" class="headerlink" title=" 1. “Unrecognized selector sent to instance” "></a><font size=3 color=#4169E1> 1. “Unrecognized selector sent to instance” </font></h4><p><strong>Problem analysis：</strong><br>“unrecognized selector sent to instance” is an Objective-C exception that indicates an attempt to call a method or message that does not exist. This exception usually occurs when: </p>
+<ul>
+<li>When using the performSelector: method, the specified method does not exist; </li>
+<li>When using KVO (key Value observation), the observed property does not exist; </li>
+<li>When using NSNotificationCenter, the monitored event does not exist; </li>
+<li>The specified method is not present when using NSInvocation (message invocation); </li>
+<li>When extending a class with a Category, methods are implemented directly in the implementation file instead of being declared in the header file;<br>And so on.</li>
+</ul>
+<p><strong>Sample code：</strong></p>
+<details>
+<summary>Objective-C</summary>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@interface</span> <span class="type">MyClass</span> : <span class="type">NSObject</span></span><br><span class="line"><span class="operator">-</span> (void)doSomething;</span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@implementation</span> <span class="type">MyClass</span></span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@interface</span> <span class="type">MyOtherClass</span> : <span class="type">NSObject</span></span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@implementation</span> <span class="type">MyOtherClass</span></span><br><span class="line"><span class="operator">-</span> (void)doSomethingElse &#123;</span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">&quot;Doing something else...&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line">int main(int argc, const char <span class="operator">*</span> argv[]) &#123;</span><br><span class="line">    <span class="meta">@autoreleasepool</span> &#123;</span><br><span class="line">        <span class="type">MyClass</span> <span class="operator">*</span>object <span class="operator">=</span> [[<span class="type">MyClass</span> alloc] <span class="keyword">init</span>];</span><br><span class="line">        <span class="comment">// unrecognized selector sent to instance</span></span><br><span class="line">        [object performSelector:<span class="meta">@selector</span>(doSomethingElse)]; </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+
+<p><strong>Recommended solution:：</strong>     </p>
+<ul>
+<li>Use the “respondsToSelector” judgment before calling, or use ProtocolKit in Release mode to add a default implementation to the protocol to prevent crashes, and turn off the default implementation in Debug mode.</li>
+<li>Take advantage of the dynamic nature of OC and use several methods of message forwarding to underwrite the process.</li>
+</ul>
+<h4 id="2-“EXC-BAD-ACCESS”"><a href="#2-“EXC-BAD-ACCESS”" class="headerlink" title=" 2. “EXC_BAD_ACCESS” "></a><font size=3 color=#4169E1> 2. “EXC_BAD_ACCESS” </font></h4><p><strong>Problem analysis：</strong><br>There are many reasons for the problem:</p>
+<ul>
+<li>Occurrence of hanging pointers (null pointers, wild pointers)</li>
+<li>Objects are not initialized</li>
+<li>The accessed object is freed</li>
+<li>Access to out-of-bounds collection elements<br>etc.</li>
+</ul>
+<p><strong>Sample code：</strong><br>Omitted.<br><strong>Recommended solution:：</strong>   </p>
+<ol>
+<li>turn on zombie mode in Debug phase and turn off zombie mode in Release.  </li>
+<li>use Xcode’s Address Sanitizer to check address access out of bounds.  </li>
+<li>remember to initialize when creating objects.  </li>
+<li>use the correct modifier for the object’s attributes (should use strong&#x2F;weak, misused assign).   </li>
+<li>call block and other objects before the time to make a judgment.</li>
+</ol>
+<h4 id="3-Caused-by-Collection-Related"><a href="#3-Caused-by-Collection-Related" class="headerlink" title=" 3. Caused by Collection Related "></a><font size=3 color=#4169E1> 3. Caused by Collection Related </font></h4><p><strong>Problem analysis：</strong><br>There are also many scenarios that lead to Crash.   </p>
+<ol>
+<li>Array out-of-bounds, where the access subscript is greater than the number of arrays.   </li>
+<li>Adding empty data to the array.     </li>
+<li>Multi-threaded environment, a thread is reading, a thread is removing.        </li>
+<li>Multi-threaded operation of variable arrays (expansion of arrays, access to zombie objects).</li>
+</ol>
+<p><strong>Sample code：</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Accessing an array out of bounds will cause a crash</span></span><br><span class="line"><span class="keyword">let</span> array <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> item <span class="operator">=</span> array[<span class="number">3</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Forcibly unwrapping an optional type and it&#x27;s value is nil will cause a crash</span></span><br><span class="line"><span class="keyword">var</span> dict: [<span class="type">String</span>: <span class="type">String</span>?] <span class="operator">=</span> [<span class="string">&quot;key1&quot;</span>: <span class="string">&quot;value1&quot;</span>, <span class="string">&quot;key2&quot;</span>: <span class="string">&quot;value2&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> value <span class="operator">=</span> dict[<span class="string">&quot;key1&quot;</span>]<span class="operator">!</span> </span><br></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Forcibly unwrapping an optional type and it&#x27;s value is nil will cause a crash</span></span><br><span class="line"><span class="keyword">var</span> <span class="keyword">set</span>: <span class="type">Set</span>&lt;<span class="type">String</span>?&gt; <span class="operator">=</span> [<span class="string">&quot;value1&quot;</span>, <span class="string">&quot;value2&quot;</span>, <span class="literal">nil</span>]</span><br><span class="line"><span class="keyword">let</span> value <span class="operator">=</span> <span class="keyword">set</span>.first<span class="operator">!</span>  </span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended solution:：</strong>  </p>
+<ol>
+<li>When using dictionaries and sets, check whether the keys and values are nil (use guard, if let, and other syntax to avoid crashes caused by forced unwrapping);</li>
+<li>Use extensions to override original methods and perform checks internally;</li>
+<li>In Objective-C, use Runtime mechanism to replace original methods with custom secure methods;</li>
+<li>When performing multi-threaded operations on arrays, ensure the atomicity of read and write operations, such as locking or other protective measures.</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Use the safe subscript extension provided by Swift to avoid accessing an array out of bounds.</span></span><br><span class="line"><span class="keyword">extension</span> <span class="title class_">Collection</span> &#123;</span><br><span class="line">    <span class="keyword">subscript</span>(<span class="params">safe</span> <span class="params">index</span>: <span class="type">Index</span>) -&gt; <span class="type">Element</span>? &#123;</span><br><span class="line">        <span class="keyword">return</span> indices.contains(index) <span class="operator">?</span> <span class="keyword">self</span>[index] : <span class="literal">nil</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> array <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line"><span class="keyword">let</span> item <span class="operator">=</span> array[safe: <span class="number">3</span>] <span class="comment">//It will not cause a crash, and the resulting value will be nil.</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="4-“Out-of-Memory”"><a href="#4-“Out-of-Memory”" class="headerlink" title=" 4. “Out of Memory” "></a><font size=3 color=#4169E1> 4. “Out of Memory” </font></h4><p><strong>Problem analysis：</strong><br>In iOS applications, if the application allocates too much memory and causes the system to run out of memory, an OOM error will occur. Each application on an iOS device has its own memory limit. When an application needs to allocate more memory, if there is not enough available memory, the system will automatically trigger an OOM error, terminate the application, and release it from memory.</p>
+<p>The causes of OOM errors may include:</p>
+<ol>
+<li>The application tries to allocate a large amount of memory when there is not enough memory available.</li>
+<li>Memory leaks in the application that cause high memory usage.</li>
+<li>The application’s memory usage is not compatible with system resources, resulting in high memory usage, etc.</li>
+</ol>
+<p><strong>Sample code：</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line"><span class="keyword">while</span> <span class="literal">true</span> &#123;</span><br><span class="line">    array.append(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended solution:：</strong>  </p>
+<p>To avoid OOM errors, the following measures can be taken:</p>
+<ol>
+<li>Use appropriate data structures to avoid unnecessary memory usage.</li>
+<li>Debug memory leaks.</li>
+<li>Release unnecessary memory in a timely manner, such as calling autoreleasepool to release it after using a large memory object.</li>
+<li>Reduce object creation. Object pool and other technologies can be used to reuse existing objects rather than frequently creating and destroying objects.</li>
+<li>For large memory objects, lazy-loading and other technologies can be used to load them only when needed to reduce memory usage.</li>
+</ol>
+<h4 id="5-“Type-Cast-Exception”or-“Type-Mismatch”"><a href="#5-“Type-Cast-Exception”or-“Type-Mismatch”" class="headerlink" title=" 5. “Type Cast Exception”or “Type Mismatch” "></a><font size=3 color=#4169E1> 5. “Type Cast Exception”or “Type Mismatch” </font></h4><p><strong>Problem analysis：</strong><br>Type Cast Exception or Type Mismatch refers to the exception that occurs during type conversion, leading to application crash. In iOS development, common scenarios include:</p>
+<ol>
+<li>Type mismatch occurs when converting an instance of one type to an instance of another type.</li>
+<li>Type mismatch occurs when converting from AnyObject to a specific type.</li>
+<li>Crash occurs when forcing the unwrapping of an optional type to a non-optional type with a nil value.</li>
+</ol>
+<p><strong>Sample code：</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array: [<span class="keyword">Any</span>] <span class="operator">=</span> [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> str <span class="operator">=</span> array[<span class="number">0</span>] <span class="keyword">as!</span> <span class="type">Int</span></span><br><span class="line"><span class="comment">//Error: Could not cast value of type &#x27;Swift.String&#x27; (0x7ff8553bc178) to &#x27;Swift.Int&#x27; (0x7ff8553be0e0).</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended solution:：</strong>  </p>
+<ol>
+<li>Before performing type conversion, check if the object is an instance of the target type using the is keyword.</li>
+<li>Use optional binding to avoid exceptions when typecasting.</li>
+</ol>
+<p>For example, in the above example, the following code can be used for improvement:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array: [<span class="keyword">Any</span>] <span class="operator">=</span> [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>]</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> obj <span class="operator">=</span> array[<span class="number">0</span>] <span class="keyword">as?</span> <span class="type">Int</span> &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="6-Caused-by-Deadlock"><a href="#6-Caused-by-Deadlock" class="headerlink" title=" 6. Caused by Deadlock "></a><font size=3 color=#4169E1> 6. Caused by Deadlock </font></h4><p><strong>Problem analysis：</strong><br>Deadlock refers to a situation where two or more threads are waiting for each other to complete their operations, causing the program to become unresponsive. In iOS, the most common cause of a deadlock is when a synchronous operation is executed on the main thread that waits for another thread to complete, while the other thread is also waiting for the main thread to complete, resulting in a deadlock.</p>
+<p><strong>Sample code：</strong><br>In the following code, when the main thread calls the queue.sync method, it waits for the completion of Block 1. However, Block 1 calls queue.sync again, causing the thread to enter a waiting state. Since Block 2 depends on the thread to release the lock before it can execute, the entire program is in a deadlock state and cannot continue executing.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">DispatchQueue</span>(label: <span class="string">&quot;com.example.queue&quot;</span>)</span><br><span class="line">queue.sync &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Block 1&quot;</span>)</span><br><span class="line">    queue.sync &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Block 2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Done&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<img src="/assets/iOS/Memory&Performance&Stability/001.png" class="">
+
+<p><strong>Recommended solution:：</strong> </p>
+<ol>
+<li>Avoid executing long synchronous operations on the main thread, and instead, perform them on a background thread.</li>
+<li>Avoid using synchronous operations that wait for each other on the same queue and use asynchronous operations instead.</li>
+<li>Avoid using synchronous operations on multiple queues that cause deadlocks. Use asynchronous operations instead or use techniques such as dispatch_group to solve the issue.</li>
+</ol>
+<p>In the above example, you can replace the synchronous operations with asynchronous operations, as shown below:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> queue <span class="operator">=</span> <span class="type">DispatchQueue</span>(label: <span class="string">&quot;com.example.queue&quot;</span>)</span><br><span class="line">queue.async &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Block 1&quot;</span>)</span><br><span class="line">    queue.async &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Block 2&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;Done&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="7-Caused-by-Stack-Overflow"><a href="#7-Caused-by-Stack-Overflow" class="headerlink" title=" 7. Caused by Stack Overflow "></a><font size=3 color=#4169E1> 7. Caused by Stack Overflow </font></h4><p><strong>Problem analysis：</strong><br>Stack Overflow usually occurs in recursive calls. If the recursion does not have a termination condition or the termination condition is incorrect, the recursion depth will continue to increase until the stack space is exhausted, causing a stack overflow. </p>
+<p>In addition, if one method calls another method, a deep call stack can also cause a stack overflow.         </p>
+<p><strong>Sample code：</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">recursiveFunction</span>() &#123;</span><br><span class="line">    recursiveFunction()</span><br><span class="line">&#125;</span><br><span class="line">recursiveFunction() </span><br></pre></td></tr></table></figure>
+<p><strong>Recommended solution:：</strong>  </p>
+<ol>
+<li>Optimize algorithms: Optimize recursive algorithms to reduce the depth of the call stack. For example, use iterative instead of recursive algorithms.</li>
+<li>Increase stack space: Increase available stack space by changing the thread stack size or using the dispatch_set_concurrency function of GCD.</li>
+<li>Reduce stack space usage: Reduce stack space usage by reducing the local variables allocated during function calls, reducing nested calls, or using tail recursion and other techniques.</li>
+<li>Use tail recursion: Tail recursion refers to the last operation in a recursive function being a recursive call to itself. In Swift, you can use the @_optimize(speed) and @_optimize(safety) attributes to mark functions so that the compiler can optimize tail recursion.</li>
+<li>Avoid infinite recursion: Ensure that the recursive algorithm has the correct termination condition; otherwise, the recursion depth will increase infinitely, eventually leading to a stack overflow.</li>
+<li>Use data structures with smaller stack space: For large-scale recursive algorithms, data structures with smaller stack space, such as linked lists or queues, can be used.</li>
+</ol>
+<h4 id="8-Caused-by-KVO"><a href="#8-Caused-by-KVO" class="headerlink" title=" 8. Caused by KVO "></a><font size=3 color=#4169E1> 8. Caused by KVO </font></h4><p><strong>Problem analysis：</strong><br>KVO (Key-Value Observing) is an observer pattern in the Cocoa framework that allows objects to be notified when the value of another object’s property changes. When using KVO, if observers are not removed in a timely manner or the observer object has already been released, it can cause a crash.<br><strong>Sample code：</strong><br>Omitted.（Objective-C）<br><strong>Recommended solution:：</strong>  </p>
+<ol>
+<li>Remove the observer in a timely manner and ensure the observer object exists.</li>
+<li>Best practices for using KVO:    <ul>
+<li>Use KVO only when necessary to avoid overuse;   </li>
+<li>Use Swift’s Property Observers instead of KVO;  </li>
+<li>Use closures or Notification Center instead of KVO;     </li>
+<li>Use the correct method when removing observers to avoid omissions;  </li>
+<li>Avoid using strings as keyPaths. Instead, use static variables or constants, or use the #keyPath() method introduced in Swift 4 to obtain the keyPath.</li>
+</ul>
+</li>
+</ol>
+<h4 id="9-Caused-by-Multi-threaded"><a href="#9-Caused-by-Multi-threaded" class="headerlink" title=" 9. Caused by Multi-threaded "></a><font size=3 color=#4169E1> 9. Caused by Multi-threaded </font></h4><p><strong>Problem analysis：</strong><br>Crashes caused by multi-threading are a common issue in iOS, which may occur in different scenarios. Here are some possible scenarios, sample code, and recommended solutions that may cause multi-threading crashes:</p>
+<ol>
+<li>Multiple threads accessing the same shared data structure or variable without synchronization or locking.</li>
+<li>Using unsafe data structures or APIs in a multi-threaded environment, such as using non-thread-safe mutable collection class Array.</li>
+<li>Calling a long-running operation (such as network requests or I&#x2F;O operations) in a thread, causing the UI thread to be blocked.</li>
+<li>Updating the UI in a sub-thread.</li>
+</ol>
+<p>In general, the crash caused by multi-threading will receive a SIGSEGV signal, indicating that an attempt was made to access memory that was not allocated to oneself or to write data to a memory address without write permission.</p>
+<p><strong>Sample code：</strong><br>The following is a simple sample code that demonstrates the scenarios and issues caused by multi-threading crashes:  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> array <span class="operator">=</span> [<span class="type">Int</span>]()</span><br><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">100</span> &#123;</span><br><span class="line">        array.append(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">100</span><span class="operator">..&lt;</span><span class="number">200</span> &#123;</span><br><span class="line">        array.append(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>After running it, the crash occurs:</p>
+<img src="/assets/iOS/Memory&Performance&Stability/002.jpeg" class="">
+
+<p><strong>Recommended solution:：</strong>  </p>
+<p>Here are three possible recommended solutions that can help you avoid multi-threading crashes:</p>
+<ol>
+<li><p>Use thread-safe data structures or APIs, such as using NSLock or dispatch_semaphore_t to synchronize.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> lock <span class="operator">=</span> <span class="type">NSLock</span>()</span><br><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    lock.lock()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span><span class="operator">..&lt;</span><span class="number">100</span> &#123;</span><br><span class="line">        array.append(i)</span><br><span class="line">    &#125;</span><br><span class="line">    lock.unlock()</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    lock.lock()</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">100</span><span class="operator">..&lt;</span><span class="number">200</span> &#123;</span><br><span class="line">        array.append(i)</span><br><span class="line">    &#125;</span><br><span class="line">    lock.unlock()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>Use GCD for inter-thread communication and avoid long-running operations on the main thread.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">DispatchQueue</span>.global().async &#123;</span><br><span class="line">    <span class="keyword">let</span> data <span class="operator">=</span> getData() <span class="comment">// long-running operation</span></span><br><span class="line">    <span class="type">DispatchQueue</span>.main.async &#123;</span><br><span class="line">        <span class="keyword">self</span>.updateUI(with: data) <span class="comment">// update UI on the main thread</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The above code performs a long-running operation on the background thread and uses GCD to send the result to the main thread to update the UI.</p>
+</li>
+<li><p>Use a serial queue to ensure that operations on the same object are executed in order.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> serialQueue <span class="operator">=</span> <span class="type">DispatchQueue</span>(label: <span class="string">&quot;com.example.serialQueue&quot;</span>)</span><br><span class="line"></span><br><span class="line">serialQueue.async &#123;</span><br><span class="line">    <span class="keyword">self</span>.updateUI(with: data1) <span class="comment">// operation 1</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">serialQueue.async &#123;</span><br><span class="line">    <span class="keyword">self</span>.updateUI(with: data2) <span class="comment">// operation 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h4 id="10-Caused-by-Long-connection-of-Socket"><a href="#10-Caused-by-Long-connection-of-Socket" class="headerlink" title=" 10. Caused by Long connection of Socket "></a><font size=3 color=#4169E1> 10. Caused by Long connection of Socket </font></h4><p><strong>Problem analysis：</strong><br>When the server closes a connection, if the client continues to send data, according to the TCP protocol, it will receive an RST response. When the client sends data to this server again, the system will send a SIGPIPE signal to the process, telling the process that the connection has been disconnected and not to write anymore. According to the default signal handling rules, the default action of the SIGPIPE signal is to terminate or exit. Therefore, the client will exit.</p>
+<p><strong>Sample code：</strong>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">SocketManager</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> inputStream: <span class="type">InputStream</span>?</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> outputStream: <span class="type">OutputStream</span>?</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> host: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;localhost&quot;</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">let</span> port: <span class="type">Int</span> <span class="operator">=</span> <span class="number">12345</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">connect</span>() &#123;</span><br><span class="line">        <span class="type">Stream</span>.getStreamsToHost(withName: host, port: port, inputStream: <span class="operator">&amp;</span>inputStream, outputStream: <span class="operator">&amp;</span>outputStream)</span><br><span class="line">        </span><br><span class="line">        inputStream<span class="operator">?</span>.open()</span><br><span class="line">        outputStream<span class="operator">?</span>.open()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">disconnect</span>() &#123;</span><br><span class="line">        inputStream<span class="operator">?</span>.close()</span><br><span class="line">        outputStream<span class="operator">?</span>.close()</span><br><span class="line">    &#125;    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended solution:：</strong><br>Here are three possible recommended solutions to avoid the crash caused by long connections of sockets:</p>
+<p>First, when the application enters the background, immediately close the socket connection:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">applicationWillResignActive</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>) &#123;</span><br><span class="line">    socketManager.disconnect()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Second, when using the background running mode in the application, handle the socket connection correctly.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">application</span>(<span class="keyword">_</span> <span class="params">application</span>: <span class="type">UIApplication</span>, <span class="params">performFetchWithCompletionHandler</span> <span class="params">completionHandler</span>: <span class="keyword">@escaping</span> (<span class="type">UIBackgroundFetchResult</span>) -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> application.backgroundTimeRemaining <span class="operator">&lt;</span> <span class="number">60</span> &#123;</span><br><span class="line">        socketManager.disconnect()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Execute background task here</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>The above code shows that when using Background Fetch, check the remaining background running time of the application, and close the socket connection if it is less than 1 minute.</p>
+<p>Third, use signal(SIGPIPE,SIG_IGN) to hand over SIGPIPE to the system, which sets SIGPIPE to SIG_IGN, making the client not execute the default operation, that is, not to exit.</p>
+<h4 id="11-Caused-by-Watch-Dog-Timeout"><a href="#11-Caused-by-Watch-Dog-Timeout" class="headerlink" title=" 11. Caused by Watch Dog Timeout "></a><font size=3 color=#4169E1> 11. Caused by Watch Dog Timeout </font></h4><p><strong>Problem analysis：</strong><br>Watchdog Timeout is a monitoring mechanism built into the iOS system that checks whether the code executed by the application in the main thread exceeds the specified time. If it times out, the system automatically terminates the execution of the application to avoid a poor user experience caused by application freezes.</p>
+<p>Watchdog Timeout typically occurs during time-consuming operations such as network requests, IO operations, and large data processing. If these time-consuming operations are not handled correctly, it is easy to trigger Watchdog Timeout, leading to application crashes.</p>
+<p><strong>Sample code：</strong><br>For example, executing the following code in the main thread may trigger a Watchdog timeout:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">doHeavyWork</span>() &#123;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span><span class="operator">...</span><span class="number">1000000000</span> &#123;</span><br><span class="line">        <span class="comment">// execute a large number of loop operations</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Recommended solution:：</strong><br>First, put time-consuming operations in a separate thread to avoid occupying the main thread for too long, thereby avoiding the occurrence of Watchdog Timeout. You can use GCD or NSOperationQueue to implement this.</p>
+<p>Second, use an asynchronous method to execute time-consuming operations and use an appropriate queue to manage the execution. For example, use DispatchQueue.global() to create a global queue, and then use the async method to asynchronously execute tasks. In addition, you can also use NSOperationQueue to manage tasks.         </p>
+<p>Third, use a timer or RunLoop to periodically execute time-consuming operations, and check whether the time exceeds the Watchdog Timeout setting before execution. If it times out, stop executing and put the task on hold until the next execution cycle.  </p>
+<p>Fourth, if time-consuming operations must be performed in the main thread, you can use NSRunLoop to control the execution time and periodically call the run method to ensure that the Watchdog Timeout setting is not exceeded.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://juejin.cn/post/6844903775203753997">https://juejin.cn/post/6844903775203753997</a><br>[2] <a target="_blank" rel="noopener" href="https://juejin.cn/post/6978014329333350430">https://juejin.cn/post/6978014329333350430</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E2%80%9CUnrecognized-selector-sent-to-instance%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text"> 1. “Unrecognized selector sent to instance” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E2%80%9CEXC-BAD-ACCESS%E2%80%9D"><span class="toc-number">2.</span> <span class="toc-text"> 2. “EXC_BAD_ACCESS” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Caused-by-Collection-Related"><span class="toc-number">3.</span> <span class="toc-text"> 3. Caused by Collection Related </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E2%80%9COut-of-Memory%E2%80%9D"><span class="toc-number">4.</span> <span class="toc-text"> 4. “Out of Memory” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E2%80%9CType-Cast-Exception%E2%80%9Dor-%E2%80%9CType-Mismatch%E2%80%9D"><span class="toc-number">5.</span> <span class="toc-text"> 5. “Type Cast Exception”or “Type Mismatch” </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Caused-by-Deadlock"><span class="toc-number">6.</span> <span class="toc-text"> 6. Caused by Deadlock </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-Caused-by-Stack-Overflow"><span class="toc-number">7.</span> <span class="toc-text"> 7. Caused by Stack Overflow </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#8-Caused-by-KVO"><span class="toc-number">8.</span> <span class="toc-text"> 8. Caused by KVO </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-Caused-by-Multi-threaded"><span class="toc-number">9.</span> <span class="toc-text"> 9. Caused by Multi-threaded </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#10-Caused-by-Long-connection-of-Socket"><span class="toc-number">10.</span> <span class="toc-text"> 10. Caused by Long connection of Socket </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-Caused-by-Watch-Dog-Timeout"><span class="toc-number">11.</span> <span class="toc-text"> 11. Caused by Watch Dog Timeout </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">12.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&text=01. Common Crash Scenarios"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&is_video=false&description=01. Common Crash Scenarios"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. Common Crash Scenarios&body=Check out this article: https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&title=01. Common Crash Scenarios"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&name=01. Common Crash Scenarios&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/&t=01. Common Crash Scenarios"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    zitao0206
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
