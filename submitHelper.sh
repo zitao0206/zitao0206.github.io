@@ -15,6 +15,6 @@ if [ $input ]; then
 else
     git commit -am "发布/编辑新文章"
 fi
-git push origin main
+git push
 
 echo "--------End--------"
