@@ -31,33 +31,6 @@
     
     
     <entry>
-      <title>Template</title>
-      <link href="/2023/08/15/Template/"/>
-      <url>/2023/08/15/Template/</url>
-      
-        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>This is a template for other documents.</p><h4 id="1-“Unrecognized-selector-sent-to-instance”"><a href="#1-“Unrecognized-selector-sent-to-instance”" class="headerlink" title="1. “Unrecognized selector sent to instance”"></a><font size=3 color=#4169E1>1. “Unrecognized selector sent to instance”</font></h4><p>Unrecognized selector sent to instance</p><h4 id="2-“EXC-BAD-ACCESS”"><a href="#2-“EXC-BAD-ACCESS”" class="headerlink" title="2. “EXC_BAD_ACCESS”"></a><font size=3 color=#4169E1>2. “EXC_BAD_ACCESS”</font></h4><p>EXC_BAD_ACCESS…</p><img src="/assets/Demo/wallpaper-2311325.jpg" class=""><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Car</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> speed: <span class="type">Float</span> <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">    <span class="keyword">var</span> increaseSpeed: (() -&gt; ())<span class="operator">?</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://cloud.tencent.com/developer/article/1602230">https://cloud.tencent.com/developer/article/1602230</a>   </p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Template </category>
-          
-          <category> 00. Tools </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> template </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>01. Common Crash Scenarios</title>
       <link href="/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/"/>
       <url>/2023/03/10/iOS/01.%20Memory%20&amp;%20Performance%20&amp;%20Stability/01.%20Common%20Crash%20Scenarios/</url>
