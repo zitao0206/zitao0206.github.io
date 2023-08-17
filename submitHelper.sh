@@ -14,7 +14,7 @@ fi
 if [ "$input" ]; then
     git commit -am "$input"
 else
-    git commit -am "发布/编辑新文章"
+    git commit -am "Publish or edit articles."
 fi
 git push
 
