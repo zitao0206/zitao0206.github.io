@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. Although these keywords are not new to Swift, they are almost always used when using Swift Concurrency. Before we introduce the formal Conc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. How to use do, catch, try, throws in Swift">
+<meta property="og:url" content="https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. Although these keywords are not new to Swift, they are almost always used when using Swift Concurrency. Before we introduce the formal Conc">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zitao0206.github.io/assets/Swift/Concurrency/catch_warning.png">
+<meta property="article:published_time" content="2023-08-18T08:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-18T10:46:39.649Z">
+<meta property="article:author" content="zitao0206">
+<meta property="article:tag" content="concurrency">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/Swift/Concurrency/catch_warning.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. How to use do, catch, try, throws in Swift</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/08/15/iOS/00.%20Tips/00.%20Difference%20Of%20nil%20in%20OC%20and%20nil%20in%20Swift/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&text=00. How to use do, catch, try, throws in Swift"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&is_video=false&description=00. How to use do, catch, try, throws in Swift"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. How to use do, catch, try, throws in Swift&body=Check out this article: https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&name=00. How to use do, catch, try, throws in Swift&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&t=00. How to use do, catch, try, throws in Swift"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-how-to-use-do-catch-try-throws-in-Swift"><span class="toc-number">1.</span> <span class="toc-text">1. how to use do-catch-try-throws in Swift</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-try%EF%BC%9Fand-try%EF%BC%81"><span class="toc-number">2.</span> <span class="toc-text">2. try？and try！</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. How to use do, catch, try, throws in Swift
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">zitao0206</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-08-18T08:00:00.000Z" class="dt-published" itemprop="datePublished">2023-08-18</time>
+        
+        (Updated: <time datetime="2023-08-18T10:46:39.649Z" class="dt-updated" itemprop="dateModified">2023-08-18</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/07-Concurrency/">07. Concurrency</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/concurrency/" rel="tag">concurrency</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<p>Although these keywords are not new to Swift, they are almost always used when using Swift Concurrency. Before we introduce the formal Concurrency content, let’s take a look at these keywords specifically.<br>In this article, we will introduce do-catch blocks, try, try? And try! The difference between them, as well as an introduction to throw.</p>
+<h4 id="1-how-to-use-do-catch-try-throws-in-Swift"><a href="#1-how-to-use-do-catch-try-throws-in-Swift" class="headerlink" title="1. how to use do-catch-try-throws in Swift"></a><font size=3 color=#4169E1>1. how to use do-catch-try-throws in Swift</font></h4><p> A do-catch statement is a mechanism for handling errors that allows you to write blocks of code that catch and handle possible errors. The general form of the do-catch-try-throws statement is as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">someFunction</span>() <span class="keyword">throws</span> &#123;</span><br><span class="line">    <span class="comment">// Code that may throw errors</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">try</span> someFunction()</span><br><span class="line">&#125; <span class="keyword">catch</span> pattern &#123;</span><br><span class="line">    <span class="comment">// Code that executes after a specific type of error is caught</span></span><br><span class="line">&#125; <span class="keyword">catch</span> pattern &#123;</span><br><span class="line">    <span class="comment">// Another type of error is caught</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Do code block:</strong><br>In this block, you can place code that may throw erros.<br><strong>Catch code block:</strong><br>This is where errors are caught and handled. You can use different patterns based on the error type to catch errors and execute the appropriate code when matched. You can have multiple catch blocks that handle different types of errors.<br>Here is an example of how to use do-catch statement:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">verifyValueValidity</span>(<span class="keyword">_</span> <span class="params">value</span>: <span class="type">Int</span>) <span class="keyword">throws</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> value <span class="operator">&lt;</span> <span class="number">0</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Value is too small.&quot;</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooSmall</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> value <span class="operator">&gt;</span> <span class="number">100</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Value is too large.&quot;</span>)</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Value is within acceptable range.&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span></span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> valid1 <span class="operator">=</span> <span class="keyword">try</span> verifyValueValidity(<span class="number">50</span>)</span><br><span class="line">    <span class="comment">// let valid2 = try verifyValueValidity(500)</span></span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooSmall &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too small.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooLarge &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too large.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An error occurred: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong><br>if there are multiple try Code in the do statement in the above code, for example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> valid1 <span class="operator">=</span> <span class="keyword">try</span> verifyValueValidity(<span class="number">50</span>)</span><br><span class="line">    <span class="keyword">let</span> valid2 <span class="operator">=</span> <span class="keyword">try</span> verifyValueValidity(<span class="number">500</span>)</span><br><span class="line">    <span class="keyword">let</span> valid3 <span class="operator">=</span> <span class="keyword">try</span> verifyValueValidity(<span class="number">5000</span>)<span class="comment">//Will not execute</span></span><br><span class="line">    <span class="keyword">let</span> valid4 <span class="operator">=</span> <span class="keyword">try</span> verifyValueValidity(<span class="number">2500</span>)<span class="comment">//Will not execute</span></span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooSmall &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too small.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooLarge &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too large.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An error occurred: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Then the try statements will be executed in order, and if a statement hits the catch statement below it, it will stop and the following try statements will not be executed. The result of the execution of the above code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Value</span> <span class="keyword">is</span> within acceptable range.</span><br><span class="line"><span class="type">Value</span> <span class="keyword">is</span> too large.</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-try？and-try！"><a href="#2-try？and-try！" class="headerlink" title="2. try？and try！"></a><font size=3 color=#4169E1>2. try？and try！</font></h4><p>There is a solution about the problem of the execution of exmultiple try statements. as following:<br>One solution to the above multiple try execution problem is to use try?. As follows is the sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> valid1 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">50</span>)</span><br><span class="line">    <span class="keyword">let</span> valid2 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">500</span>)</span><br><span class="line">    <span class="keyword">let</span> valid3 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">5000</span>)</span><br><span class="line">    <span class="keyword">let</span> valid4 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">2500</span>)</span><br><span class="line">    </span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooSmall &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too small.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">CustomError</span>.valueTooLarge &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is too large.&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;An error occurred: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The results of the execution are as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Value</span> <span class="keyword">is</span> within acceptable range.</span><br><span class="line"><span class="type">Value</span> <span class="keyword">is</span> too large.</span><br><span class="line"><span class="type">Value</span> <span class="keyword">is</span> too large.</span><br><span class="line"><span class="type">Value</span> <span class="keyword">is</span> too large.</span><br></pre></td></tr></table></figure>
+<p>The result of the execution shows that all the try statements are executed, but written this way Xcode will give you a Warning:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;<span class="keyword">catch</span>&#x27; block <span class="keyword">is</span> unreachable because no errors are thrown <span class="keyword">in</span> &#x27;<span class="keyword">do</span>&#x27; block</span><br></pre></td></tr></table></figure>
+<p>Like this:   </p>
+<img src="/assets/Swift/Concurrency/catch_warning.png" class="">
+<!-- <image src="images/catch_warning.png">     -->
+<p>That’s right, try? will invalidate the catch statement so that all the try statements will be executed. So the above code can just be simplified to:          </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> valid1 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">50</span>)</span><br><span class="line"><span class="keyword">let</span> valid2 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">500</span>)</span><br><span class="line"><span class="keyword">let</span> valid3 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">5000</span>)</span><br><span class="line"><span class="keyword">let</span> valid4 <span class="operator">=</span> <span class="keyword">try?</span> verifyValueValidity(<span class="number">2500</span>)</span><br></pre></td></tr></table></figure>
+<p>So, when we don’t care about the execution of the catch statement, this is the way to write it.</p>
+<p><strong>Note:</strong><br>If you change try? to try!, the catch statement will also fail, but if the forced parsing fails, it will cause a Crash, so it is not recommended.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">About</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-how-to-use-do-catch-try-throws-in-Swift"><span class="toc-number">1.</span> <span class="toc-text">1. how to use do-catch-try-throws in Swift</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-try%EF%BC%9Fand-try%EF%BC%81"><span class="toc-number">2.</span> <span class="toc-text">2. try？and try！</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&text=00. How to use do, catch, try, throws in Swift"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&is_video=false&description=00. How to use do, catch, try, throws in Swift"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. How to use do, catch, try, throws in Swift&body=Check out this article: https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&title=00. How to use do, catch, try, throws in Swift"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&name=00. How to use do, catch, try, throws in Swift&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/08/18/Swift/07.%20Concurrency/00.%20How%20to%20use%20do,%20catch,%20try,%20throws%20in%20Swift/&t=00. How to use do, catch, try, throws in Swift"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    zitao0206
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">About</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
