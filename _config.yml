@@ -6,8 +6,8 @@
 title: iOS Hunter Notes
 subtitle: ''
 description: >
-  Hi, I am an iOS developer with 8 years experience, worked in several top technology companies in China, like NetEase, Meituan and Viva Video. 
-  I like to record my study notes here, maybe there are some inaccuracies or mistakes in these summaries, but these are not important, the important thing is to continue to summarize every day.
+  Hi, I am an iOS developer with 8 years experience, worked in several top technology companies in China, like NetEase, Meituan. 
+  I like to record my study notes here, maybe these summaries have inaccuracies or mistakes or even not high enough quality, but these are not important, the important thing is to keep summarizing every day.
   If you're interested in iOS or Swift or any other questions, welcome to contact me.
 keywords:
 author: zitao0206
@@ -72,7 +72,7 @@ prismjs:
 # order_by: Posts order. (Order by date descending by default)
 index_generator:
   path: ''
-  per_page: 20
+  per_page: 10
   order_by: -date
 
 # Category & Tag
