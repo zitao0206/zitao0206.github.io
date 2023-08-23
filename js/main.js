@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 
   /**
-   * Controls the different versions of  the menu in blog post articles 
+   * Controls the different versions of the menu in blog post articles 
    * for Desktop, tablet and mobile.
    */
   if ($(".post").length) {

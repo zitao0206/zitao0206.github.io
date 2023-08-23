@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 12px;
+  font-size: 14px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #666;
   color: #383838;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
 }
 body td {
   padding: 0 8px;
@@ -471,7 +471,7 @@ html {
   margin: 0;
   padding: 0;
   height: 100%;
-  border-top: 2px solid #383838;
+  border-top: 2px solid #000;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 }
@@ -479,9 +479,9 @@ body {
   margin: 0;
   height: 100%;
   background-color: #fff;
-  color: #383838;
-  font-weight: 400;
-  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+  font-size: 16px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -508,9 +508,9 @@ body {
   -webkit-hyphens: manual;
 }
 .content a {
-  color: #383838;
+  color: #000;
   text-decoration: none;
-  background-image: linear-gradient(transparent, transparent 5px, #383838 5px, #383838);
+  background-image: linear-gradient(transparent, transparent 5px, #000 5px, #000);
   background-position: bottom;
   background-size: 100% 6px;
   background-repeat: repeat-x;
@@ -572,7 +572,7 @@ body {
   }
 }
 .max-width {
-  max-width: 75rem;
+  max-width: 60rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -597,7 +597,7 @@ body {
 #header .h1 {
   margin-top: 0;
   margin-bottom: 0;
-  color: #383838;
+  color: #000;
   letter-spacing: 0.01em;
   font-weight: 700;
   font-style: normal;
@@ -845,7 +845,7 @@ body {
   display: none;
 }
 #header-post #toc .toc-level-2 {
-  color: #383838;
+  color: #000;
   font-size: 0.8rem;
 }
 #header-post #toc .toc-level-2:before {
@@ -1025,7 +1025,7 @@ body {
   display: none;
 }
 #footer-post #toc-footer .toc-level-2 {
-  color: #383838;
+  color: #000;
   font-size: 0.8rem;
 }
 #footer-post #toc-footer .toc-level-2:before {
@@ -1330,14 +1330,14 @@ article .content .caption {
   text-align: center;
 }
 .pagination .page-number {
-  color: #383838;
+  color: #000;
   font-size: 0.8rem;
 }
 .pagination a {
   padding: 4px 6px;
   border-radius: 5px;
   background-image: none;
-  color: #383838;
+  color: #000;
   text-decoration: none;
 }
 .pagination a:hover {
@@ -1353,7 +1353,7 @@ article .content .caption {
   border: solid 1px #8c8c8c;
   border-radius: 5px;
   background-color: #fff;
-  color: #383838;
+  color: #000;
   font-size: 1.2rem;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -1370,7 +1370,7 @@ article .content .caption {
 }
 #search-result a.search-result-title {
   background-image: none;
-  color: #383838;
+  color: #000;
   text-transform: capitalize;
   font-weight: bold;
   line-height: 1.2;
@@ -1390,7 +1390,7 @@ article .content .caption {
 .search-no-result {
   display: none;
   padding-bottom: 0.5em;
-  color: #383838;
+  color: #000;
 }
 #tag-cloud .tag-cloud-title {
   color: #666;
@@ -1415,7 +1415,7 @@ article .content .caption {
   color: #fff;
   font-display: swap;
   font-weight: 400;
-  font-size: 11.200000000000001px;
+  font-size: 12.8px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -1423,7 +1423,7 @@ article .content .caption {
   word-wrap: break-word;
   white-space: pre;
   content: attr(aria-label);
-  background: #383838;
+  background: #000;
   border-radius: 3px;
   opacity: 0;
 }
@@ -1433,7 +1433,7 @@ article .content .caption {
   display: none;
   width: 0;
   height: 0;
-  color: #383838;
+  color: #000;
   pointer-events: none;
   content: '';
   border: 6px solid transparent;
@@ -1464,7 +1464,7 @@ article .content .caption {
   right: 50%;
   bottom: -7px;
   margin-right: -6px;
-  border-bottom-color: #383838;
+  border-bottom-color: #000;
 }
 .tooltipped-sw::after {
   margin-right: -16px;
@@ -1581,7 +1581,7 @@ pre {
   padding-bottom: 0;
   border: 1px dotted #666;
   border-radius: 4px;
-  font-size: 13px;
+  font-size: 15px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 22px;
   -webkit-border-radius: 4px;
