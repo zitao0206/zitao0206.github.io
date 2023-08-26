@@ -7,7 +7,7 @@ title: iOS Hunter Notes
 subtitle: ''
 description: >
   Hi, I am an iOS developer with 8 years experience, worked in several top technology companies in China, like NetEase, Meituan. 
-  I like to record my study notes here, maybe these summaries have inaccuracies or mistakes or even not high enough quality, but these are not important, the important thing is to keep summarizing every day. If you're interested in iOS or Swift or any other questions, welcome to contact me.
+  I like to record my study notes here, maybe these summaries have inaccuracies or mistakes or even not high enough quality, but these are not important, the important thing is to keep summarizing every day. If you're interested in iOS or Swift or any other questions, welcome to communicate me.
   
 keywords:
 author: Zitao
@@ -19,7 +19,8 @@ menu:
   categories: /categories #分类
   archives: /archives   #归档
   tags: /tags   #标签
-  about: /about   ##关于     
+  about: /about   ##关于
+  clock: /clock #日历
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'

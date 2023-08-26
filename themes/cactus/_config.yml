@@ -20,7 +20,8 @@ nav:
   Search: /search #搜索
   Archives: /archives   #归档
   Projects: https://github.com/zitao0206
-  About: /about   ##关于
+  Others: /about   ##关于
+#  Clock: /clock
 
 
 # Links to your social media accounts.
@@ -34,8 +35,8 @@ social_links:
     icon: github
     link: https://github.com/zitao0206
   -
-    icon: weixin
-    link: https://zitao0206.github.io/about/
+    icon: twitter
+    link: https://twitter.com/Zitao_Li0206
 #  -
 #    icon: twitter
 #    link: /
