@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>00. An investigation of Lost location Issue</title>
+      <link href="/2023/08/31/iOS/05.%20Projects%20&amp;%20Issues/00.%20%20An%20investigation%20of%20Lost%20location%20Issue/"/>
+      <url>/2023/08/31/iOS/05.%20Projects%20&amp;%20Issues/00.%20%20An%20investigation%20of%20Lost%20location%20Issue/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p><h4 id="1-Background"><a href="#1-Background" class="headerlink" title="1. Background"></a><font size=4 color=#4169E1>1. Background</font></h4><p>This is really one of the issues that impressed me. I’m recording it here specifically because I find it quite fascinating.   </p><p>At that time I was a leader of iOS team based on Oversea business at Meituan. The business was brand new, I was one of the few guys who were familiar all Oversea business. One day, Our data engineer came to me, and told me that the location data of our business had a high lost rate to 30%, even to 50% in some special areas. According to past experience, it may be normal for this loss rate to be between 10% and 15%, so it was too high.</p><p>As we all kown, without the correct location information(City or region information), we could not offer different  business data to the accurate areas we wanted. Soon I realized  it was a serious problem for our business, and I reported it to our technical boss. We decided that until the problem was resolved, the users that lost location information could only read the default H5 page we offered.</p><h4 id="2-Investigation-process"><a href="#2-Investigation-process" class="headerlink" title="2. Investigation process"></a><font size=4 color=#4169E1>2. Investigation process</font></h4><p>Then I began to investigate the issue and tried to optimize it. Later, I gradually discovered that the issues involved in this process are very complicated, involving many links and requiring a lot of cross-team cooperation.</p><p>The process of getting location data in iOS is as follows:   </p><p>(1) iOS gets the longitude and latitude by calling the system callback function in CLLocationManagerDelegate.</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">-</span> (void)locationManager:(<span class="type">CLLocationManager</span> <span class="operator">*</span>)manager didUpdateLocations:(<span class="type">NSArray</span> <span class="operator">*</span>)locations &#123;</span><br><span class="line">    <span class="type">CLLocation</span> <span class="operator">*</span>location <span class="operator">=</span> [locations firstObject]; </span><br><span class="line">    <span class="type">CLLocationCoordinate2D</span> coordinate <span class="operator">=</span> location.coordinate; </span><br><span class="line">    <span class="type">NSLog</span>(@<span class="string">&quot;Longitude: %f, Latitude: %f&quot;</span>,coordinate.longitude,coordinate.latitude);</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>At this step, although there could have been failures with a rate of 5% more or less, what we could do was limited, not only because it was a system-level method, but more importantly, this was the code that existed in the basic library. Any modification to it would have affected the entire company’s business.</p><p>(2) After getting the latitude and longitude, we used them and some other information (IP address, etc.) to request a back-end interface( we can call it requestPosition), which will return the corresponding location information, which is a basic public interface for all the company’s business.</p><p>Then by querying the interface logs and the database logs of other businesses, I found that the failure rate of this interface for overseas business was very high, but the failure rate for domestic business was normal. I don’t know why. After all, all businesses use the same interface. </p><p>But even though I didn’t know why, I pushed for something: to create the interface in a way that in overseas business scenarios, if it failed to acquire location information, it would trigger a retry mechanism, meaning that if the first attempt failed, the subsequent attempt would be made up to 2 times until it succeeded(The actual logic may be more complex.).</p><p>After doing this optimization, I again verified the location information data for the business and found that the data had improved, but the improvement was limited, about 20% to 25% from the original average of 30% to 40%.</p><p>(3) I escalated the issue after that because I felt that it might be beyond our capabilities on the mobile side, and I organized multiple meetings with multiple server-side teams to discuss the issue.  </p><p>In the discussion with the server side I found:<br>Because the company’s network services are basically customized http protocol, take the network long connection, with the help of strong domestic server resources, domestic users benefit from this way, the network’s end-to-end success rate is very high (long connection that is, through the heartbeat message way to keep alive).</p><p>However, due to the lack of sufficient server resources in foreign countries, coupled with the network conditions in some foreign regions were not very good, at this time, the end-to-end success rate of the network long connection was very low, and may be even lower than the short link method. We originally wanted to change the overseas business network request to short connection, but after discussion, we felt that this is not a fundamental solution. </p><p>Later, I learned that through the efforts of our big boss, we were able to help our overseas business deploy a dedicated server resource in Hong Kong to support the overseas business. Later this data was optimized and finally reached the ideal zone.</p><p>So far, this problem was solved.</p><h4 id="3-Review-and-summary"><a href="#3-Review-and-summary" class="headerlink" title="3. Review and summary"></a><font size=4 color=#4169E1>3. Review and summary</font></h4><p>In this process, I had to constantly review other teams’ code, and communicated with the basic service team many times on how to optimize the code.  </p><p>I needed to apply permissions to various databases and learned to write various SQL languages to query data. Query server-side logs, query other business data repeatedly for comparison. </p><p>During this period, I also needed to discuss and communicate with multiple server teams and multiple data teams.</p><p>Although this work could be beyond the ability and responsibility of an iOS developer, and the process was full of challenges, But in retrospect, I still benefited a lot from it and learned a lot of knowledge beyond iOS.</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+          <category> 05. Projects &amp; Issues </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> latitude </tag>
+            
+            <tag> longitude </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>01. Async and Await</title>
       <link href="/2023/08/23/Swift/07.%20Concurrency/01.%20Async%20and%20Await/"/>
       <url>/2023/08/23/Swift/07.%20Concurrency/01.%20Async%20and%20Await/</url>
@@ -851,6 +880,180 @@
       <title>00. Article publishing failure problem summary</title>
       <link href="/2023/01/15/Others/00.%20Article%20publishing%20failure%20problem%20summary/"/>
       <url>/2023/01/15/Others/00.%20Article%20publishing%20failure%20problem%20summary/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/01.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/01.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/03.%20A%20modular%20page-building%20solution%20based%20on%20UIView./"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/03.%20A%20modular%20page-building%20solution%20based%20on%20UIView./</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/04.%20A%20page-building%20solution%20based%20on%20State%20machines./"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/04.%20A%20page-building%20solution%20based%20on%20State%20machines./</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/05.%20How%20to%20support%20multi-source%20configuration%20in%20a%20componentized%20Pod/"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/05.%20How%20to%20support%20multi-source%20configuration%20in%20a%20componentized%20Pod/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Others </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. Article publishing failure problem summary</title>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/06.%20An%20encapsulation%20of%20data%20transmission%20based%20on%20RAC/"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/06.%20An%20encapsulation%20of%20data%20transmission%20based%20on%20RAC/</url>
       
         <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
       
