@@ -4,6 +4,64 @@
   
     
     <entry>
+      <title>00. SwiftUI vs UIKit</title>
+      <link href="/2023/09/02/SwiftUI/00.%20SwiftUI%20vs%20UIKit/"/>
+      <url>/2023/09/02/SwiftUI/00.%20SwiftUI%20vs%20UIKit/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Just as we struggled with whether or not to embrace Swift, are many people today struggling with whether or not to embrace SwiftUI. Then I can tell you very clearly that if you choose to embrace Swift, then SwiftUI is a hurdle you won’t be able to get past sooner or later! Take my advice, it’s not too late to embrace SwiftUI, you’ll find more and more hiring JD’s asking for SwiftUI. I’ve also been learning SwiftUI on my own lately, and I’m going to be writing a series of posts about SwiftUI, so let’s start with this one on SwiftUI vs UIKit and why we’re going to go with SwiftUI.</p><h4 id="2-UIKit"><a href="#2-UIKit" class="headerlink" title="2. UIKit"></a><font size=3 color=#4169E1>2. UIKit</font></h4><p>UIKit was publicly released in 2008 and is built on the object-oriented Objective-C language. In UIKit, all views inherit from a class called UIView, which has a very large number of properties and methods-such as background, layout, layers for rendering, and so on-there are almost 200 properties, and every UIView and subclass of UIView, whether you want it or not, will have Every UIView and subclass of UIView will have these properties whether you want them or not. </p><p>For example, there is a special UIStackView in UIKit, which is a view type that will not be rendered for the design intent of making layouts simpler. But because of the inheritance mechanism, even though it doesn’t render, it has those various unused properties including background color. </p><p>So, in UIKit, when we draw a UI that contains a series of labels&#x2F;buttons, etc., it’s a stack of “big” and “heavy” Views that contain more than 200 attributes.</p><h4 id="3-SwiftUI"><a href="#3-SwiftUI" class="headerlink" title="3. SwiftUI"></a><font size=3 color=#4169E1>3. SwiftUI</font></h4><p>Born in 2019, SwiftUI is a modern framework for building user interfaces introduced by Apple. As new devices evolve in terms of processing power, graphics performance, and other technical features, SwiftUI takes full advantage of these new hardware and technical capabilities, optimizing and tuning the underlying implementation so that apps running on new devices can render interfaces, handle user interactions, and deliver smoother animations and effects more efficiently.</p><p>SwiftUI is based on responsive programming approach to UI development, all the views are fine-grained structure struct, compared struct and class can be known, Swift is very much advocate the use of struct, the specific why will not expand.  In SwiftUI, each view is a lightweight struct structure, which abandons UIKit’s inheritance approach and uses protocols to contain the few properties and modifiers needed. All in all, SwiftUI is much more performant and faster than UIKit, with less overhead for creating the same view.</p><p>In addition, SwiftUI provides a number of keywords like State, which not only allows us to write less code, but also allows us to focus more on the UI changes caused by value changes in responsive programming thinking. Since class can freely modify the value of attributes, which may bring complicated logic, in contrast, struct under the SwiftUI development of UI code is more “independent” (many of the capabilities it has also provided you, do not need to build the wheel again)</p><h4 id="4-Final-Thoughts"><a href="#4-Final-Thoughts" class="headerlink" title="4. Final Thoughts "></a><font size=3 color=#4169E1>4. Final Thoughts </font></h4><p>Because SwiftUI will only come out in 2019, compatibility for previous iOS versions is expected to be a bit of a problem. Because UIKit has been developed for many years, SwiftUI has not been as powerful as UIKit third-party libraries, but it is only a matter of time. And Apple in order to be compatible with some of the methods used, such as UIHostingController. read a lot of foreign articles, many of them developers are very clear point: SwiftUI will eventually replace UIKit, and UIKit will eventually be abandoned.</p><h4 id="5-Recommended-Learning-Resources"><a href="#5-Recommended-Learning-Resources" class="headerlink" title="5. Recommended Learning Resources: "></a><font size=3 color=#4169E1>5. Recommended Learning Resources: </font></h4><ol><li>Apple Official:<br>[1] <a href="https://developer.apple.com/tutorials/swiftui">https://developer.apple.com/tutorials/swiftui</a><br>[2] <a href="https://developer.apple.com/documentation/SwiftUI/View-fundamentals">https://developer.apple.com/documentation/SwiftUI/View-fundamentals</a></li><li>Hackingwithswift Series:<br>[1] <a href="https://www.hackingwithswift.com/books/ios-swiftui/">https://www.hackingwithswift.com/books/ios-swiftui/</a></li><li>SwiftfulThinking Series:<br>[1] <a href="https://www.youtube.com/playlist?list=PLwvDm4VfkdphqETTBf-DdjCoAvhai1QpO">https://www.youtube.com/playlist?list=PLwvDm4VfkdphqETTBf-DdjCoAvhai1QpO</a><br>[2] <a href="https://www.bilibili.com/video/BV1KY411f7in">https://www.bilibili.com/video/BV1KY411f7in</a><br>[3] <a href="https://github.com/SwiftfulThinking">https://github.com/SwiftfulThinking</a></li></ol>]]></content>
+      
+      
+      <categories>
+          
+          <category> SwiftUI </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> SwiftUI </tag>
+            
+            <tag> UIKit </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>01. How to use iOS Geofencing in your business</title>
+      <link href="/2023/09/02/iOS/05.%20Projects%20&amp;%20Issues/01.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/"/>
+      <url>/2023/09/02/iOS/05.%20Projects%20&amp;%20Issues/01.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+          <category> 05. Projects &amp; Issues </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> configuration </tag>
+            
+            <tag> tool </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>00. An investigation of Lost location Issue</title>
       <link href="/2023/08/31/iOS/05.%20Projects%20&amp;%20Issues/00.%20%20An%20investigation%20of%20Lost%20location%20Issue/"/>
       <url>/2023/08/31/iOS/05.%20Projects%20&amp;%20Issues/00.%20%20An%20investigation%20of%20Lost%20location%20Issue/</url>
@@ -127,7 +185,7 @@
           
           <category> iOS </category>
           
-          <category> 04. Others </category>
+          <category> 00. Tips </category>
           
       </categories>
       
@@ -907,37 +965,8 @@
     
     <entry>
       <title>00. Article publishing failure problem summary</title>
-      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/01.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/"/>
-      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/01.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/</url>
-      
-        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
-      
-      
-      <categories>
-          
-          <category> Others </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> hexo </tag>
-            
-            <tag> configuration </tag>
-            
-            <tag> tool </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
-      <title>00. Article publishing failure problem summary</title>
-      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/"/>
-      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20How%20to%20use%20iOS%20Geofencing%20in%20your%20business/</url>
+      <link href="/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/"/>
+      <url>/2023/01/15/iOS/05.%20Projects%20&amp;%20Issues/02.%20Design%20of%20a%20Document%20Similarity%20Comparison%20Tool/</url>
       
         <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=3 color=#4169E1>1. Header information is incorrect</font></h4><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=3 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows: </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=3 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">Why should we avoid using closures in Swift structs?</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
       
