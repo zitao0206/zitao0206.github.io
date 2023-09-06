@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. This article focuses on some common property wrappers in SwiftUI. 1. @StateIn Swift, a computed property is a property that does not have a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03. Basic Concepts of SwiftUI (3)">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. This article focuses on some common property wrappers in SwiftUI. 1. @StateIn Swift, a computed property is a property that does not have a">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-06T18:30:00.000Z">
+<meta property="article:modified_time" content="2023-09-06T19:13:40.229Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="State">
+<meta property="article:tag" content="binding">
+<meta property="article:tag" content="ObservableObject">
+<meta property="article:tag" content="StateObject">
+<meta property="article:tag" content="EnvironmentObject">
+<meta property="article:tag" content="FocusState">
+<meta property="article:tag" content="AppStorage">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>03. Basic Concepts of SwiftUI (3)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&text=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&is_video=false&description=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Basic Concepts of SwiftUI (3)&body=Check out this article: https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&name=03. Basic Concepts of SwiftUI (3)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&t=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-State"><span class="toc-number">1.</span> <span class="toc-text">1. @State</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-binding"><span class="toc-number">2.</span> <span class="toc-text">2. @binding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ObservableObject"><span class="toc-number">3.</span> <span class="toc-text">3. @ObservableObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-StateObject"><span class="toc-number">4.</span> <span class="toc-text">4. @StateObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-EnvironmentObject"><span class="toc-number">5.</span> <span class="toc-text">5. @EnvironmentObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-FocusState"><span class="toc-number">6.</span> <span class="toc-text">5. @FocusState</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-AppStorage"><span class="toc-number">7.</span> <span class="toc-text">6. @AppStorage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        03. Basic Concepts of SwiftUI (3)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-06T18:30:00.000Z" class="dt-published" itemprop="datePublished">2023-09-06</time>
+        
+        (Updated: <time datetime="2023-09-06T19:13:40.229Z" class="dt-updated" itemprop="dateModified">2023-09-06</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SwiftUI/">SwiftUI</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AppStorage/" rel="tag">AppStorage</a>, <a class="p-category" href="/tags/EnvironmentObject/" rel="tag">EnvironmentObject</a>, <a class="p-category" href="/tags/FocusState/" rel="tag">FocusState</a>, <a class="p-category" href="/tags/ObservableObject/" rel="tag">ObservableObject</a>, <a class="p-category" href="/tags/State/" rel="tag">State</a>, <a class="p-category" href="/tags/StateObject/" rel="tag">StateObject</a>, <a class="p-category" href="/tags/binding/" rel="tag">binding</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<p>This article focuses on some common property wrappers in SwiftUI.</p>
+<h4 id="1-State"><a href="#1-State" class="headerlink" title="1. @State"></a><font size=4 color=#4169E1>1. @State</font></h4><p>In Swift, a computed property is a property that does not have a directly stored value, it is a calculated property value. Therefore, the mutating keyword is not allowed to modify computed properties. So code like the following is not allowed:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">mutating</span> <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span></span><br></pre></td></tr></table></figure>
+<p>However, in SwiftUI, a special solution called property wrapper @State is provided, which is not only used to create mutable properties that can respond to user interaction and state changes, but also to share and pass data between views.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> counter: <span class="type">Int</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Counter: <span class="subst">\(counter)</span>&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Increment&quot;</span>) &#123;</span><br><span class="line">                counter <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@State allows us to bypass the limitations of structs: we know their properties cannot be changed because the struct is fixed, but @State allows SwiftUI to store that value alone where it can be modified. Let’s take a look at its implementation:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@frozen</span> <span class="keyword">@propertyWrapper</span> <span class="keyword">public</span> <span class="keyword">struct</span> <span class="title class_">State</span>&lt;<span class="title class_">Value</span>&gt; : <span class="title class_">DynamicProperty</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Creates the state with an initial wrapped value.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(<span class="params">wrappedValue</span> <span class="params">value</span>: <span class="type">Value</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Creates the state with an initial value.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(<span class="params">initialValue</span> <span class="params">value</span>: <span class="type">Value</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// The underlying value referenced by the state variable.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> wrappedValue: <span class="type">Value</span> &#123; <span class="keyword">get</span> <span class="keyword">nonmutating</span> <span class="keyword">set</span> &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// A binding to the state value.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">var</span> projectedValue: <span class="type">Binding</span>&lt;<span class="type">Value</span>&gt; &#123; <span class="keyword">get</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(1) @propertyWrapper:<br>This is a property tag indicating that State is a property wrapper.</p>
+<p>(2) Follow the DynamicProperty protocol:<br>This protocol is a special protocol used to indicate that the value of a property may change dynamically at runtime. This protocol completes the interface needed to create dependent operations on data (state) and views. Only a few interfaces are exposed right now, and we can’t fully use it for now.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">protocol</span> <span class="title class_">DynamicProperty</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/// Called immediately before the view&#x27;s body() function is</span></span><br><span class="line">    <span class="comment">/// executed, after updating the values of any dynamic properties</span></span><br><span class="line">    <span class="comment">/// stored in `self`.</span></span><br><span class="line">    <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">update</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(3) Its projectedValue (projected value) is of Binding type. Binding is a first-level reference to data. It serves as a bridge for two-way binding of data (state) in SwiftUI, allowing data to be read and written without owning the data. We will introduce it separately later.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@frozen</span> <span class="keyword">@propertyWrapper</span> <span class="keyword">@dynamicMemberLookup</span> <span class="keyword">struct</span> <span class="title class_">Binding</span>&lt;<span class="title class_">Value</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-binding"><a href="#2-binding" class="headerlink" title="2. @binding"></a><font size=4 color=#4169E1>2. @binding</font></h4><p>In SwiftUI, @Binding is used to create a two-way-bindable property, which allows properties to be bound to mutable state in other views in order to share and synchronize data between multiple views.</p>
+<p>Because sometimes we will pass a property of a view to a child node, but it cannot be directly passed to the child node, because the value transfer form in Swift is the value type transfer method, that is, a copy is passed to the child node past value.</p>
+<p>But after being modified by the @Binding decorator, the attribute becomes a reference type, and the transfer becomes a reference transfer, so that the state of the parent-child view can be associated.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> count: <span class="type">Int</span> <span class="operator">=</span> <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Count: <span class="subst">\(count)</span>&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">ChildView</span>(count: <span class="variable">$count</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ChildView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@Binding</span> <span class="keyword">var</span> count: <span class="type">Int</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Button</span>(<span class="string">&quot;Increment&quot;</span>) &#123;</span><br><span class="line">            count <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>@Binding actually encapsulates a reference to a value and provides an interface for reading and writing the value. When the bound value changes, the binding will automatically notify its dependencies, thereby triggering updates and re-rendering.</p>
+<h4 id="3-ObservableObject"><a href="#3-ObservableObject" class="headerlink" title="3. @ObservableObject"></a><font size=4 color=#4169E1>3. @ObservableObject</font></h4><p>@ObservableObject is used to create observable objects that can be used by multiple independent Views. If you use @ObservedObject to decorate an object, then that object must implement the ObservableObject protocol, and then use @Published to decorate the property in the object, indicating that this property needs to be monitored by SwiftUI.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserData</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> name: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;John&quot;</span></span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> age: <span class="type">Int</span> <span class="operator">=</span> <span class="number">30</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> userData <span class="operator">=</span> <span class="type">UserData</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Name: <span class="subst">\(userData.name)</span>&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Age: <span class="subst">\(userData.age)</span>&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Change Data&quot;</span>) &#123;</span><br><span class="line">                userData.name <span class="operator">=</span> <span class="string">&quot;Jane&quot;</span></span><br><span class="line">                userData.age <span class="operator">=</span> <span class="number">25</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we create a custom class called UserData and mark its properties name and age as observable using the @Published property wrapper. This means that when these properties change, SwiftUI will automatically post a notification, and the associated views will be notified and automatically updated to reflect the new value.</p>
+<p>By using @ObservableObject and @Published property wrappers, we can create observable data models in SwiftUI, and realize dynamic updates of data and synchronization of views. This mechanism makes building responsive user interfaces easier and more efficient.</p>
+<h4 id="4-StateObject"><a href="#4-StateObject" class="headerlink" title="4. @StateObject"></a><font size=4 color=#4169E1>4. @StateObject</font></h4><p>@State modifies value type data, and @StateObject is basically an upgraded version of @State for class.</p>
+<p>The main function of @StateObject is to create an independent, observable object in the view and is responsible for managing the life cycle of the object.</p>
+<p>Unlike @ObservedObject, @StateObject does not reinitialize the object when the view is recreated, but keeps its state unchanged. This makes sharing and managing observables in view hierarchies more convenient and reliable. Let’s compare it with an example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserAuth</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> isLoggedIn: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment">// Other user-related properties and methods... </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@StateObject</span> <span class="keyword">var</span> userAuth <span class="operator">=</span> <span class="type">UserAuth</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> userAuth.isLoggedIn &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Welcome, User!&quot;</span>)</span><br><span class="line">                    .font(.largeTitle)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">LoginView</span>(userAuth: userAuth)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">LoginView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> username: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> password: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> userAuth: <span class="type">UserAuth</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">TextField</span>(<span class="string">&quot;Username&quot;</span>, text: <span class="variable">$username</span>)</span><br><span class="line">                .textFieldStyle(<span class="type">RoundedBorderTextFieldStyle</span>())</span><br><span class="line">            <span class="type">SecureField</span>(<span class="string">&quot;Password&quot;</span>, text: <span class="variable">$password</span>)</span><br><span class="line">                .textFieldStyle(<span class="type">RoundedBorderTextFieldStyle</span>())</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Login&quot;</span>) &#123;</span><br><span class="line">                <span class="comment">// Simulate authenticated users </span></span><br><span class="line">                <span class="keyword">if</span> username <span class="operator">==</span> <span class="string">&quot;admin&quot;</span> <span class="operator">&amp;&amp;</span> password <span class="operator">==</span> <span class="string">&quot;password&quot;</span> &#123;</span><br><span class="line">                    userAuth.isLoggedIn <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In the above example, UserAuth is an ObservableObject that holds the logged-in state isLoggedIn. In the ContentView, we create a persistent UserAuth object using the @StateObject property wrapper and display a welcome message or a login view depending on the user’s login status.</p>
+<p>Example of using @ObservableObject: </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserAuth</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> isLoggedIn: <span class="type">Bool</span> <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">    <span class="comment">// Other user-related properties and methods... </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> userAuth <span class="operator">=</span> <span class="type">UserAuth</span>()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> userAuth.isLoggedIn &#123;</span><br><span class="line">                <span class="type">Text</span>(<span class="string">&quot;Welcome, User!&quot;</span>)</span><br><span class="line">                    .font(.largeTitle)</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="type">LoginView</span>(userAuth: userAuth)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">LoginView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> username: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> password: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@ObservedObject</span> <span class="keyword">var</span> userAuth: <span class="type">UserAuth</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">TextField</span>(<span class="string">&quot;Username&quot;</span>, text: <span class="variable">$username</span>)</span><br><span class="line">                .textFieldStyle(<span class="type">RoundedBorderTextFieldStyle</span>())</span><br><span class="line">            <span class="type">SecureField</span>(<span class="string">&quot;Password&quot;</span>, text: <span class="variable">$password</span>)</span><br><span class="line">                .textFieldStyle(<span class="type">RoundedBorderTextFieldStyle</span>())</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Login&quot;</span>) &#123;</span><br><span class="line">                <span class="comment">// Simulate authenticated users </span></span><br><span class="line">                <span class="keyword">if</span> username <span class="operator">==</span> <span class="string">&quot;admin&quot;</span> <span class="operator">&amp;&amp;</span> password <span class="operator">==</span> <span class="string">&quot;password&quot;</span> &#123;</span><br><span class="line">                    userAuth.isLoggedIn <span class="operator">=</span> <span class="literal">true</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we also use UserAuth as an ObservableObject to manage the user’s login status. The difference is that in the ContentView, we used the @ObservedObject property wrapper to create the UserAuth object. This means that whenever the ContentView is recreated, a new instance of the UserAuth object is created.</p>
+<p>To sum up, @ObservedObject will be created multiple times with the creation of View regardless of storage, which is suitable for temporary and partial data models.</p>
+<p>While @StateObject guarantees that the object will only be created once, it is suitable for objects that need to share and maintain persistent state in the entire view hierarchy.</p>
+<p>Therefore, if it is an ObservableObject model object created by itself in View, using @StateObject will most likely be a more correct choice.</p>
+<h4 id="5-EnvironmentObject"><a href="#5-EnvironmentObject" class="headerlink" title="5. @EnvironmentObject"></a><font size=4 color=#4169E1>5. @EnvironmentObject</font></h4><p>In SwiftUI, the main function of @EnvironmentObject is to share observable objects throughout the application and make them update automatically in views. By setting an observable as an environment variable, it is available throughout the view hierarchy without having to manually pass it to each view.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">UserData</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">    <span class="meta">@Published</span> <span class="keyword">var</span> name: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;John&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@EnvironmentObject</span> <span class="keyword">var</span> userData: <span class="type">UserData</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Name: <span class="subst">\(userData.name)</span>&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Change Name&quot;</span>) &#123;</span><br><span class="line">                userData.name <span class="operator">=</span> <span class="string">&quot;Jane&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DetailView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@EnvironmentObject</span> <span class="keyword">var</span> userData: <span class="type">UserData</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Welcome, <span class="subst">\(userData.name)</span>!&quot;</span>)</span><br><span class="line">            .font(.title)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">AppView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">ContentView</span>()</span><br><span class="line">            .environmentObject(<span class="type">UserData</span>())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@main</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyApp</span>: <span class="title class_">App</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">Scene</span> &#123;</span><br><span class="line">        <span class="type">WindowGroup</span> &#123;</span><br><span class="line">            <span class="type">AppView</span>()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we created a custom class called UserData and marked it as ObservableObject. We then use @EnvironmentObject property wrappers in ContentView and DetailView to set the UserData object as the environment object.</p>
+<p>In ContentView, we can access the properties of the userData object and update them as needed. In the DetailView, we can also access the same userData object and use its properties to display the welcome message.</p>
+<p>In the AppView, we use the environmentObject(_:) function to set the UserData instance as the application’s environment object so that it is shared across the application.</p>
+<p>By using @EnvironmentObject property wrappers, we can share and access global observable objects throughout the application, making data transfer and synchronization easier and more convenient.</p>
+<h4 id="5-FocusState"><a href="#5-FocusState" class="headerlink" title="5. @FocusState"></a><font size=4 color=#4169E1>5. @FocusState</font></h4><p>In SwiftUI, @FocusState is used to manage the focus state in a view. It allows you to track and control focus in the UI for automation if needed.</p>
+<p>@FocusState provides a mechanism to track and control focus state in order to manage keyboard interactions and user input in the view hierarchy. It can be used to automatically switch focus between multiple text fields or views, and to perform focus-related actions such as submitting a form or handling user input.</p>
+<p>Here is a simple sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@State</span> <span class="keyword">private</span> <span class="keyword">var</span> name: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;&quot;</span></span><br><span class="line">    <span class="meta">@FocusState</span> <span class="keyword">private</span> <span class="keyword">var</span> isNameFocused: <span class="type">Bool</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">TextField</span>(<span class="string">&quot;Name&quot;</span>, text: <span class="variable">$name</span>)</span><br><span class="line">                .focused(<span class="variable">$isNameFocused</span>)</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Submit&quot;</span>) &#123;</span><br><span class="line">                isNameFocused <span class="operator">=</span> <span class="literal">false</span></span><br><span class="line">                <span class="comment">// Execute the commit operation</span></span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Submitted: <span class="subst">\(name)</span>&quot;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we have used the @State property wrapper in the ContentView to store the value of the name. We also use the @FocusState property wrapper to manage the focus state of the name text field.</p>
+<p>By using the .focused($isNameFocused) modifier on the TextField, we associate the focus state with the name text field. This means that when the value of isNameFocused is true, the name text field will get focus.</p>
+<p>In the action closure of the submit button, we set the value of isNameFocused to false to defocus the name text field. You can then perform commit operations or other focus-related operations.</p>
+<h4 id="6-AppStorage"><a href="#6-AppStorage" class="headerlink" title="6. @AppStorage"></a><font size=4 color=#4169E1>6. @AppStorage</font></h4><p>In SwiftUI, @AppStorage is used to conveniently read and write values in the app’s persistent storage. It provides an easy way to handle application user settings, preferences, or other data that needs to be stored persistently.</p>
+<p>The main function of @AppStorage is to associate properties with the persistent storage of the application, so that the value of the property can be loaded when the application starts, and automatically persisted when it is changed. It uses UserDefaults to achieve data persistence.</p>
+<p>Here is a simple sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="meta">@AppStorage</span>(<span class="string">&quot;username&quot;</span>) <span class="keyword">private</span> <span class="keyword">var</span> username: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;Guest&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">VStack</span> &#123;</span><br><span class="line">            <span class="type">Text</span>(<span class="string">&quot;Welcome, <span class="subst">\(username)</span>!&quot;</span>)</span><br><span class="line">                .font(.largeTitle)</span><br><span class="line"></span><br><span class="line">            <span class="type">Button</span>(<span class="string">&quot;Logout&quot;</span>) &#123;</span><br><span class="line">                <span class="comment">// Clear the username and reset to default</span></span><br><span class="line">                username <span class="operator">=</span> <span class="string">&quot;Guest&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, we’ve used the @AppStorage property wrapper to associate the username property with the key “username” in the application’s persistent storage. If a value for the “username” key has been saved at application startup, then that value will be loaded into the username property.</p>
+<p>In the view, we can directly use the username property to display the welcome message. When the “Logout” button is clicked, we can update the username by setting the username property to the new value and persist it to the application’s persistent storage.</p>
+<p>By using the @AppStorage property wrapper, we can easily read and write to the application’s persistent storage for user settings, preferences, or other data that needs to be stored persistently. It provides a convenient way to handle persistent data for applications.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=4 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://juejin.cn/post/6976448420722507784">https://juejin.cn/post/6976448420722507784</a><br>[2] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/151286558">https://zhuanlan.zhihu.com/p/151286558</a><br>[3] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/349079593">https://zhuanlan.zhihu.com/p/349079593</a><br>[4] <a target="_blank" rel="noopener" href="https://onevcat.com/2020/06/stateobject">https://onevcat.com/2020/06/stateobject</a>     </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-State"><span class="toc-number">1.</span> <span class="toc-text">1. @State</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-binding"><span class="toc-number">2.</span> <span class="toc-text">2. @binding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-ObservableObject"><span class="toc-number">3.</span> <span class="toc-text">3. @ObservableObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-StateObject"><span class="toc-number">4.</span> <span class="toc-text">4. @StateObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-EnvironmentObject"><span class="toc-number">5.</span> <span class="toc-text">5. @EnvironmentObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-FocusState"><span class="toc-number">6.</span> <span class="toc-text">5. @FocusState</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-AppStorage"><span class="toc-number">7.</span> <span class="toc-text">6. @AppStorage</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&text=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&is_video=false&description=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Basic Concepts of SwiftUI (3)&body=Check out this article: https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&title=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&name=03. Basic Concepts of SwiftUI (3)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/&t=03. Basic Concepts of SwiftUI (3)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
