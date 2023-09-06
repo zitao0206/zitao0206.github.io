@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. 1. “Special” views in SwiftUIIn SwiftUI, every type that follows the View protocol must define a computational property called Body that re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02. Basic Concepts of SwiftUI (2)">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. 1. “Special” views in SwiftUIIn SwiftUI, every type that follows the View protocol must define a computational property called Body that re">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/004.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/005.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/006.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/007.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/008.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/009.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/010.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/011.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/012.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/013.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/014.png">
+<meta property="article:published_time" content="2023-09-06T17:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-06T19:12:04.089Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Never">
+<meta property="article:tag" content="Body">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/004.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>02. Basic Concepts of SwiftUI (2)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/06/iOS/06.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&text=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&is_video=false&description=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. Basic Concepts of SwiftUI (2)&body=Check out this article: https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&name=02. Basic Concepts of SwiftUI (2)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&t=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E2%80%9CSpecial%E2%80%9D-views-in-SwiftUI"><span class="toc-number">1.</span> <span class="toc-text">1. “Special” views in SwiftUI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Introduction-to-%E2%80%9CSpecial%E2%80%9D-views"><span class="toc-number">2.</span> <span class="toc-text">2. Introduction to “Special” views</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        02. Basic Concepts of SwiftUI (2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-06T17:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-06</time>
+        
+        (Updated: <time datetime="2023-09-06T19:12:04.089Z" class="dt-updated" itemprop="dateModified">2023-09-06</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/SwiftUI/">SwiftUI</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Body/" rel="tag">Body</a>, <a class="p-category" href="/tags/Never/" rel="tag">Never</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<h4 id="1-“Special”-views-in-SwiftUI"><a href="#1-“Special”-views-in-SwiftUI" class="headerlink" title="1. “Special” views in SwiftUI"></a><font size=3 color=#4169E1>1. “Special” views in SwiftUI</font></h4><p>In SwiftUI, every type that follows the View protocol must define a computational property called Body that represents the body content of that view. The type of this Body property determines the structure and content of the view. Typically, the type of Body is a specific View type.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MyView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Text</span>(<span class="string">&quot;Hello, World!&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>However, sometimes we create special views whose type of the Body property may not be a specific View type, but a special placeholder type indicating that the view has no actual content. In this case, we can set the type of Body to Never.</p>
+<p>Never is a special type that denotes an impossible value or a result that will never be returned. In this context, setting the type of Body to Never means that this view has no actual content; it exists only as a container or modifier for other views.</p>
+<p>The purpose of using Body &#x3D; Never in these view types is to indicate that they have no actual content or may not show any content depending on certain conditions. This avoids processing these views at the SwiftUI runtime, improving performance and efficiency.</p>
+<p>Here we introduce a few SwiftUI in several common such special views, they are not directly used in SwiftUI rendering display with, they are mainly used for layout, placeholder, packaging and other roles, they have a very important role in the development of SwiftUI.</p>
+<h4 id="2-Introduction-to-“Special”-views"><a href="#2-Introduction-to-“Special”-views" class="headerlink" title="2. Introduction to “Special” views"></a><font size=3 color=#4169E1>2. Introduction to “Special” views</font></h4><p><font size=3 color=#4169E1><strong>2.1 VStack, HStack, ZStack</strong></font><br>UIKit has an invisible view, UIStackView, which is used for arranging other views. In SwiftUI we can create flexible layouts using three view containers, VStack, HStack, and ZStack, which are container views that help us organize and arrange other views to create a variety of complex interfaces.</p>
+<p>VStack: a vertical stack layout container that arranges the contained views vertically from top to bottom. This means the views will be laid out vertically in order. As follows:       </p>
+<img src="/assets/SwiftUI/BasicConcepts/004.png" class=""> 
+
+<p>HStack: Horizontal Stack Container View, arranges the contained views horizontally from left to right, and the views will be laid out horizontally in order. As follows:</p>
+<img src="/assets/SwiftUI/BasicConcepts/005.png" class=""> 
+
+<p>ZStack: cascades container views, cascading the contained views in the order they appear in the ZStack, which means that later views will override earlier ones. As follows:</p>
+<img src="/assets/SwiftUI/BasicConcepts/006.png" class=""> 
+
+<p><font size=3 color=#4169E1><strong>2.2 Spacer()</strong></font><br>Spacer is a flexible spatial view that expands along the main axis that contains the Stack layout, or on both x or y axes if it is not included in the stack.Spacer is mostly used in combination with the Stack layout trying to work together. As follows:</p>
+<img src="/assets/SwiftUI/BasicConcepts/007.png" class="">       
+<img src="/assets/SwiftUI/BasicConcepts/008.png" class=""> 
+
+<p>Spacer() will “fill” the space it can occupy. </p>
+<p><font size=3 color=#4169E1><strong>2.3 Group</strong></font><br>Group is a container view in SwiftUI for combining multiple views into a logical whole. It does not apply specific layout or modifications to the views, but is only used to place multiple views in a common container.</p>
+<img src="/assets/SwiftUI/BasicConcepts/009.png" class="">    
+<img src="/assets/SwiftUI/BasicConcepts/010.png" class="">    
+
+<p><font size=3 color=#4169E1><strong>2.4 NavigationView</strong></font><br>NavigationView is a container view for building navigation interfaces in SwiftUI. It provides a simple way to manage navigation stacks and navigation links, and provides the user with the ability to navigate interactively.     </p>
+<img src="/assets/SwiftUI/BasicConcepts/011.png" class="">    
+
+<p><font size=3 color=#4169E1><strong>2.5 EmptyView</strong></font><br>EmptyView is a special view type in SwiftUI that represents an empty view without any content. It is often used as a placeholder or to hide a view under certain conditions.</p>
+<img src="/assets/SwiftUI/BasicConcepts/012.png" class="">    
+
+<p>Although EmptyView doesn’t display anything, it’s still a valid view type and can participate in the combination and layout of views. Its presence in SwiftUI gives us the flexibility to control and manage the showing and hiding of views while keeping the code clean and consistent.</p>
+<p><font size=3 color=#4169E1><strong>2.6 TupleView</strong></font><br>TupleView is a view type in SwiftUI for combining multiple views into a tuple view. It allows multiple views to be passed as parameters and combined as a tuple to form a view container.</p>
+<img src="/assets/SwiftUI/BasicConcepts/013.png" class="">  
+
+<p><font size=3 color=#4169E1><strong>2.7 AnyView</strong></font><br>AnyView is a type eraser in SwiftUI that allows to encapsulate any type of view into an opaque type. In SwiftUI, each view has a specific type, but sometimes we need to manipulate views without caring about the specific type, or mix views of different types. This is where you can use AnyView to encapsulate these views and treat them as a unified type. Here is an example showing how to encapsulate and manipulate different types of views using AnyView:</p>
+<img src="/assets/SwiftUI/BasicConcepts/014.png" class="">  
+
+
+<p>The above list is provided by SwiftUI, of course, we can define some special Views according to our needs.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E2%80%9CSpecial%E2%80%9D-views-in-SwiftUI"><span class="toc-number">1.</span> <span class="toc-text">1. “Special” views in SwiftUI</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Introduction-to-%E2%80%9CSpecial%E2%80%9D-views"><span class="toc-number">2.</span> <span class="toc-text">2. Introduction to “Special” views</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&text=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&is_video=false&description=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. Basic Concepts of SwiftUI (2)&body=Check out this article: https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&title=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&name=02. Basic Concepts of SwiftUI (2)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/&t=02. Basic Concepts of SwiftUI (2)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>

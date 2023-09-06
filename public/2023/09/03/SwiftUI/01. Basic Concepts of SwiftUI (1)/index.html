@@ -8,22 +8,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="It will take about 5 minutes to finish reading this article. Let’s start with a piece of SwiftUI code and its Canvas display as follows:     Explain this code: 1234567891011import SwiftUIstruct Conten">
 <meta property="og:type" content="article">
-<meta property="og:title" content="01. Basic Concepts (1)">
-<meta property="og:url" content="https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/index.html">
+<meta property="og:title" content="01. Basic Concepts of SwiftUI (1)">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/index.html">
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 5 minutes to finish reading this article. Let’s start with a piece of SwiftUI code and its Canvas display as follows:     Explain this code: 1234567891011import SwiftUIstruct Conten">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/000.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/001.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/002.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/003.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/000.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/001.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/002.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/003.png">
 <meta property="article:published_time" content="2023-09-03T12:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-06T12:32:00.339Z">
+<meta property="article:modified_time" content="2023-09-06T19:11:03.659Z">
 <meta property="article:author" content="Zitao">
 <meta property="article:tag" content="ContentView">
 <meta property="article:tag" content="View">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zitao0206.github.io/assets/SwiftUI/000.png">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/SwiftUI/BasicConcepts/000.png">
     
     
       
@@ -43,7 +43,7 @@
       
     
     <!-- title -->
-    <title>01. Basic Concepts (1)</title>
+    <title>01. Basic Concepts of SwiftUI (1)</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -94,7 +94,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20(3)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/06/iOS/06.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2023/09/02/SwiftUI/00.%20SwiftUI%20vs%20UIKit/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -110,17 +110,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&text=01. Basic Concepts (1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&is_video=false&description=01. Basic Concepts (1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=01. Basic Concepts (1)&body=Check out this article: https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&name=01. Basic Concepts (1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&t=01. Basic Concepts (1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&text=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&is_video=false&description=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. Basic Concepts of SwiftUI (1)&body=Check out this article: https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&name=01. Basic Concepts of SwiftUI (1)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&t=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -140,7 +140,7 @@
   <header>
     
     <h1 class="posttitle p-name" itemprop="name headline">
-        01. Basic Concepts (1)
+        01. Basic Concepts of SwiftUI (1)
     </h1>
 
 
@@ -154,7 +154,7 @@
       
         <time datetime="2023-09-03T12:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-03</time>
         
-        (Updated: <time datetime="2023-09-06T12:32:00.339Z" class="dt-updated" itemprop="dateModified">2023-09-06</time>)
+        (Updated: <time datetime="2023-09-06T19:11:03.659Z" class="dt-updated" itemprop="dateModified">2023-09-06</time>)
         
       
     </div>
@@ -181,7 +181,7 @@
   <div class="content e-content" itemprop="articleBody">
     <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
 <p>Let’s start with a piece of SwiftUI code and its Canvas display as follows:  </p>
-<img src="/assets/SwiftUI/000.png" class="">
+<img src="/assets/SwiftUI/BasicConcepts/000.png" class="">
 
 <p>Explain this code:</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">        <span class="type">Button</span>(<span class="string">&quot;Hello, world!&quot;</span>) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">        .background(.red)</span><br><span class="line">        .frame(width: <span class="number">200</span>, height: <span class="number">200</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -205,10 +205,10 @@
 <p>The effect of the above code is the same, only the lack of flexibility, each time you need to figure out what type of specific return in the body, too tired, in fact, to the compiler on the line.         </p>
 <p>‘some’ is a special generic type placeholder in Swift that supports more complex combinations and reuse of multiple view types, making SwiftUI code more flexible and concise and reducing the possibility of type errors, which is also a reflection of SwiftUI’s polymorphism.</p>
 <h4 id="3-Modifier"><a href="#3-Modifier" class="headerlink" title="3. Modifier"></a><font size=3 color=#4169E1>3. Modifier</font></h4><p>Let’s take a look at the effect of executing each of the following two types of code:     </p>
-<img src="/assets/SwiftUI/001.png" class="">    
+<img src="/assets/SwiftUI/BasicConcepts/001.png" class="">    
 
 <p>Attribute modifier code after switching the order:</p>
-<img src="/assets/SwiftUI/002.png" class="">      
+<img src="/assets/SwiftUI/BasicConcepts/002.png" class="">      
 
 <p>Just adjusting the order in which the two lines of code are executed results in a different outcome, which almost turns our perception upside down.</p>
 <p>Here we need to understand the working mechanism of Modifier in SwiftUI, unlike UIKit where each modifier acts as an object, you can simply think of each modifier in SwiftUI as “working alone”, for example, after modifier A modifies an object, it will become another object after modifier B modifies it. For example, after modifier A is modified, it forms an object, and after it is modified by modifier B, it becomes another object.</p>
@@ -220,7 +220,7 @@
 <p>It first generates a Button with text and background color via ‘ModifiedContent&lt;Button<Text>, _BackgroundStyleModifier<Color>‘. Then, it sets a larger frame to it via ‘ModifiedContent&lt;…, _framayout &gt;’.</p>
 <p>So, end up with a stack of ‘ModifiedContent’ types - each of which transforms a view plus the actual changes to be made, rather than modifying the view directly.   </p>
 <p>Simply, the front Modified A production “product” is like a brick out of the kiln pit has been molded, the back of the Modifier B, Modifier C … Modifier B, Modifier C … can not be changed, only in the original basis of “stacking”.</p>
-<img src="/assets/SwiftUI/003.png" class="">    
+<img src="/assets/SwiftUI/BasicConcepts/003.png" class="">    
 <h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/books/ios-swiftui/why-modifier-order-matters">Why modifier order matters</a><br>[2] <a target="_blank" rel="noopener" href="https://www.hackingwithswift.com/books/ios-swiftui/why-does-swiftui-use-some-view-for-its-view-type">Why does SwiftUI use “some View” for its view type?</a></p>
 
   </div>
@@ -261,17 +261,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&text=01. Basic Concepts (1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&is_video=false&description=01. Basic Concepts (1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=01. Basic Concepts (1)&body=Check out this article: https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&title=01. Basic Concepts (1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&name=01. Basic Concepts (1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20(1)/&t=01. Basic Concepts (1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&text=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&is_video=false&description=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. Basic Concepts of SwiftUI (1)&body=Check out this article: https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&title=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&name=01. Basic Concepts of SwiftUI (1)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/&t=01. Basic Concepts of SwiftUI (1)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
