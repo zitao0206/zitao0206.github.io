@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 10 minutes to finish reading this article. 1. The Birth of Actorclass allows creating types with mutable properties and sharing them throughout a program. However, classes have prob">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03. Actor">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 10 minutes to finish reading this article. 1. The Birth of Actorclass allows creating types with mutable properties and sharing them throughout a program. However, classes have prob">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-07T19:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-07T19:26:08.415Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="actor">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>03. Actor</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/07/Swift/07.%20Concurrency/02.%20Task/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&text=03. Actor"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&is_video=false&description=03. Actor"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Actor&body=Check out this article: https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&name=03. Actor&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&t=03. Actor"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-The-Birth-of-Actor"><span class="toc-number">1.</span> <span class="toc-text">1. The Birth of Actor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Concept-of-Actor"><span class="toc-number">2.</span> <span class="toc-text">2. Concept of Actor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Actor-isolation"><span class="toc-number">3.</span> <span class="toc-text">3. Actor isolation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Nonisolated"><span class="toc-number">4.</span> <span class="toc-text">4. Nonisolated</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Actor-Reentrancy"><span class="toc-number">5.</span> <span class="toc-text">5. Actor Reentrancy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-globalActor-and-MainActor"><span class="toc-number">6.</span> <span class="toc-text">6. globalActor and MainActor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        03. Actor
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-07T19:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-07</time>
+        
+        (Updated: <time datetime="2023-09-07T19:26:08.415Z" class="dt-updated" itemprop="dateModified">2023-09-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/07-Concurrency/">07. Concurrency</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/actor/" rel="tag">actor</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 10 minutes to finish reading this article.</em></font></p>
+<h4 id="1-The-Birth-of-Actor"><a href="#1-The-Birth-of-Actor" class="headerlink" title="1. The Birth of Actor"></a><font size=3 color=#4169E1>1. The Birth of Actor</font></h4><p>class allows creating types with mutable properties and sharing them throughout a program. However, classes have problems in concurrent programming, requiring developers to manually implement error-prone synchronization mechanisms to avoid data races.</p>
+<p>Our goal is to allow global sharing of mutable state while maintaining static detection of data contention and other concurrency issues. And the actor model can be a good solution to this problem. Each actor ensures the independence of its data through data isolation, thus ensuring that only one thread can access that data at a time.</p>
+<p><strong>Note:</strong><br>Actor model is a concurrent computing programming model, originally proposed by computer scientist Carl Hewitt and others in 1973, it is not owned by a certain language or framework, and can be used in almost any programming language. It ensures data security through data isolation. Its principle maintains a serial queue (mailbox) inside, and all external calls involving data security are executed serially.</p>
+<p>See: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Actor_model">https://en.wikipedia.org/wiki/Actor_model</a></p>
+<p>Swift introduced Actor as part of the Swift concurrency family in version 5.5. the actor model guarantees the same race conditions and memory safety as structured concurrency, while providing a Swift abstraction that is familiar to developers, and implementing features that are available in other explicitly declared types.</p>
+<h4 id="2-Concept-of-Actor"><a href="#2-Concept-of-Actor" class="headerlink" title="2. Concept of Actor"></a><font size=3 color=#4169E1>2. Concept of Actor</font></h4><p>In Proposition 0306, Actor is a reference type, and except for the lack of inheritance support, actor is very similar to class: it can adhere to specified protocols, support extensions, etc.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">actor</span> <span class="title class_">MyActor</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> title: <span class="type">String</span></span><br><span class="line">    <span class="keyword">let</span> num: <span class="type">Int</span></span><br><span class="line">​</span><br><span class="line">    <span class="keyword">init</span>(<span class="params">title</span>: <span class="type">String</span>, <span class="params">num</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.title <span class="operator">=</span> title</span><br><span class="line">        <span class="keyword">self</span>.num <span class="operator">=</span> num</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">updateTitle</span>(<span class="params">newTitle</span>: <span class="type">String</span>) &#123;</span><br><span class="line">        title <span class="operator">=</span> newTitle</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">let</span> objectA <span class="operator">=</span> <span class="type">MyActor</span>(title: <span class="string">&quot;Starting title!&quot;</span>, num: <span class="number">1001</span>)</span><br><span class="line"><span class="keyword">await</span> <span class="built_in">print</span>(<span class="string">&quot;ObjectA: &quot;</span>, objectA.title)</span><br><span class="line"><span class="keyword">await</span> objectA.updateTitle(newTitle: <span class="string">&quot;Second title!&quot;</span>)</span><br><span class="line"><span class="keyword">await</span> <span class="built_in">print</span>(<span class="string">&quot;ObjectA: &quot;</span>, objectA.title)</span><br></pre></td></tr></table></figure>
+
+<p>In order to ensure data security under concurrency, the Actor internally executes external accesses serially. Therefore, such accesses are asynchronous, which means that they do not return a result immediately, but are queued up and executed sequentially. Therefore, such accesses need to be executed via await.</p>
+<h4 id="3-Actor-isolation"><a href="#3-Actor-isolation" class="headerlink" title="3. Actor isolation"></a><font size=3 color=#4169E1>3. Actor isolation</font></h4><p>Actor isolation is a way to protect its mutable state by isolating the actor instance as a unit (boundary) from the outside world and severely restricting cross-boundary access, so that only direct access to its stored instance properties is allowed on self.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objectA.title <span class="operator">=</span> <span class="string">&quot;New title!&quot;</span></span><br></pre></td></tr></table></figure>
+<p>The above code will report an error:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Actor</span><span class="operator">-</span><span class="keyword">isolated</span> property title can not be mutated from the main <span class="keyword">actor</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="4-Nonisolated"><a href="#4-Nonisolated" class="headerlink" title="4. Nonisolated"></a><font size=3 color=#4169E1>4. Nonisolated</font></h4><p>Nonisolated, as the name implies, means non-isolated. the mailbox serial access mechanism inside the actor is bound to have some performance loss, and methods and computation attributes inside the actor do not always cause Data races. therefore, the “Improved control over actor isolation” in SE0313 provides an explicit way for clients to freely synchronize access to immutable actor states with the keyword nonisolated.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">MyActor</span> &#123;</span><br><span class="line">    <span class="comment">// Inside the method, only the let num is referenced, so there are no Data races.</span></span><br><span class="line">    <span class="comment">// Can be modified by nonisolated</span></span><br><span class="line">    <span class="keyword">nonisolated</span> <span class="keyword">func</span> <span class="title function_">changeIntToSting</span>(<span class="params">num</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Num:&quot;</span> <span class="operator">+</span> <span class="type">String</span>(num)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This allows you to call the following code directly, and since you don’t need to go through the asynchronous serial mechanism, you don’t need to add await:         </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> num <span class="operator">=</span> objectA.changeIntToSting(num: <span class="number">1002</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;ObjectA: &quot;</span>, num)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;ObjectA: &quot;</span>, objectA.num)</span><br></pre></td></tr></table></figure>
+<p><strong>Note:</strong><br>It is not possible to access the isolated state in the nonisolated method, for example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">nonisolated</span> <span class="keyword">func</span> <span class="title function_">changeIntToSting</span>(<span class="params">num</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">    <span class="comment">//Actor-isolated property &#x27;title&#x27; can not be mutated from a non-isolated context</span></span><br><span class="line">    title <span class="operator">=</span> <span class="string">&quot;Title&quot;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;Num:&quot;</span> <span class="operator">+</span> <span class="type">String</span>(num)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Remove nonisolated and turn it into an internal method of the actor, where methods and properties can be accessed directly.         </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> <span class="title class_">MyActor</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">changeIntToSting</span>(<span class="params">num</span>: <span class="type">Int</span>) -&gt; <span class="type">String</span> &#123;</span><br><span class="line">        title <span class="operator">=</span> <span class="string">&quot;New Title1&quot;</span></span><br><span class="line">        updateTitle(newTitle: <span class="string">&quot;New Title2&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Num:&quot;</span> <span class="operator">+</span> <span class="type">String</span>(num)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="5-Actor-Reentrancy"><a href="#5-Actor-Reentrancy" class="headerlink" title="5. Actor Reentrancy"></a><font size=3 color=#4169E1>5. Actor Reentrancy</font></h4><p>Actor Reentrancy is the context of entering the same actor multiple times in the same thread.Actor-isolated methods are reentrant, which means that the same actor’s method can be called multiple times in the same thread without blocking or waiting.</p>
+<p>This reentrancy can improve performance in some cases because it allows a task executing an actor-isolated method to not wait for the previous call to complete if it needs to call the method again. This flexibility can reduce the overhead of thread switching and thus improve performance.</p>
+<p>Specific attention should be paid to:<br>(1) Actor-isolated methods may have pause points within them when explicitly declared as asynchronous methods;</p>
+<p>(2) When an Actor-isolated method is hung due to a pause point, the method is reentrant, i.e., it can be accessed again before the previous hang is resumed;</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">actor</span> <span class="title class_">MyActor</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> title: <span class="type">String</span></span><br><span class="line">    <span class="keyword">let</span> num: <span class="type">Int</span></span><br><span class="line">    <span class="keyword">var</span> capacity: <span class="type">Int</span></span><br><span class="line">​</span><br><span class="line">    <span class="keyword">init</span>(<span class="params">title</span>: <span class="type">String</span>, <span class="params">num</span>: <span class="type">Int</span>, <span class="params">capacity</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.title <span class="operator">=</span> title</span><br><span class="line">        <span class="keyword">self</span>.num <span class="operator">=</span> num</span><br><span class="line">        <span class="keyword">self</span>.capacity <span class="operator">=</span> capacity</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">updateTitle</span>(<span class="params">newTitle</span>: <span class="type">String</span>) &#123;</span><br><span class="line">        title <span class="operator">=</span> newTitle</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">extension</span> <span class="title class_">MyActor</span> &#123;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">waitHere</span>() <span class="keyword">async</span> -&gt; <span class="type">Bool</span> &#123;</span><br><span class="line">        <span class="keyword">try?</span> <span class="keyword">await</span> <span class="type">Task</span>.sleep(nanoseconds: <span class="number">1_000_000_000</span>)</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">consumeCapacity</span>(<span class="params">consume</span>: <span class="type">Int</span>) <span class="keyword">async</span> <span class="keyword">throws</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">guard</span> capacity <span class="operator">&gt;=</span> consume <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        <span class="keyword">guard</span> <span class="keyword">await</span> waitHere() <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">        &#125;</span><br><span class="line">​</span><br><span class="line">        capacity <span class="operator">-=</span> consume</span><br><span class="line">        <span class="keyword">return</span> capacity</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The call is as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myActor <span class="operator">=</span> <span class="type">MyActor</span>(title: <span class="string">&quot;Starting title!&quot;</span>, num: <span class="number">1001</span>, capacity: <span class="number">9000</span>)</span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> capacity1 <span class="operator">=</span> <span class="keyword">try</span> <span class="keyword">await</span> myActor.consumeCapacity(consume: <span class="number">5000</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Consume succeeded, capacity = <span class="subst">\(capacity1)</span>&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Consume failed: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> capacity2 <span class="operator">=</span> <span class="keyword">try</span> <span class="keyword">await</span> myActor.consumeCapacity(consume: <span class="number">5000</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Consume succeeded, capacity = <span class="subst">\(capacity2)</span>&quot;</span>)</span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Consume failed: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The results of the implementation are as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Comsume</span> succeeded, capacity <span class="operator">=</span> <span class="number">4000</span></span><br><span class="line"><span class="type">Comsume</span> succeeded, capacity <span class="operator">=</span> <span class="operator">-</span><span class="number">1000</span></span><br></pre></td></tr></table></figure>
+<p>Where did it go wrong?<br>​Generally, the two-step operation of “check-modify” should not cross the await suspension point. They belong to an “atomic operation”, and the await suspension point may “cut” them. How to solve this problem? , you can check it again before modifying:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">consumeCapacity</span>(<span class="params">consume</span>: <span class="type">Int</span>) <span class="keyword">async</span> <span class="keyword">throws</span> -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">​</span><br><span class="line">    <span class="keyword">guard</span> capacity <span class="operator">&gt;=</span> consume <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="comment">// suspension point</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">await</span> waitHere() <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    <span class="comment">// re-check</span></span><br><span class="line">    <span class="keyword">guard</span> capacity <span class="operator">&gt;=</span> consume <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="type">CustomError</span>.valueTooLarge</span><br><span class="line">    &#125;</span><br><span class="line">​</span><br><span class="line">    capacity <span class="operator">-=</span> consume</span><br><span class="line">    <span class="keyword">return</span> capacity</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The results are as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Consume</span> succeeded, capacity <span class="operator">=</span> <span class="number">4000</span></span><br><span class="line"><span class="type">Consume</span> failed: valueTooLarge</span><br></pre></td></tr></table></figure>
+<p>So, this issue needs to be taken care of.</p>
+<h4 id="6-globalActor-and-MainActor"><a href="#6-globalActor-and-MainActor" class="headerlink" title="6. globalActor and MainActor"></a><font size=3 color=#4169E1>6. globalActor and MainActor</font></h4><p>6.1 globalActor<br>An actor is data-protected at the boundaries of its instances. globalActor is designed to be thread-safe for global variables, static attributes, and cross-type&#x2F;cross-instance. A global actor is a type that has the @globalActor attribute and contains a static attribute called shared that provides a shared instance of an actor. Example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@globalActor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> <span class="title class_">SomeGlobalActor</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">actor</span> <span class="title class_">MyActor</span> &#123; &#125;</span><br><span class="line">​</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> shared <span class="operator">=</span> <span class="type">MyActor</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@MyGlobalActor</span></span><br><span class="line"><span class="keyword">var</span> globalValue <span class="operator">=</span> <span class="number">0</span></span><br><span class="line">​</span><br><span class="line"><span class="meta">@MyGlobalActor</span></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">incrementGlobalValue</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    globalValue <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="meta">@MyGlobalActor</span></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">printGlobalValue</span>() &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Global value: <span class="subst">\(globalValue)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This makes the global variable globalValue thread-safe.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> incrementGlobalValue()</span><br><span class="line">    <span class="keyword">await</span> printGlobalValue()</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> incrementGlobalValue()</span><br><span class="line">    <span class="keyword">await</span> printGlobalValue()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>6.2 MainActor<br>MainActor is a special case of globalActor. MainActor is a global actor that describes the main thread, and the methods, properties, etc. modified by MainActor will be executed on the main thread.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@globalActor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">actor</span> <span class="title class_">MainActor</span> &#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> shared <span class="operator">=</span> <span class="type">MainActor</span>(<span class="operator">...</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We often use ‘MainActor.run’ to execute a piece of code on the main thread:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">await</span> <span class="type">MainActor</span>.run &#123;</span><br><span class="line">    <span class="keyword">self</span>.image <span class="operator">=</span> image</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md">https://github.com/apple/swift-evolution/blob/main/proposals/0306-actors.md</a><br>[2] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7076738494869012494">https://juejin.cn/post/7076738494869012494</a><br>[3] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/86460724">https://zhuanlan.zhihu.com/p/86460724</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-The-Birth-of-Actor"><span class="toc-number">1.</span> <span class="toc-text">1. The Birth of Actor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Concept-of-Actor"><span class="toc-number">2.</span> <span class="toc-text">2. Concept of Actor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Actor-isolation"><span class="toc-number">3.</span> <span class="toc-text">3. Actor isolation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Nonisolated"><span class="toc-number">4.</span> <span class="toc-text">4. Nonisolated</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Actor-Reentrancy"><span class="toc-number">5.</span> <span class="toc-text">5. Actor Reentrancy</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-globalActor-and-MainActor"><span class="toc-number">6.</span> <span class="toc-text">6. globalActor and MainActor</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&text=03. Actor"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&is_video=false&description=03. Actor"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Actor&body=Check out this article: https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&title=03. Actor"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&name=03. Actor&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/07/Swift/07.%20Concurrency/03.%20Actor/&t=03. Actor"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
