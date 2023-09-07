@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. Restful API is also one of the necessary knowledge points on the mobile terminal, but only need to understand is enough. 1. What is Restful">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01. All we need to know about Restful API">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/index.html">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. Restful API is also one of the necessary knowledge points on the mobile terminal, but only need to understand is enough. 1. What is Restful">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-07T17:30:00.000Z">
+<meta property="article:modified_time" content="2023-09-07T18:09:27.896Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Restful">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>01. All we need to know about Restful API</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/07/Swift/07.%20Concurrency/02.%20Task/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/06/SwiftUI/03.%20Basic%20Concepts%20of%20SwiftUI%20(3)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&text=01. All we need to know about Restful API"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&is_video=false&description=01. All we need to know about Restful API"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. All we need to know about Restful API&body=Check out this article: https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&name=01. All we need to know about Restful API&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&t=01. All we need to know about Restful API"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-What-is-Restful-API"><span class="toc-number">1.</span> <span class="toc-text">1. What is Restful API?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Features-of-Restful-API"><span class="toc-number">2.</span> <span class="toc-text">2. Features of Restful API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Swift-call-Restful-API-sample-code"><span class="toc-number">3.</span> <span class="toc-text">3. Swift call Restful API sample code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Pros-and-Cons-of-Restful-API"><span class="toc-number">4.</span> <span class="toc-text">4. Pros and Cons of Restful API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Other-ways"><span class="toc-number">5.</span> <span class="toc-text">5. Other ways</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        01. All we need to know about Restful API
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-07T17:30:00.000Z" class="dt-published" itemprop="datePublished">2023-09-07</time>
+        
+        (Updated: <time datetime="2023-09-07T18:09:27.896Z" class="dt-updated" itemprop="dateModified">2023-09-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/Others/">Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Restful/" rel="tag">Restful</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>Restful API is also one of the necessary knowledge points on the mobile terminal, but only need to understand is enough.</p>
+<h4 id="1-What-is-Restful-API"><a href="#1-What-is-Restful-API" class="headerlink" title="1. What is Restful API?"></a><font size=3 color=#4169E1>1. What is Restful API?</font></h4><p>Restful (Representational State Transfer presentation layer state transition) is currently the most popular interface design specifications. Restful is a design style (a design style rather than a standard) for creating reliable, scalable and easy-to-maintain Web services. It follows the REST architectural style and is resource-centric, communicating via the HTTP protocol.</p>
+<p>The Restful API is based on a request and response model between the client and the server. Client requests resources from the server by request methods (GET, POST, PUT, DELETE, etc.) The server responds according to the request method and the requested resource path, and returns the corresponding resource or status code. The request and response data format of a Restful API is usually JSON or XML.</p>
+<h4 id="2-Features-of-Restful-API"><a href="#2-Features-of-Restful-API" class="headerlink" title="2. Features of Restful API"></a><font size=3 color=#4169E1>2. Features of Restful API</font></h4><p>It has several features:        </p>
+<p>Based on HTTP protocol:<br>RESTful API uses HTTP protocol as a communication protocol, the client sends a request to the server via HTTP protocol and the server sends a response to the client via HTTP protocol.</p>
+<p>Statelessness:<br>RESTful APIs are stateless, and each request contains enough information so that the server does not need to save any state information about the client.</p>
+<p>Resource Oriented:<br>RESTful API is a resource-oriented API that treats all operations as operations on resources. Each resource has a unique identifier (URI) and the client can request a representation of the resource via the URI.</p>
+<p>Unified Interface:<br>The RESTful API uses a standard set of HTTP methods (GET, POST, PUT, DELETE, etc.) to manipulate resources, and the client performs operations on the resources through these methods.</p>
+<p>Cacheability:<br>The RESTful API supports a caching mechanism where the client can cache responses to improve performance and the server can use caching to reduce the load.</p>
+<p>Hierarchical systems:<br>The RESTful API supports a hierarchical system, which allows the server to distribute the load across multiple hierarchies and allows clients to access resources by accessing different hierarchies.</p>
+<p>Common status codes for Restful API:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">200</span> <span class="type">OK</span>: indicates that the request was successful.</span><br><span class="line"><span class="number">201</span> <span class="type">Created</span>: indicates that the resource was successfully created.</span><br><span class="line"><span class="number">204</span> <span class="type">No</span> <span class="type">Content</span>: <span class="type">The</span> request was executed successfully, but no content was returned.</span><br><span class="line"><span class="number">400</span> <span class="type">Bad</span> <span class="type">Request</span>: <span class="type">Indicates</span> an error <span class="keyword">in</span> the request, such <span class="keyword">as</span> an incorrectly formatted or missing request parameter.</span><br><span class="line"><span class="number">401</span> <span class="type">Unauthorized</span>: indicates unauthorized access and requires valid credentials to access the resource.</span><br><span class="line"><span class="number">403</span> <span class="type">Forbidden</span>: indicates that access has been authorized, but access to the resource <span class="keyword">is</span> not allowed.</span><br><span class="line"><span class="number">404</span> <span class="type">Not</span> <span class="type">Found</span>: indicates that the requested resource does not exist.</span><br><span class="line"><span class="number">405</span> <span class="type">Method</span> <span class="type">Not</span> <span class="type">Allowed</span>: indicates that the requested <span class="type">HTTP</span> method does not support the resource, such <span class="keyword">as</span> using <span class="type">POST</span> to request a read<span class="operator">-</span>only resource.</span><br><span class="line"><span class="number">409</span> <span class="type">Conflict</span>: indicates a request conflict, such <span class="keyword">as</span> a version conflict when updating a resource.</span><br><span class="line"><span class="number">500</span> <span class="type">Internal</span> <span class="type">Server</span> <span class="type">Error</span>: <span class="type">Indicates</span> an <span class="keyword">internal</span> server error, such <span class="keyword">as</span> an inability to connect to the database or an exception when processing a request.</span><br></pre></td></tr></table></figure>
+
+<h4 id="3-Swift-call-Restful-API-sample-code"><a href="#3-Swift-call-Restful-API-sample-code" class="headerlink" title="3. Swift call Restful API sample code"></a><font size=3 color=#4169E1>3. Swift call Restful API sample code</font></h4><p>The following is sample code for a Restful API style request:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;https://example.com/api/users/1&quot;</span>)<span class="operator">!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> request <span class="operator">=</span> <span class="type">URLRequest</span>(url: url)</span><br><span class="line">request.httpMethod <span class="operator">=</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> task <span class="operator">=</span> <span class="type">URLSession</span>.shared.dataTask(with: request) &#123; data, response, error <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data <span class="operator">=</span> data, <span class="keyword">let</span> response <span class="operator">=</span> response <span class="keyword">as?</span> <span class="type">HTTPURLResponse</span>, error <span class="operator">==</span> <span class="literal">nil</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error: <span class="subst">\(error<span class="operator">?</span>.localizedDescription <span class="operator">??</span> <span class="string">&quot;Unknown error&quot;</span>)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">200</span><span class="operator">..&lt;</span><span class="number">300</span>).contains(response.statusCode) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> jsonObject <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">JSONSerialization</span>.jsonObject(with: data) &#123;</span><br><span class="line">            <span class="built_in">print</span>(jsonObject)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error: <span class="subst">\(response.statusCode)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task.resume()</span><br></pre></td></tr></table></figure>
+<p>The above code is an example of a GET request, requesting information about a user resource via a URL and printing the response data.</p>
+<p>The code uses Swift’s URLSession for the network request, where the dataTask method creates and executes an HTTP&#x2F;HTTPS request, and calls a callback function to process the response data when the request is complete.</p>
+<h4 id="4-Pros-and-Cons-of-Restful-API"><a href="#4-Pros-and-Cons-of-Restful-API" class="headerlink" title="4. Pros and Cons of Restful API"></a><font size=3 color=#4169E1>4. Pros and Cons of Restful API</font></h4><p><font size=3 color=#4169E1>4.1 Advantages of the Restful API include:</font><br>Simple to use:<br>The Restful API follows the HTTP protocol and is easy to understand and implement.</p>
+<p>Extensible:<br>The resource-centric design of the Restful API makes it easy for the server side to add or remove resources, while the client side simply gets the resources it needs via a URL.</p>
+<p>Cacheable:<br>Restful API supports caching, which can improve performance and reduce network transfers.</p>
+<p>Cross-platform compatible:<br>The Restful API supports a variety of data formats, such as JSON, XML, etc., and can interact with different platforms and languages.</p>
+<p><font size=3 color=#4169E1>4.2 Disadvantages of the Restful API include: </font><br>Security:<br>Restful APIs are usually based on the HTTP protocol, which can be a security risk during transmission.</p>
+<p>Performance issues:<br>Since the Restful API is based on the HTTP protocol, a connection needs to be established for each request, and there may be a performance bottleneck for a large number of concurrent requests or a large amount of data transfer.</p>
+<h4 id="5-Other-ways"><a href="#5-Other-ways" class="headerlink" title="5. Other ways"></a><font size=3 color=#4169E1>5. Other ways</font></h4><p>However, it is important to note that Restful APIs are not the only way to communicate and exchange data.Other common ways are RPC, WebSocket, etc.</p>
+<p><font size=3 color=#4169E1>5.1 RPC</font><br>Remote procedure calls, a standard that shields the underlying communication details and can be called directly.<br>Simply, RPC is to call a function or method (collectively referred to as a service) on another machine (server) from one machine (client) by passing parameters and get the returned result. RPC is used to call remote functions (or methods) just like calling local functions (or methods).</p>
+<p>There is such a principle: internal service: first use RPC, RPC is suitable for internal, efficient and fast communication. The disadvantage is that it is best to use Java systems on both sides. External service: RESTful is the first to be used. REST is suitable for external use, easy to use, and cross-language. The disadvantage is that the operation is limited (CRUD), and it is not efficient enough. Therefore, RPC tends to be applied to scenarios with high performance and reliability requirements such as microservice architecture, distributed systems, database access, and high-performance computing.</p>
+<p><font size=3 color=#4169E1>5.2 WebSocket</font><br>WebSocket is a full-duplex communication protocol over a single TCP connection that allows a persistent connection between a client and a server for real-time data transfer.</p>
+<p>WebSocket can be realized through a simple API, supporting cross-platform and cross-browser use. Therefore, WebSocket is more suitable for some scenarios such as instant messaging (online chatting), real-time data pushing (stock data), remote monitoring and controlling real-time collaboration.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/334809573">https://zhuanlan.zhihu.com/p/334809573</a><br>[2] <a target="_blank" rel="noopener" href="https://blog.csdn.net/The_Time_Runner/article/details/86518448">https://blog.csdn.net/The_Time_Runner/article/details/86518448</a><br>[3] <a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhongyuanzhao000/p/11700815.html">https://www.cnblogs.com/zhongyuanzhao000/p/11700815.html</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-What-is-Restful-API"><span class="toc-number">1.</span> <span class="toc-text">1. What is Restful API?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Features-of-Restful-API"><span class="toc-number">2.</span> <span class="toc-text">2. Features of Restful API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Swift-call-Restful-API-sample-code"><span class="toc-number">3.</span> <span class="toc-text">3. Swift call Restful API sample code</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Pros-and-Cons-of-Restful-API"><span class="toc-number">4.</span> <span class="toc-text">4. Pros and Cons of Restful API</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Other-ways"><span class="toc-number">5.</span> <span class="toc-text">5. Other ways</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&text=01. All we need to know about Restful API"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&is_video=false&description=01. All we need to know about Restful API"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. All we need to know about Restful API&body=Check out this article: https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&title=01. All we need to know about Restful API"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&name=01. All we need to know about Restful API&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/&t=01. All we need to know about Restful API"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
