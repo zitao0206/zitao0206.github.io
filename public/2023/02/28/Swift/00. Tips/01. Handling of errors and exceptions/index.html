@@ -9,7 +9,7 @@
     <meta name="description" content="It will take about 3 minutes to finish reading this article.  1. Handlings of Objective-C In Objective-C, we often write code like this: 12345NSError *error;BOOL success &#x3D; [data writeToFile: path opti">
 <meta property="og:type" content="article">
 <meta property="og:title" content="01. Handling of errors and exceptions">
-<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/01.%20Handling%20of%20errors%20and%20exceptions/index.html">
+<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/01.%20Handling%20of%20errors%20and%20exceptions/">
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 3 minutes to finish reading this article.  1. Handlings of Objective-C In Objective-C, we often write code like this: 12345NSError *error;BOOL success &#x3D; [data writeToFile: path opti">
 <meta property="og:locale" content="en_US">
@@ -57,7 +57,7 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 6.3.0"></head>
+</head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -289,13 +289,25 @@
     <!-- styles -->
 
 
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
 
 
     <!-- jquery -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
 
 
 
@@ -303,7 +315,9 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   
   <script type="text/javascript">
   $(function() {

@@ -9,7 +9,7 @@
     <meta name="description" content="It will take about 1 minutes to finish reading this article.  1. Force unwrapping Forced unwrapping of optional types means that when we are sure that an optional type must have a value, we can use th">
 <meta property="og:type" content="article">
 <meta property="og:title" content="08. Force unwrapping and Implicitly Unwrapped Optionals">
-<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/08.%20Implicitly%20Unwrapped%20Optionals%20and%20Force%20unwrapping/index.html">
+<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/08.%20Implicitly%20Unwrapped%20Optionals%20and%20Force%20unwrapping/">
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 1 minutes to finish reading this article.  1. Force unwrapping Forced unwrapping of optional types means that when we are sure that an optional type must have a value, we can use th">
 <meta property="og:locale" content="en_US">
@@ -57,7 +57,7 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 6.3.0"></head>
+</head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -92,7 +92,7 @@
         <li><a class="icon" aria-label="Previous post" href="/2023/03/01/Swift/01.%20Closures/01.%20Capturing%20Values/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/2023/02/28/Swift/00.%20Tips/07.%20How%20to%20print%20the%20memory%20address%20of%20a%20variable?/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2023/02/28/Swift/00.%20Tips/07.%20How%20to%20print%20the%20memory%20address%20of%20a%20variable/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -288,13 +288,25 @@
     <!-- styles -->
 
 
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
 
 
     <!-- jquery -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
 
 
 
@@ -302,7 +314,9 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   
   <script type="text/javascript">
   $(function() {

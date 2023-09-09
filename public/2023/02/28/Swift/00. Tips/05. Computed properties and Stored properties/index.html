@@ -9,7 +9,7 @@
     <meta name="description" content="It will take about 3 minutes to finish reading this article.  Example Code  1234567891011121314151617181920212223&#x2F;&#x2F;arr1var arr1:[Int] &#x3D;  &amp;#123;    return [1,2,3];&amp;#125;()&#x2F;&#x2F;arr2var arr2:[Int] &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="05. Computed properties and Stored properties">
-<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/05.%20Computed%20properties%20and%20Stored%20properties/index.html">
+<meta property="og:url" content="https://zitao0206.github.io/2023/02/28/Swift/00.%20Tips/05.%20Computed%20properties%20and%20Stored%20properties/">
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 3 minutes to finish reading this article.  Example Code  1234567891011121314151617181920212223&#x2F;&#x2F;arr1var arr1:[Int] &#x3D;  &amp;#123;    return [1,2,3];&amp;#125;()&#x2F;&#x2F;arr2var arr2:[Int] &amp;#123;">
 <meta property="og:locale" content="en_US">
@@ -57,7 +57,7 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 6.3.0"></head>
+</head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -89,7 +89,7 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2023/02/28/Swift/00.%20Tips/06.%20How%20to%20Define%20a%20singleton?/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/02/28/Swift/00.%20Tips/06.%20How%20to%20Define%20a%20singleton/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
         <li><a class="icon" aria-label="Next post" href="/2023/02/28/Swift/00.%20Tips/04.%20Set%20Read-only%20permission%20of%20the%20property/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
@@ -292,13 +292,25 @@
     <!-- styles -->
 
 
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
 
 
     <!-- jquery -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
 
 
 
@@ -306,7 +318,9 @@
 <!-- clipboard -->
 
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
   
   <script type="text/javascript">
   $(function() {
