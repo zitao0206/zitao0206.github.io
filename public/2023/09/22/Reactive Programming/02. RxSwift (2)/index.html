@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. 1. DisposeBagGarbage collection bag, DisposeBag is actually equivalent to ARC in iOS, it will destroy the observer at the appropriate time,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02. RxSwift (2) ———— Basic Operations">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. 1. DisposeBagGarbage collection bag, DisposeBag is actually equivalent to ARC in iOS, it will destroy the observer at the appropriate time,">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/01.jpeg">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/02.jpeg">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/03.jpeg">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/04.jpeg">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/05.jpeg">
+<meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/06.jpeg">
+<meta property="article:published_time" content="2023-09-22T14:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-22T14:23:04.152Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="RxSwift">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/01.jpeg">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>02. RxSwift (2) ———— Basic Operations</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/21/Reactive%20Programming/01.%20RxSwift%20(1)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&text=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&is_video=false&description=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. RxSwift (2) ———— Basic Operations&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&name=02. RxSwift (2) ———— Basic Operations&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&t=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-DisposeBag"><span class="toc-number">1.</span> <span class="toc-text">1. DisposeBag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Common-basic-operations"><span class="toc-number">2.</span> <span class="toc-text">2. Common basic operations</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        02. RxSwift (2) ———— Basic Operations
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-22T14:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-22</time>
+        
+        (Updated: <time datetime="2023-09-22T14:23:04.152Z" class="dt-updated" itemprop="dateModified">2023-09-22</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Reactive-Programming/">Reactive Programming</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/RxSwift/" rel="tag">RxSwift</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<h4 id="1-DisposeBag"><a href="#1-DisposeBag" class="headerlink" title="1. DisposeBag"></a><font size=3 color=#4169E1>1. DisposeBag</font></h4><p>Garbage collection bag, DisposeBag is actually equivalent to ARC in iOS, it will destroy the observer at the appropriate time, a memory management mechanism of RxSwift.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> disposeBag <span class="operator">=</span> <span class="type">DisposeBag</span>()</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="2-Common-basic-operations"><a href="#2-Common-basic-operations" class="headerlink" title="2. Common basic operations"></a><font size=3 color=#4169E1>2. Common basic operations</font></h4><p><font size=3 color=#4169E1><strong>2.1 never</strong></font>  </p>
+<p>never is a special entity used to create an Observable that never terminates. This Observable will not emit any elements, nor will it emit error or completion events. Typically used to indicate a situation that persists but does not emit any events. Because it never terminates, care needs to be taken when subscribing to take appropriate steps to handle unsubscription situations.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/01.jpeg" class="">
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example00</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>&lt;<span class="type">String</span>&gt;.never()</span><br><span class="line">    .subscribe &#123; <span class="keyword">_</span> <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;This will not be executed here...&quot;</span>)</span><br><span class="line">     &#125;.disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.2 empty</strong></font>  </p>
+<p>Used to create an empty Observable that does not emit any elements or events, i.e. it is an Observable that completes immediately. Usually used to indicate that the result of some operation is empty or does not produce any value. The sequence created by empty can only emit one completed event.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example01</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.empty()</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(event)</span><br><span class="line">    &#125;.disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result：</span></span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.3 just</strong></font></p>
+<p>It is used to create an Observable sequence containing only a single element. just takes an argument and emits that argument as an element, creating an Observable containing a single element. Typically used to convert a single value or object to an Observable.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/02.jpeg" class="">
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example02</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.just(<span class="string">&quot;?&quot;</span>)</span><br><span class="line">    .subscribe &#123; event <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(event)</span><br><span class="line">    &#125;.disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.4 of</strong></font></p>
+<p>Used to pass multiple elements as parameters, and then emit these elements in sequence to create an Observable sequence containing these elements. This operator is ideal for creating an Observable containing static data.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example03</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.of(<span class="string">&quot;?&quot;</span>, <span class="string">&quot;?&quot;</span>, <span class="string">&quot;?&quot;</span>, <span class="string">&quot;?&quot;</span>)</span><br><span class="line">    .subscribe(onNext: &#123; element <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(element)</span><br><span class="line">    &#125;).disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br></pre></td></tr></table></figure>
+
+<p>If you remove onNext: above, the result will be like this, which corresponds to our subscribe. Subscribe only listens for events. The execution results are as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.5 from</strong></font></p>
+<p>Used to convert an array, sequence, or enumerable object into an Observable, emitting its elements in sequence. It is suitable for converting an existing collection of data into an observable sequence.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example04</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.from([<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;4&quot;</span>])</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="number">4</span></span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.6 create</strong></font></p>
+<p>Method for creating a custom Observable. The create method gives you complete control over the behavior of the Observable, including when to emit element, error, or completion events. This allows you to create highly customized Observables to meet specific needs.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/03.jpeg" class="">
+
+<p>The create operator passes in an observer, and then calls the observer’s onNext, onCompleted, and onError methods. Returns an observable sequence.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example05</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> myJust <span class="operator">=</span> &#123; (element: <span class="type">String</span>) -&gt; <span class="type">Observable</span>&lt;<span class="type">String</span>&gt; <span class="keyword">in</span></span><br><span class="line">        <span class="keyword">return</span> <span class="type">Observable</span>.create &#123; observer <span class="keyword">in</span></span><br><span class="line">            observer.on(.next(element))</span><br><span class="line">            observer.on(.completed)</span><br><span class="line">            <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    myJust(<span class="string">&quot;?&quot;</span>)</span><br><span class="line">    .subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line">next(<span class="operator">?</span>)</span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.7 range</strong></font></p>
+<p>Factory function for creating an Observable that emits a sequence of integers within a range. The range operator generates an Observable sequence that emits consecutive integers starting at a specified starting value until a specified number or ending value is reached.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/04.jpeg" class="">
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example06</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.range(start: <span class="number">3</span>, count: <span class="number">5</span>)</span><br><span class="line">    .subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line">next(<span class="number">3</span>)</span><br><span class="line">next(<span class="number">4</span>)</span><br><span class="line">next(<span class="number">5</span>)</span><br><span class="line">next(<span class="number">6</span>)</span><br><span class="line">next(<span class="number">7</span>)</span><br><span class="line">completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.8 repeatElement</strong></font></p>
+<p>Factory function for creating an Observable that emits the specified element repeatedly indefinitely. It generates a sequence of Observables that emit the same elements until you explicitly stop it.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/05.jpeg" class="">
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example07</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.repeatElement(<span class="string">&quot;#&quot;</span>)</span><br><span class="line">    .take(<span class="number">3</span>)</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line">#</span><br><span class="line">#</span><br><span class="line">#</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.9 generate</strong></font></p>
+<p>Generates elements in an Observable sequence according to specified logic, and allows you to customize how the elements are generated. The generate operator allows you to define the starting state of generated elements, incrementing logic, and when to terminate generation. The observable sequence created by generate will emit the corresponding event when the initialization condition is true.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example08</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.generate(</span><br><span class="line">        initialState: <span class="number">0</span>,</span><br><span class="line">        condition: &#123; <span class="variable">$0</span> <span class="operator">&lt;</span> <span class="number">3</span> &#125;,</span><br><span class="line">        iterate: &#123; <span class="variable">$0</span> <span class="operator">+</span> <span class="number">1</span> &#125;</span><br><span class="line">    )</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result</span></span><br><span class="line"><span class="number">0</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="number">2</span></span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.10 deferred</strong></font></p>
+<p>Used to delay the creation of an Observable until an observer subscribes to it. This means that every time an observer subscribes, the specified closure is executed to create a new Observable. Note: Deferred will create a new observable sequence for each subscriber observer.</p>
+<img src="/assets/ReactiveProgramming/RxSwift/06.jpeg" class="">
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example09</span>() &#123;</span><br><span class="line">    <span class="keyword">var</span> count <span class="operator">=</span> <span class="number">1</span></span><br><span class="line">    <span class="keyword">let</span> deferredSequence <span class="operator">=</span> <span class="type">Observable</span>&lt;<span class="type">String</span>&gt;.deferred &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Creating <span class="subst">\(count)</span>&quot;</span>)</span><br><span class="line">        count <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="type">Observable</span>.create &#123; observer <span class="keyword">in</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Emitting...&quot;</span>)</span><br><span class="line">            observer.onNext(<span class="string">&quot;?&quot;</span>)</span><br><span class="line">            observer.onNext(<span class="string">&quot;?&quot;</span>)</span><br><span class="line">            observer.onNext(<span class="string">&quot;?&quot;</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="type">Disposables</span>.create()</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    deferredSequence</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line"></span><br><span class="line">    deferredSequence</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result</span></span><br><span class="line"><span class="type">Creating</span> <span class="number">1</span></span><br><span class="line"><span class="type">Emitting</span>...</span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="type">Creating</span> <span class="number">2</span></span><br><span class="line"><span class="type">Emitting</span>...</span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br><span class="line"><span class="operator">?</span></span><br></pre></td></tr></table></figure>
+
+<p>In the above example, a new deferredSequence will be created every time you subscribe, so Emitting will be printed twice.</p>
+<p><font size=3 color=#4169E1><strong>2.11 error</strong></font></p>
+<p>Indicates that an error occurred during the Observable’s life cycle. When an Observable encounters an error condition that prevents it from continuing to emit elements normally, it emits an error event and passes the error information to the observer. It creates an observable sequence but does not emit any normal events, only the error event and ends.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example10</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>&lt;<span class="type">Int</span>&gt;.error(<span class="type">TestError</span>.test) <span class="comment">//Custom Error subclasses</span></span><br><span class="line">    .subscribe &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line">error(test)</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.12 doOn</strong></font></p>
+<p>Used to add a side-effect behavior that performs a specified operation when certain events in the Observable’s life cycle occur, but does not change the elements in the Observable.</p>
+<p>The feeling of doOn is to execute a certain method first when directly processing onNext. The doOnNext(:) method is called before subscribe(onNext:), and doOnCompleted(:) is called before subscribe(onCompleted:).</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example11</span>() &#123;</span><br><span class="line">    <span class="type">Observable</span>.of(<span class="string">&quot;1&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>, <span class="string">&quot;4&quot;</span>)</span><br><span class="line">    .do(onNext: &#123; <span class="built_in">print</span>(<span class="string">&quot;Intercepted:&quot;</span>, <span class="variable">$0</span>) &#125;, onError: &#123; <span class="built_in">print</span>(<span class="string">&quot;Intercepted error:&quot;</span>, <span class="variable">$0</span>) &#125;, onCompleted: &#123; <span class="built_in">print</span>(<span class="string">&quot;Completed&quot;</span>)  &#125;)</span><br><span class="line">    .subscribe(onNext: &#123; <span class="built_in">print</span>(<span class="variable">$0</span>) &#125;,onCompleted: &#123; <span class="built_in">print</span>(<span class="string">&quot;Finished&quot;</span>) &#125;)</span><br><span class="line">    .disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Result:</span></span><br><span class="line"><span class="type">Intercepted</span>: <span class="number">1</span></span><br><span class="line"><span class="number">1</span></span><br><span class="line"><span class="type">Intercepted</span>: <span class="number">2</span></span><br><span class="line"><span class="number">2</span></span><br><span class="line"><span class="type">Intercepted</span>: <span class="number">3</span></span><br><span class="line"><span class="number">3</span></span><br><span class="line"><span class="type">Intercepted</span>: <span class="number">4</span></span><br><span class="line"><span class="number">4</span></span><br><span class="line"><span class="type">Completed</span></span><br><span class="line"><span class="type">Finished</span></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-DisposeBag"><span class="toc-number">1.</span> <span class="toc-text">1. DisposeBag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Common-basic-operations"><span class="toc-number">2.</span> <span class="toc-text">2. Common basic operations</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&text=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&is_video=false&description=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. RxSwift (2) ———— Basic Operations&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&title=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&name=02. RxSwift (2) ———— Basic Operations&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/&t=02. RxSwift (2) ———— Basic Operations"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
