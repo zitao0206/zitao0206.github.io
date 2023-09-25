@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 10 minutes to finish reading this article. 1. Backgroudasync&#x2F;await are used to write natural, efficient asynchronous code. However, async&#x2F;await does not have concurrency c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03. Task">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 10 minutes to finish reading this article. 1. Backgroudasync&#x2F;await are used to write natural, efficient asynchronous code. However, async&#x2F;await does not have concurrency c">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-20T18:13:00.000Z">
+<meta property="article:modified_time" content="2023-09-25T19:13:48.636Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="task">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>03. Task</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/21/Swift/07.%20Concurrency/04.%20Actor/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/09/Swift/07.%20Concurrency/02.%20The%20use%20of%20Continuation/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&text=03. Task"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&is_video=false&description=03. Task"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Task&body=Check out this article: https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&name=03. Task&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&t=03. Task"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Backgroud"><span class="toc-number">1.</span> <span class="toc-text">1. Backgroud</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-what-exactly-is-Task"><span class="toc-number">2.</span> <span class="toc-text">2. what exactly is Task?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        03. Task
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-20T18:13:00.000Z" class="dt-published" itemprop="datePublished">2023-09-20</time>
+        
+        (Updated: <time datetime="2023-09-25T19:13:48.636Z" class="dt-updated" itemprop="dateModified">2023-09-25</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/07-Concurrency/">07. Concurrency</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/task/" rel="tag">task</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 10 minutes to finish reading this article.</em></font></p>
+<h4 id="1-Backgroud"><a href="#1-Backgroud" class="headerlink" title="1. Backgroud"></a><font size=3 color=#4169E1>1. Backgroud</font></h4><p>async&#x2F;await are used to write natural, efficient asynchronous code. However, async&#x2F;await does not have concurrency capabilities on its own, but asynchronous functions (introduced with async) can abort the executing thread at any given pause point (marked by await), which is necessary for building highly concurrent systems. Swift 5.5 introduces task, which is designed to provide concurrency.</p>
+<h4 id="2-what-exactly-is-Task"><a href="#2-what-exactly-is-Task" class="headerlink" title="2. what exactly is Task?"></a><font size=3 color=#4169E1>2. what exactly is Task?</font></h4><p>A task is the basic unit of concurrency; each asynchronous function executes in a task. When a function makes an asynchronous call, the called function still runs as part of the same task (the caller waits for the function to return).</p>
+<p>Similarly, when the function returns from an asynchronous call, the caller continues to run in the same task. So tasks are different from threads in that they are a higher abstraction above threads, and the system is responsible for scheduling the execution of a task on the appropriate thread.</p>
+<p><font size=3 color=#4169E1><strong>2.1 “Task is to asynchronous functions as threads are to synchronous functions”</strong></font><br>Synchronized Functions and Threads</p>
+<p>In traditional synchronous functions, code is executed sequentially, with one function call waiting for its internal operations to complete before moving on to the next function call. This model tends to cause the program to block when performing time-consuming operations, as the execution of one function may prevent the execution of subsequent functions. To solve this problem, multithreaded programming can be used. A thread is the smallest unit of execution scheduled by the operating system that executes different tasks in parallel, thus improving the concurrency and responsiveness of the program.</p>
+<p>Asynchronous functions and tasks</p>
+<p>Asynchronous functions, unlike synchronous functions, allow the program to continue performing other operations without blocking while waiting for time-consuming operations to complete. This is accomplished by using the “await” keyword, which allows a function to suspend while waiting for an operation to complete, and then resume execution once the operation completes.</p>
+<p><font size=3 color=#4169E1><strong>2.2 State of the Task</strong></font>  </p>
+<p>Task has 3 states:</p>
+<p>(1) Suspended, suspended tasks are schedulable.<br>There are 2 situations that will cause the Task to be in a suspended state:<br>First, the Task is ready and waiting for the system to allocate execution threads;</p>
+<p>Second, wait for external events. For example, after a Task encounters a suspension point, it may enter a suspended state and wait for external events to wake up.</p>
+<p>(2) Running, the running task is currently running on a thread.<br>It will run until it returns from the initial function (completion) or reaches a pause point (pause).</p>
+<p>(3) Completed, the task has no work to do and will never enter any other state.<br>Code can wait for tasks to complete in various ways, the main one being through await.</p>
+<p><font size=3 color=#4169E1><strong>2.3 Some advanced uses of Task</strong></font>  </p>
+<p>Tasks carry scheduling information, such as the priority of the task.</p>
+<p>Task is a handle through which operations such as cancellation and query can be performed.</p>
+<p>Can carry user-supplied task-local data.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">performTask</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> task <span class="operator">=</span> <span class="type">Task</span>.detached(priority: .userInitiated) &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Task started with priority: <span class="subst">\(Task.currentPriority)</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Simulate a long-running task</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span><span class="operator">...</span><span class="number">5</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> <span class="type">Task</span>.isCancelled &#123;</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;Task was cancelled&quot;</span>)</span><br><span class="line">                <span class="keyword">return</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Task processing step <span class="subst">\(i)</span>&quot;</span>)</span><br><span class="line">            sleep(<span class="number">1</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Task completed&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Cancel the task after 3 seconds</span></span><br><span class="line">    <span class="type">DispatchQueue</span>.global().asyncAfter(deadline: .now() <span class="operator">+</span> <span class="number">3</span>) &#123;</span><br><span class="line">        task.cancel()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wait for the task to complete or be cancelled</span></span><br><span class="line">    task.value<span class="operator">?</span>.waitForCancellation()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Task finished or cancelled&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">performTask()</span><br></pre></td></tr></table></figure>
+
+<p>In this example, we demonstrate how to use task handles to implement tasks such as priority, cancellation, and query operations.</p>
+<p><font size=3 color=#4169E1><strong>2.4 child task</strong></font>  </p>
+<p>Asynchronous functions can create child tasks. The child task inherits part of the structure of the parent task, including priority, but can run concurrently with the parent task. However, this concurrency has limits. This kind of parent-child relationship between Tasks has the following characteristics:</p>
+<p>(1) The life cycle of the child Task will not exceed the scope of the parent Task (this is very important);</p>
+<p>(2) When a Task is canceled, all its sub-Tasks will also be canceled;</p>
+<p>(3) Unhandled errors will automatically be propagated from the child Task to the parent Task;</p>
+<p>(4) The child Task will inherit the priority of the parent Task by default;</p>
+<p>(5) Task-local data will be shared between parent and child Tasks;</p>
+<p>(6) The parent Task can easily collect the results of the child Task.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">performParentTask</span>() &#123;</span><br><span class="line">    <span class="keyword">let</span> parentTask <span class="operator">=</span> <span class="type">Task</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Parent task started&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> childTask1 <span class="operator">=</span> <span class="type">Task</span>.detached &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Child task 1 started&quot;</span>)</span><br><span class="line">            <span class="keyword">await</span> <span class="type">Task</span>.sleep(<span class="number">1_000_000_000</span>) <span class="comment">// Sleep for 1 second</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Child task 1 completed&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">let</span> childTask2 <span class="operator">=</span> <span class="type">Task</span>.detached &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Child task 2 started&quot;</span>)</span><br><span class="line">            <span class="keyword">await</span> <span class="type">Task</span>.sleep(<span class="number">1_500_000_000</span>) <span class="comment">// Sleep for 1.5 seconds</span></span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;Child task 2 completed&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">await</span> childTask1 <span class="comment">// Wait for childTask1 to complete</span></span><br><span class="line">        <span class="keyword">await</span> childTask2 <span class="comment">// Wait for childTask2 to complete</span></span><br><span class="line"></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Parent task completed&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    parentTask.waitForAll()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">performParentTask()</span><br></pre></td></tr></table></figure>
+
+<p>In this example we have a function called performParentTask which creates a main task parentTask. Inside the main task, we create two child tasks childTask1 and childTask2 using Task.detached. These two child tasks perform asynchronous sleep operations respectively to simulate time-consuming operations. We then use the await keyword to wait for the child task to complete.</p>
+<p><font size=3 color=#4169E1><strong>2.5 Task groups and child tasks</strong></font></p>
+<p>Task groups define a scope within which new child-tasks can be created programmatically. Like all child-tasks, child-tasks in a task group scope must complete when that scope exits. If the scope throws an error on exit, the child-tasks will first be implicitly canceled.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">fetchImagesWithTaskGroup</span>() <span class="keyword">async</span> <span class="keyword">throws</span> -&gt; [<span class="type">UIImage</span>] &#123;</span><br><span class="line">    <span class="keyword">let</span> urlStrings <span class="operator">=</span> [</span><br><span class="line">        <span class="string">&quot;https://picsum.photos/300&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://picsum.photos/300&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://picsum.photos/300&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://picsum.photos/300&quot;</span>,</span><br><span class="line">        <span class="string">&quot;https://picsum.photos/300&quot;</span></span><br><span class="line">    ]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> images: [<span class="type">UIImage</span>] <span class="operator">=</span> []</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use a throwing task group to fetch images concurrently</span></span><br><span class="line">    <span class="keyword">try</span> <span class="keyword">await</span> withThrowingTaskGroup(of: <span class="type">UIImage</span>.<span class="keyword">self</span>) &#123; group <span class="keyword">in</span></span><br><span class="line">        <span class="comment">// Add tasks to the group</span></span><br><span class="line">        <span class="keyword">for</span> urlString <span class="keyword">in</span> urlStrings &#123;</span><br><span class="line">            group.addTask &#123;</span><br><span class="line">                <span class="keyword">try</span> <span class="keyword">await</span> <span class="keyword">self</span>.fetchImage(urlString: urlString)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Collect the images as they are fetched</span></span><br><span class="line">        <span class="keyword">for</span> <span class="keyword">try</span> <span class="keyword">await</span> image <span class="keyword">in</span> group &#123;</span><br><span class="line">            images.append(image)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> images</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.6 Task.init and Task.detached</strong></font></p>
+<p>If you create a new task using the regular Task.init initializer, the work starts running immediately, inheriting the caller’s priority, any task local values, and its actor context.</p>
+<p>However, tasks created through Task.detached are completely independent of the current context, that is, they will not inherit the priority, task-local data, and actor isolation of the current context. The Task.detached function returns a handle that you can use to cancel, query task status, etc.</p>
+<p>Consider a scenario where you need to execute two tasks in the background, one using Task.init and the other using Task.detached, and observe their behavior. Here is sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">performTaskWithInit</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Task with Task.init started&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> <span class="type">Task</span>.sleep(<span class="number">2_000_000_000</span>) <span class="comment">// Sleep for 2 seconds</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Task with Task.init completed&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">performTaskDetached</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Detached task started&quot;</span>)</span><br><span class="line">    <span class="keyword">await</span> <span class="type">Task</span>.sleep(<span class="number">1_000_000_000</span>) <span class="comment">// Sleep for 1 second</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Detached task completed&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Main task started&quot;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Using Task.init</span></span><br><span class="line">    <span class="keyword">await</span> performTaskWithInit()</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Using Task.detached</span></span><br><span class="line">    <span class="keyword">await</span> <span class="type">Task</span>.detached &#123;</span><br><span class="line">        <span class="keyword">await</span> performTaskDetached()</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Main task completed&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Sleep to allow tasks to finish before the program exits</span></span><br><span class="line">sleep(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+<p>In this example, we have three tasks: the main task, the task created using Task.init, and the task created using Task.detached. The main task will run the performTaskWithInit function and execute a task in the background that takes 2 seconds. The task created using Task.detached then runs the performTaskDetached function and performs a task in the background that takes 1 second. The point is that the main task will wait for the completion of the performTaskWithInit function and will not wait for the task created using Task.detached. Therefore, the main task continues execution after performTaskWithInit completes without waiting for performTaskDetached to complete.</p>
+<p>After running the example, you will see output like this:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Main</span> task started</span><br><span class="line"><span class="type">Task</span> with <span class="type">Task</span>.<span class="keyword">init</span> started</span><br><span class="line"><span class="type">Task</span> with <span class="type">Task</span>.<span class="keyword">init</span> completed</span><br><span class="line"><span class="type">Main</span> task completed</span><br><span class="line"><span class="type">Detached</span> task started</span><br><span class="line"><span class="type">Detached</span> task completed</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.7 Task.yield</strong></font></p>
+<p>Task.yield() is used to actively pause the current task so that Swift can give other tasks a chance to continue when needed. Look at a sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Task</span>(priority: .high) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;high&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .userInitiated) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;userInitiated&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .medium) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;medium&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .low) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;low&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .utility) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;utility&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .background) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;background&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The execution results are as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">high <span class="operator">&lt;---</span></span><br><span class="line">userInitiated</span><br><span class="line">medium</span><br><span class="line">utility</span><br><span class="line">low</span><br><span class="line">background</span><br></pre></td></tr></table></figure>
+
+<p>Yield the .high thread:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Task</span>(priority: .high) &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="type">Task</span>.yield()</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;high&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .userInitiated) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;userInitiated&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .medium) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;medium&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .low) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;low&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .utility) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;utility&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="type">Task</span>(priority: .background) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;background&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Results of the:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">medium</span><br><span class="line">userInitiated</span><br><span class="line">high <span class="operator">&lt;---</span></span><br><span class="line">low</span><br><span class="line">utility</span><br><span class="line">background</span><br></pre></td></tr></table></figure>
+<p>Note:<br>Calling yield() does not always mean that the task will stop running: if the task has a higher priority than other waiting tasks, it is entirely possible for the task to resume work immediately.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md">https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md</a><br>[2] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7084640887250092062">https://juejin.cn/post/7084640887250092062</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Backgroud"><span class="toc-number">1.</span> <span class="toc-text">1. Backgroud</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-what-exactly-is-Task"><span class="toc-number">2.</span> <span class="toc-text">2. what exactly is Task?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&text=03. Task"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&is_video=false&description=03. Task"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Task&body=Check out this article: https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&title=03. Task"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&name=03. Task&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/20/Swift/07.%20Concurrency/03.%20Task/&t=03. Task"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
