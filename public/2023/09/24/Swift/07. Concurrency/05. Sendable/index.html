@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. 1. BackgroudSendable is used to mark a type that can be safely passed between different tasks and threads. It is an important concept in co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05. Sendable">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. 1. BackgroudSendable is used to mark a type that can be safely passed between different tasks and threads. It is an important concept in co">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-24T19:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-26T19:41:38.527Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Sendable">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>05. Sendable</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/22/Reactive%20Programming/04.%20RxSwift%20(4)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&text=05. Sendable"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&is_video=false&description=05. Sendable"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=05. Sendable&body=Check out this article: https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&name=05. Sendable&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&t=05. Sendable"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Backgroud"><span class="toc-number">1.</span> <span class="toc-text">1. Backgroud</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-The-Sendable-Protocol"><span class="toc-number">2.</span> <span class="toc-text">2. The Sendable Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Sendable"><span class="toc-number">3.</span> <span class="toc-text">3. @Sendable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        05. Sendable
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-24T19:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-24</time>
+        
+        (Updated: <time datetime="2023-09-26T19:41:38.527Z" class="dt-updated" itemprop="dateModified">2023-09-26</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/07-Concurrency/">07. Concurrency</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Sendable/" rel="tag">Sendable</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<h4 id="1-Backgroud"><a href="#1-Backgroud" class="headerlink" title="1. Backgroud"></a><font size=3 color=#4169E1>1. Backgroud</font></h4><p>Sendable is used to mark a type that can be safely passed between different tasks and threads. It is an important concept in concurrent programming and is used to ensure that data is passed without causing race conditions or data race issues. By marking a type as Sendable, the compiler can verify the delivery behavior of concurrent code at compile time to improve the safety of the code.</p>
+<p>Because Actor can only guarantee the thread safety of instance boundaries, it cannot guarantee the safety of objects such as references that cross Actor. For example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    <span class="keyword">self</span>.age <span class="operator">=</span> age</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">actor</span> <span class="title class_">BankAccount</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> accountNumber: <span class="type">Int</span></span><br><span class="line">  <span class="keyword">var</span> balance: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">user</span>() -&gt; <span class="type">User</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="type">User</span>.<span class="keyword">init</span>(name: name, age: age)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>At this time, once the User is obtained externally, security cannot be guaranteed. At this time, Sendable can help to pass it freely across actors.</p>
+<h4 id="2-The-Sendable-Protocol"><a href="#2-The-Sendable-Protocol" class="headerlink" title="2. The Sendable Protocol"></a><font size=3 color=#4169E1>2. The Sendable Protocol</font></h4><p>The protocol is defined as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// ### Sendable Metatypes</span></span><br><span class="line"><span class="comment">///</span></span><br><span class="line"><span class="comment">/// Metatypes such as `Int.Type` implicitly conform to the `Sendable` protocol.</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">protocol</span> <span class="title class_">Sendable</span> &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>The Sendable protocol has the following characteristics:</p>
+<p>(1) Sendable is an empty protocol and a Marker Protocol;</p>
+<p>(2) It cannot be used as a type name for is, as? and other operations;</p>
+<p>(3) Cannot be used as a constraint on a generic type to make a type comform to a non-marker protocol, for example:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">P</span> &#123;</span><br><span class="line">   <span class="keyword">func</span> <span class="title function_">test</span>()</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">class</span> <span class="title class_">A</span>&lt;<span class="title class_">T</span>&gt; &#123;&#125;</span><br><span class="line"></span><br><span class="line"> <span class="comment">// Error: Conditional conformance to non-marker protocol &#x27;P&#x27; cannot depend on conformance of &#x27;T&#x27; to non-marker protocol &#x27;Sendable&#x27;</span></span><br><span class="line"> <span class="keyword">extension</span> <span class="title class_">A</span>: <span class="title class_">P</span> <span class="title class_">where</span> <span class="title class_">T</span>: <span class="title class_">Sendable</span> &#123;</span><br><span class="line">   <span class="keyword">func</span> <span class="title function_">test</span>() &#123;&#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<p>(4) Value types (struct, basic type, enum, etc.) will perform a copy operation when being passed, which means that they are safe to pass across actors. These types implicitly and automatically comply with the Sendable protocol, as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Implicitly complies with the Sendable protocol</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">A</span> &#123;</span><br><span class="line">     <span class="keyword">var</span> views: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Will not implicitly comply with the Sendable protocol</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">B</span> &#123;</span><br><span class="line">     <span class="keyword">var</span> views: <span class="type">Int</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// Because it contains a reference type, it does not implicitly comply with the Sendable protocol.</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">C</span> &#123;</span><br><span class="line">     <span class="keyword">var</span> views: <span class="type">Int</span></span><br><span class="line">     <span class="keyword">var</span> b: <span class="type">B</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//If Value does not comply with the Sendable protocol, D will not automatically comply with the protocol implicitly.</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">D</span>&lt;<span class="title class_">Value</span>&gt; &#123;</span><br><span class="line">     <span class="keyword">var</span> child: <span class="type">Value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Note:<br>If struct and enum contain reference types, they will not implicitly comply with the Sendable protocol.</p>
+<p>(5) All actors comform to the Actor protocol, which inherits from Sendable, as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@available</span>(<span class="keyword">macOS</span> <span class="number">10.15</span>, <span class="keyword">iOS</span> <span class="number">13.0</span>, <span class="keyword">watchOS</span> <span class="number">6.0</span>, <span class="keyword">tvOS</span> <span class="number">13.0</span>, <span class="operator">*</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">protocol</span> <span class="title class_">Actor</span> : <span class="title class_">AnyObject</span>, <span class="title class_">Sendable</span> &#123;</span><br><span class="line">    <span class="keyword">nonisolated</span> <span class="keyword">var</span> unownedExecutor: <span class="type">UnownedSerialExecutor</span> &#123; <span class="keyword">get</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>(6) Class requires us to actively declare compliance with the Sendable protocol and has the following restrictions:</p>
+<p>A. Final class restriction: When a class is declared to conform to the Sendable protocol, it must be a final class. </p>
+<p>This is because inheritance may introduce concurrency safety issues, and only methods and properties of final classes can be safely used in a concurrent environment. If the class is not final, the compiler will provide a warning and suggest using @unchecked Sendable as an alternative, but this does not provide the same concurrency safety.</p>
+<p>B. Immutable attribute restrictions: The stored attributes of classes that conform to&#96;&#96; the Sendable protocol must be immutable, that is, they cannot be modified after initialization. </p>
+<p>This is to ensure that no race conditions occur when passing instances.</p>
+<p>C. Attribute type restrictions: The type of the storage attribute of the class must also comform to the Sendable protocol. </p>
+<p>This is to ensure that the passing of properties is also safe. If the property’s type is not Sendable, a race condition may occur when passing it.</p>
+<p>D. Ancestor class restriction: If a class has an ancestor class, then the ancestor class must comply with the Sendable protocol or NSObject.</p>
+<p>This is to ensure that all classes in the class inheritance chain are safe in a concurrent environment.</p>
+<p>Going back to the top code example, User has 2 modification options:</p>
+<p>Changed from class to struct:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">User</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Or manually implement the Sendable protocol:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">User</span>: <span class="title class_">Sendable</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">let</span> age: <span class="type">Int</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>(7) If you want the compiler not to check Sendable semantics, you can use @unchecked attribute;</p>
+<h4 id="3-Sendable"><a href="#3-Sendable" class="headerlink" title="3. @Sendable"></a><font size=3 color=#4169E1>3. @Sendable</font></h4><p>Sendable can only be used to modify regular types. For closures and functions, you need to use @Sendable. Functions and closures modified by @Sendable can be passed across actors.</p>
+<p>(1) To modify a function:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Sendable</span></span><br><span class="line"><span class="keyword">func</span> <span class="title function_">incrementAndPrint</span>(<span class="params">value</span>: <span class="keyword">inout</span> <span class="type">Int</span>) &#123;</span><br><span class="line">    value <span class="operator">+=</span> <span class="number">1</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value is now <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myValue <span class="operator">=</span> <span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> incrementAndPrint(value: <span class="operator">&amp;</span>myValue)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> incrementAndPrint(value: <span class="operator">&amp;</span>myValue)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>(2) To modify a closure:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">actorStorage &#123;</span><br><span class="line">     <span class="keyword">var</span> capacity: <span class="type">Int</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">init</span>(<span class="params">capacity</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">         <span class="keyword">self</span>.capacity <span class="operator">=</span> capacity</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">addCapacity</span>(<span class="params">consume</span>: <span class="type">Int</span>, <span class="params">completion</span>: <span class="meta">@Sendable</span> (<span class="type">Storage</span>) -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">         capacity <span class="operator">+=</span> consume</span><br><span class="line">         completion(<span class="keyword">self</span>)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create actor instance</span></span><br><span class="line"><span class="keyword">let</span> storage <span class="operator">=</span> <span class="type">Storage</span>(capacity: <span class="number">1500</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Execute tasks in actor context</span></span><br><span class="line"><span class="type">Task</span> &#123;</span><br><span class="line">     <span class="keyword">await</span> <span class="type">Storage</span>.(consume: <span class="number">500</span>) &#123; storage <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Storage new capacity: <span class="subst">\(storage.capacity)</span>&quot;</span>)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The closure modified by @Sendable may be called in a concurrent environment, so data security must be paid attention to.</p>
+<p>Therefore, when it comes to closures executed in a concurrent environment, especially method parameters and return values ​​within the actor or external methods of the actor, if they may be passed between different tasks and threads, they should be decorated with @Sendable. Ensure safety.</p>
+<p>Compliance checks performed by the compiler when using @Sendable to decorate a closure help ensure the safety of the closure in a concurrent environment:</p>
+<p>First, actor-isolated properties cannot be captured: since @Sendable closures may be executed in a concurrent environment, they cannot capture actor-isolated properties belonging to other actors. Because @Sendable closures can execute across different tasks and threads, capturing properties belonging to other actors can lead to race conditions. Only asynchronous @Sendable closures (@Sendable () async) can capture actor-isolated properties, because async closures can execute in the same actor context.</p>
+<p>Second, mutable var variables cannot be captured: Since @Sendable closures may be executed between different tasks and threads, capturing mutable var variables may cause data race problems. Therefore, @Sendable closures do not allow capture of mutable variables.</p>
+<p>Third, the captured object must implement the Sendable protocol: the object captured in the @Sendable closure must be a type that follows the Sendable protocol. This is to ensure safety when passing objects in a concurrent environment and avoid race conditions and data races.</p>
+<p>In addition, it should be noted that in WWDC21, Apple stated that in future versions, the Swift compiler will prohibit passing instances of non-Sendable types to actors. This change may affect some existing code, especially that involving the passing of instances of non-Sendable types.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7153096148842971144">https://juejin.cn/post/7153096148842971144</a><br>[2] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7076741945820872717">https://juejin.cn/post/7076741945820872717</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Backgroud"><span class="toc-number">1.</span> <span class="toc-text">1. Backgroud</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-The-Sendable-Protocol"><span class="toc-number">2.</span> <span class="toc-text">2. The Sendable Protocol</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Sendable"><span class="toc-number">3.</span> <span class="toc-text">3. @Sendable</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&text=05. Sendable"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&is_video=false&description=05. Sendable"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=05. Sendable&body=Check out this article: https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&title=05. Sendable"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&name=05. Sendable&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/&t=05. Sendable"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
