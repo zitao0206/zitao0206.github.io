@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 5 minutes to finish reading this article. 1. Concept of Structured-ConcurrencyStructured-Concurrency is a programming paradigm that aims to improve code clarity and efficiency by us">
+<meta property="og:type" content="article">
+<meta property="og:title" content="06. Structured Concurrency">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 5 minutes to finish reading this article. 1. Concept of Structured-ConcurrencyStructured-Concurrency is a programming paradigm that aims to improve code clarity and efficiency by us">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-28T19:00:00.000Z">
+<meta property="article:modified_time" content="2023-09-28T21:02:19.529Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Structured Concurrency">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>06. Structured Concurrency</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/24/Swift/07.%20Concurrency/05.%20Sendable/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&text=06. Structured Concurrency"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&is_video=false&description=06. Structured Concurrency"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=06. Structured Concurrency&body=Check out this article: https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&name=06. Structured Concurrency&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&t=06. Structured Concurrency"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Concept-of-Structured-Concurrency"><span class="toc-number">1.</span> <span class="toc-text">1. Concept of Structured-Concurrency</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Structured-Concurrency-in-Swift"><span class="toc-number">2.</span> <span class="toc-text">2. Structured-Concurrency in Swift</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Unstructured-tasks"><span class="toc-number">3.</span> <span class="toc-text">3. Unstructured tasks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        06. Structured Concurrency
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-28T19:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-28</time>
+        
+        (Updated: <time datetime="2023-09-28T21:02:19.529Z" class="dt-updated" itemprop="dateModified">2023-09-28</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/06-Concurrency/">06. Concurrency</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Structured-Concurrency/" rel="tag">Structured Concurrency</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 5 minutes to finish reading this article.</em></font></p>
+<h4 id="1-Concept-of-Structured-Concurrency"><a href="#1-Concept-of-Structured-Concurrency" class="headerlink" title="1. Concept of Structured-Concurrency"></a><font size=4 color=#4169E1>1. Concept of Structured-Concurrency</font></h4><p>Structured-Concurrency is a programming paradigm that aims to improve code clarity and efficiency by using structured parallel programming methods.</p>
+<p>Suppose there is a function that does a lot of work on the CPU. We want to optimize this by spreading the work across the two cores; so now the function creates multiple new threads, does a portion of the work in each thread, and then lets the original thread wait for the new thread to finish. There is some relationship (dependency, priority, synchronization, etc.) between the work done by these threads, but the system does not know it. This requires developers to write high-quality code to ensure.</p>
+<p>In other words, Structured-Concurrency can help us better leverage the synergy of multi-core processors and greatly improve the performance of our code, but it may not be that easy to implement it manually.</p>
+<p>In fact, in the Objective-C era, we can also implement Structured-Concurrency through some code, such as the following code we use GCD to implement:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">#<span class="keyword">import</span> &lt;Foundation/Foundation.h&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Define a task to be executed asynchronously</span></span><br><span class="line">void performTask(int taskNumber) &#123;</span><br><span class="line">     dispatch_async(dispatch_get_global_queue(<span class="type">DISPATCH_QUEUE_PRIORITY_DEFAULT</span>, <span class="number">0</span>), <span class="operator">^</span>&#123;</span><br><span class="line">         <span class="type">NSLog</span>(@<span class="string">&quot;Task %d starts executing&quot;</span>, taskNumber);</span><br><span class="line">        </span><br><span class="line">         <span class="comment">// Simulate time-consuming operations</span></span><br><span class="line">         [<span class="type">NSThread</span> sleepForTimeInterval:<span class="number">2.0</span>];</span><br><span class="line">        </span><br><span class="line">         <span class="type">NSLog</span>(@<span class="string">&quot;Task %d completed&quot;</span>, taskNumber);</span><br><span class="line">     &#125;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main(int argc, const char <span class="operator">*</span> argv[]) &#123;</span><br><span class="line">     <span class="meta">@autoreleasepool</span> &#123;</span><br><span class="line">      <span class="comment">//Create a concurrent queue group</span></span><br><span class="line">         dispatch_group_t group <span class="operator">=</span> dispatch_group_create();</span><br><span class="line">        </span><br><span class="line">         <span class="comment">// Start multiple tasks and add them to the queue group</span></span><br><span class="line">         <span class="keyword">for</span> (int i <span class="operator">=</span> <span class="number">1</span>; i <span class="operator">&lt;=</span> <span class="number">3</span>; i<span class="operator">++</span>) &#123;</span><br><span class="line">             dispatch_group_async(group, dispatch_get_global_queue(<span class="type">DISPATCH_QUEUE_PRIORITY_DEFAULT</span>, <span class="number">0</span>), <span class="operator">^</span>&#123;</span><br><span class="line">                 performTask(i);</span><br><span class="line">             &#125;);</span><br><span class="line">         &#125;</span><br><span class="line">        </span><br><span class="line">         <span class="comment">// Wait for all tasks in the queue group to be completed</span></span><br><span class="line">         dispatch_group_wait(group, <span class="type">DISPATCH_TIME_FOREVER</span>);</span><br><span class="line">        </span><br><span class="line">         <span class="comment">//The main thread can continue to perform other work</span></span><br><span class="line">         <span class="type">NSLog</span>(@<span class="string">&quot;The main thread continues to perform other work&quot;</span>);</span><br><span class="line">        </span><br><span class="line">         <span class="comment">// Sleep for a while to wait for the asynchronous task to complete</span></span><br><span class="line">         [<span class="type">NSThread</span> sleepForTimeInterval:<span class="number">5.0</span>];</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>It is important to note that when using GCD in Objective-C, you need to carefully manage communication and synchronization between threads and tasks to avoid potential race conditions and data sharing issues.</p>
+<p>GCD provides various scheduling queues, semaphores, and other tools to help you implement more complex concurrency logic. However, this approach is not as intuitive or type-safe as Swift’s Structured-Concurrency. If you need more advanced concurrency control and error handling, you may want to consider writing your application in Swift.</p>
+<h4 id="2-Structured-Concurrency-in-Swift"><a href="#2-Structured-Concurrency-in-Swift" class="headerlink" title="2. Structured-Concurrency in Swift"></a><font size=4 color=#4169E1>2. Structured-Concurrency in Swift</font></h4><p>Structured concurrency is mainly implemented in Swift through async let and task group.</p>
+<p>The following is an asynchronous common code for downloading images:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">fetchImage</span>(<span class="params">from</span> <span class="params">url</span>: <span class="type">URL</span>) <span class="keyword">async</span> <span class="keyword">throws</span> -&gt; <span class="type">UIImage</span> &#123;</span><br><span class="line">     <span class="comment">// Simulate asynchronous download of pictures</span></span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&quot;fetchImage----- begin: <span class="subst">\(Thread.current)</span>&quot;</span>)</span><br><span class="line">     <span class="keyword">try?</span> <span class="keyword">await</span> <span class="type">Task</span>.sleep(nanoseconds: <span class="number">1_000_000_000</span>) <span class="comment">// Simulate a download time of 1 second</span></span><br><span class="line">     <span class="keyword">let</span> (data, <span class="keyword">_</span>) <span class="operator">=</span> <span class="keyword">try</span> <span class="keyword">await</span> <span class="type">URLSession</span>.shared.data(from: url)</span><br><span class="line">     <span class="keyword">guard</span> <span class="keyword">let</span> image <span class="operator">=</span> <span class="type">UIImage</span>(data: data) <span class="keyword">else</span> &#123;</span><br><span class="line">         <span class="keyword">throw</span> <span class="type">NSError</span>(domain: <span class="string">&quot;ImageDownloadError&quot;</span>, code: <span class="number">0</span>, userInfo: [NSLocalizedDescriptionKey: <span class="string">&quot;Failed to download image&quot;</span>])</span><br><span class="line">     &#125;</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&quot;fetchImage----- end: <span class="subst">\(Thread.current)</span>&quot;</span>)</span><br><span class="line">     <span class="keyword">return</span> image</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><font size=3 color=#4169E1><strong>2.1 Implement Structured-Concurrency by ‘async let’</strong></font>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">downloadImages</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> imageURLs <span class="operator">=</span> [</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://example.com/image1.jpg&quot;</span>)<span class="operator">!</span>,</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://example.com/image2.jpg&quot;</span>)<span class="operator">!</span>,</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://example.com/image3.jpg&quot;</span>)<span class="operator">!</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="keyword">var</span> images: [<span class="type">UIImage</span>] <span class="operator">=</span> []</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- begin&quot;</span>)</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">let</span> fetchImage1 <span class="operator">=</span> fetchImage(from: imageURLs[<span class="number">0</span>])</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">let</span> fetchImage2 <span class="operator">=</span> fetchImage(from: imageURLs[<span class="number">1</span>])</span><br><span class="line">            <span class="keyword">async</span> <span class="keyword">let</span> fetchImage3 <span class="operator">=</span> fetchImage(from: imageURLs[<span class="number">2</span>])</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- going&quot;</span>)<span class="comment">//这里先执行</span></span><br><span class="line">            <span class="keyword">let</span> (image1, image2, image3) <span class="operator">=</span> <span class="keyword">await</span> (<span class="keyword">try</span> fetchImage1, <span class="keyword">try</span> fetchImage2, <span class="keyword">try</span> fetchImage3)</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- end&quot;</span>)</span><br><span class="line">            images.append(contentsOf: [image1, image2, image3])</span><br><span class="line">     &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line"></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Result:         </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fetchImage <span class="operator">-----</span> begin</span><br><span class="line">fetchImage <span class="operator">-----</span> going</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100003fe40</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">6</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100004a840</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">7</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100004a840</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">7</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100004a840</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">7</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100005bd40</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">8</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100004a840</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">7</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage <span class="operator">-----</span> end</span><br></pre></td></tr></table></figure>
+<p>Note: the above code in the assignment expression of the leftmost plus async let instead of await, called async let binding, it is because of this binding operation, so that the previous fetchImage1, fetchImage2, fetchImage3 are encapsulated in a subtask waiting to be completed, this is the This is the key point of Structured-Concurrency.</p>
+<p><font size=3 color=#4169E1><strong>2.2 Implement Structured-Concurrency by ‘task group’</strong></font>  </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">downloadImages</span>() <span class="keyword">async</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> imageURLs <span class="operator">=</span> [</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://picsum.photos/300&quot;</span>)<span class="operator">!</span>,</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://picsum.photos/300&quot;</span>)<span class="operator">!</span>,</span><br><span class="line">        <span class="type">URL</span>(string: <span class="string">&quot;https://picsum.photos/300&quot;</span>)<span class="operator">!</span></span><br><span class="line">    ]</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">var</span> images: [<span class="type">UIImage</span>] <span class="operator">=</span> []</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- begin&quot;</span>)</span><br><span class="line">        <span class="keyword">try</span> <span class="keyword">await</span> withThrowingTaskGroup(of: <span class="type">UIImage</span>.<span class="keyword">self</span>) &#123; group <span class="keyword">in</span></span><br><span class="line">            </span><br><span class="line">            group.addTask &#123;</span><br><span class="line">                <span class="keyword">try</span> <span class="keyword">await</span> fetchImage(from: imageURLs[<span class="number">0</span>])</span><br><span class="line">            &#125;</span><br><span class="line">            group.addTask &#123;</span><br><span class="line">                <span class="keyword">try</span> <span class="keyword">await</span> fetchImage(from: imageURLs[<span class="number">1</span>])</span><br><span class="line">            &#125;</span><br><span class="line">            group.addTask &#123;</span><br><span class="line">                <span class="keyword">try</span> <span class="keyword">await</span> fetchImage(from: imageURLs[<span class="number">2</span>])</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- going&quot;</span>)</span><br><span class="line">            <span class="keyword">for</span> <span class="keyword">try</span> <span class="keyword">await</span> image <span class="keyword">in</span> group &#123;</span><br><span class="line">                images.append(image)</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">print</span>(<span class="string">&quot;fetchImage ----- end&quot;</span>)</span><br><span class="line">         &#125;      </span><br><span class="line">    &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Result:     </p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">fetchImage <span class="operator">-----</span> begin</span><br><span class="line">fetchImage <span class="operator">-----</span> going</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b1000048300</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">5</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b1000046d00</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">7</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> begin: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b1000048300</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">5</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b100004a800</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">4</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b1000048300</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">5</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage<span class="operator">-----</span> end: <span class="operator">&lt;</span><span class="type">NSThread</span>: <span class="number">0x7b1000062c80</span><span class="operator">&gt;</span>&#123;number <span class="operator">=</span> <span class="number">8</span>, name <span class="operator">=</span> (null)&#125;</span><br><span class="line">fetchImage <span class="operator">-----</span> end</span><br></pre></td></tr></table></figure>
+<p><font size=3 color=#4169E1><strong>2.3 The difference between the two</strong></font>  </p>
+<p>First, not only the number of subtasks created by async let is static, but the order in which the subtasks are completed is also fixed, so it cannot obtain the results in the order in which the subtasks are completed. This determines that it is lighter and more intuitive. So if it can meet the needs, developers should give priority to async let.</p>
+<p>Second, task groups can dynamically create subtasks and have more flexible operations, but they also require unified Closure encapsulation;</p>
+<h4 id="3-Unstructured-tasks"><a href="#3-Unstructured-tasks" class="headerlink" title="3. Unstructured tasks"></a><font size=4 color=#4169E1>3. Unstructured tasks</font></h4><p>In Apple’s 0304-structured-concurrency article, there is a mention of the unstructured concept. Compared to structured tasks (which mainly refer to parent-child tasks), then unstructured tasks mainly refer to some scenarios that run independently without relationship (parent-child). Unstructured tasks are mainly created by Task.init and Task.detached. These two ways to create the task, you can get the handle of the task, can be canceled, which is contrary to the structured concurrency. Specific sample code please see Task which chapter introduction.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=4 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md">https://github.com/apple/swift-evolution/blob/main/proposals/0304-structured-concurrency.md</a><br>[2] <a target="_blank" rel="noopener" href="https://juejin.cn/post/7084640887250092062">https://juejin.cn/post/7084640887250092062</a><br>[3] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Structured_concurrency">https://en.wikipedia.org/wiki/Structured_concurrency</a><br>[4] <a target="_blank" rel="noopener" href="http://chuquan.me/2023/03/11/structured-concurrency">http://chuquan.me/2023/03/11/structured-concurrency</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Concept-of-Structured-Concurrency"><span class="toc-number">1.</span> <span class="toc-text">1. Concept of Structured-Concurrency</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Structured-Concurrency-in-Swift"><span class="toc-number">2.</span> <span class="toc-text">2. Structured-Concurrency in Swift</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Unstructured-tasks"><span class="toc-number">3.</span> <span class="toc-text">3. Unstructured tasks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&text=06. Structured Concurrency"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&is_video=false&description=06. Structured Concurrency"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=06. Structured Concurrency&body=Check out this article: https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&title=06. Structured Concurrency"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&name=06. Structured Concurrency&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/&t=06. Structured Concurrency"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
