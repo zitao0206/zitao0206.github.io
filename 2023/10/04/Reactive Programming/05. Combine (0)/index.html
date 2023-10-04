@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. Next, I will record the learning process of Combine through a series of articles. 1. ReactiveCocoa、RxSwift and Combine1.1 Comparison Reacti">
+<meta property="og:type" content="article">
+<meta property="og:title" content="05. Combine (0) ———— A Simple Example">
+<meta property="og:url" content="https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. Next, I will record the learning process of Combine through a series of articles. 1. ReactiveCocoa、RxSwift and Combine1.1 Comparison Reacti">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-04T19:05:00.000Z">
+<meta property="article:modified_time" content="2023-10-04T19:16:30.404Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Combine">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>05. Combine (0) ———— A Simple Example</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/28/Swift/07.%20Concurrency/06.%20Structured%20concurrency/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&text=05. Combine (0) ———— A Simple Example"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&is_video=false&description=05. Combine (0) ———— A Simple Example"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=05. Combine (0) ———— A Simple Example&body=Check out this article: https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&name=05. Combine (0) ———— A Simple Example&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&t=05. Combine (0) ———— A Simple Example"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ReactiveCocoa%E3%80%81RxSwift-and-Combine"><span class="toc-number">1.</span> <span class="toc-text">1. ReactiveCocoa、RxSwift and Combine</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-A-Simple-Example"><span class="toc-number">2.</span> <span class="toc-text">2. A Simple Example</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        05. Combine (0) ———— A Simple Example
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-04T19:05:00.000Z" class="dt-published" itemprop="datePublished">2023-10-04</time>
+        
+        (Updated: <time datetime="2023-10-04T19:16:30.404Z" class="dt-updated" itemprop="dateModified">2023-10-04</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Reactive-Programming/">Reactive Programming</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Combine/" rel="tag">Combine</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>Next, I will record the learning process of Combine through a series of articles.</p>
+<h4 id="1-ReactiveCocoa、RxSwift-and-Combine"><a href="#1-ReactiveCocoa、RxSwift-and-Combine" class="headerlink" title="1. ReactiveCocoa、RxSwift and Combine"></a><font size=3 color=#4169E1>1. ReactiveCocoa、RxSwift and Combine</font></h4><p><font size=3 color=#4169E1><strong>1.1 Comparison</strong></font></p>
+<p>ReactiveCocoa (RAC), RxSwift, and Combine are all frameworks for handling reactive programming (Reactive Programming). They are designed to help developers handle asynchronous event streams, data binding, and event processing more easily.</p>
+<p>ReactiveCocoa first introduced the concepts of Signal and Subscriber, and it also provides a set of functions for processing event streams and data binding. RxSwift is the Swift version of ReactiveX (Rx) and also uses the Publisher and Subscriber models.</p>
+<p>Combine was introduced by Apple in iOS 13 and macOS 10.15 as part of Swift specifically for the Swift programming language. Combine also uses the Publisher and Subscriber model, which is based on Swift language features and has been integrated into Apple’s native frameworks, such as Foundation and UIKit, making it more collaborative with other parts of the Apple ecosystem.</p>
+<p><font size=3 color=#4169E1><strong>1.2 Common points</strong></font></p>
+<p>Combine, RxSwift, and ReactiveCocoa all adopt the Publisher and Subscriber model, where a stream of events (such as user input, network responses, etc.) is represented as an observable sequence, and these events can then be processed by subscribers.</p>
+<p>They all support data binding, which can automatically bind the data model and UI elements together. When the data changes, the UI will automatically update.</p>
+<p>They both provide a set of operators for processing and transforming event streams, making it easier to write complex asynchronous operations.</p>
+<p>They all emphasize composability, allowing multiple operations and event streams to be combined into more complex operations and data processing processes.</p>
+<p>They are all designed to simplify asynchronous programming and handle asynchronous tasks such as network requests, timers, and multi-threaded operations.</p>
+<h4 id="2-A-Simple-Example"><a href="#2-A-Simple-Example" class="headerlink" title="2. A Simple Example"></a><font size=3 color=#4169E1>2. A Simple Example</font></h4><p>Here is an example of SwiftUI and Combine:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">Item</span> &#123;</span><br><span class="line">     <span class="keyword">let</span> title: <span class="type">String</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extension</span> <span class="title class_">Notification</span>.<span class="title class_">Name</span> &#123;</span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">let</span> titleData <span class="operator">=</span> <span class="type">Notification</span>.<span class="type">Name</span>(<span class="string">&quot;Title_Data&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ItemViewModel</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">     <span class="meta">@Published</span> <span class="keyword">var</span> titleText: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;Hello Swift!&quot;</span></span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">var</span> cancelables: <span class="type">Set</span>&lt;<span class="type">AnyCancellable</span>&gt; <span class="operator">=</span> []</span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">var</span> cancel: <span class="type">AnyCancellable</span>?</span><br><span class="line"></span><br><span class="line">     <span class="keyword">init</span>() &#123;</span><br><span class="line">         <span class="comment">// register</span></span><br><span class="line">         <span class="keyword">let</span> publisher <span class="operator">=</span> <span class="type">NotificationCenter</span>.<span class="type">Publisher</span>(center: .default, name: .titleData)</span><br><span class="line">             .compactMap &#123; notification -&gt; <span class="type">String</span>? <span class="keyword">in</span></span><br><span class="line">                 <span class="keyword">return</span> (notification.object <span class="keyword">as?</span> <span class="type">Item</span>)<span class="operator">?</span>.title</span><br><span class="line">             &#125;</span><br><span class="line">        </span><br><span class="line">         <span class="comment">// Binding</span></span><br><span class="line">         publisher</span><br><span class="line">             .assign(to: \.titleText, on: <span class="keyword">self</span>)</span><br><span class="line">             .store(in: <span class="operator">&amp;</span>cancellables)</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">requestData</span>() &#123;</span><br><span class="line">         <span class="keyword">let</span> data <span class="operator">=</span> <span class="type">Item</span>(title: <span class="string">&quot;Hello Combine!&quot;</span>)</span><br><span class="line">         <span class="type">NotificationCenter</span>.default.post(name: .titleData, object: data)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">     <span class="meta">@ObservedObject</span> <span class="keyword">var</span> viewModel <span class="operator">=</span> <span class="type">ItemViewModel</span>()</span><br><span class="line"></span><br><span class="line">     <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">         <span class="type">VStack</span> &#123;</span><br><span class="line">             <span class="type">Button</span>(<span class="string">&quot;Please Click&quot;</span>) &#123;</span><br><span class="line">                 viewModel.requestData()</span><br><span class="line">             &#125;</span><br><span class="line">            </span><br><span class="line">             <span class="type">Text</span>(viewModel.titleText)</span><br><span class="line">                 .padding()</span><br><span class="line">             .padding()</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Execution result:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Hello</span> <span class="type">Swift</span>!</span><br></pre></td></tr></table></figure>
+
+<p>Click button, becomes:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Hello</span> <span class="type">Combine</span>!</span><br></pre></td></tr></table></figure>
+
+<p>This involves using the Combine framework to handle the publication and subscription process of notifications. Here’s an explanation of these two lines of code:</p>
+<p>(1) <code>NotificationCenter.Publisher(center: .default, name: .titleData)</code>:</p>
+<p>   This line of code creates a Combine publisher that subscribes to notifications associated with a specific notification name. Here, <code>.default</code> means using the default notification center, and <code>.titleData</code> is a custom notification name (Notification.Name) used to identify the notification type you are interested in. This notification name is usually defined elsewhere to ensure that both publishers and subscribers use the same notification name.</p>
+<p>(2) <code>.compactMap &#123; notification -&gt; String? in ... &#125;</code>:</p>
+<p>  This part is the transformation of the publisher just created. <code>.compactMap</code> is a Combine operator, which is used to transform or filter the data extracted from the notification.</p>
+<p>  In this closure, <code>notification</code> is the notification object, and we try to extract data from the <code>object</code> property of the notification, where <code>object</code> is expected to be an <code>Item</code> object. If the advised <code>object</code> is of type <code>Item</code> and has a <code>title</code> attribute, then the closure returns an optional string (<code>String?</code>), which is the title of the <code>Item</code>.</p>
+<p>  Note that type conversion is done using the <code>as?</code> keyword to ensure that the notification’s <code>object</code> property is of type <code>Item</code>. If the conversion is successful, returns the title; otherwise, returns <code>nil</code>.</p>
+<p>(3) <code>publisher.assign(to: \.titleText, on: self)</code>:</p>
+<p>  This line of code binds the publisher created above to the property that receives the data. The <code>.assign</code> operator assigns the publisher’s output value (a string in this case) to a specific property.</p>
+<p>  <code>\titleText</code> is a keyPath that specifies the attribute that receives the data. In this example, assume that <code>self</code> has a property called <code>titleText</code> which will be used to store the title string extracted from the notification.</p>
+<p>(4) <code>.store(in: &amp;cancellables)</code>:</p>
+<p>  This line of code stores the subscription relationship in the <code>cancellables</code> collection to ensure that the subscription can be properly canceled when it is no longer needed. <code>cancellables</code> is usually a <code>Set</code> type variable used to hold the Cancellation identifier of the Combine in order to unsubscribe when the object is released to avoid memory leaks.</p>
+<p>This code creates a Combine publisher that receives a notification of a specific name from the NotificationCenter and extracts the data from the notification as a string and assigns the extracted string to the object’s <code>titleText</code> property. The subscription relationship is then stored in <code>cancellables</code> to ensure that the subscription can be canceled when needed. This way, the value of the <code>titleText</code> property will be automatically updated when a specific notification is received.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-ReactiveCocoa%E3%80%81RxSwift-and-Combine"><span class="toc-number">1.</span> <span class="toc-text">1. ReactiveCocoa、RxSwift and Combine</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-A-Simple-Example"><span class="toc-number">2.</span> <span class="toc-text">2. A Simple Example</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&text=05. Combine (0) ———— A Simple Example"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&is_video=false&description=05. Combine (0) ———— A Simple Example"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=05. Combine (0) ———— A Simple Example&body=Check out this article: https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&title=05. Combine (0) ———— A Simple Example"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&name=05. Combine (0) ———— A Simple Example&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/04/Reactive%20Programming/05.%20Combine%20(0)/&t=05. Combine (0) ———— A Simple Example"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
