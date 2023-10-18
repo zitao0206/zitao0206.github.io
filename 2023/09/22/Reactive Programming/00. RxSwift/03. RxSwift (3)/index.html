@@ -9,7 +9,7 @@
     <meta name="description" content="It will take about 5 minutes to finish reading this article. Subjet is the bridge between observable and Observer. A Subject is both an Observable and an Observer. It can both emit events and listen f">
 <meta property="og:type" content="article">
 <meta property="og:title" content="03. RxSwift (3) ———— Concept of Subjects">
-<meta property="og:url" content="https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/">
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 5 minutes to finish reading this article. Subjet is the bridge between observable and Observer. A Subject is both an Observable and an Observer. It can both emit events and listen f">
 <meta property="og:locale" content="en_US">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/08.png">
 <meta property="og:image" content="https://zitao0206.github.io/assets/ReactiveProgramming/RxSwift/09.png">
 <meta property="article:published_time" content="2023-09-22T15:00:00.000Z">
-<meta property="article:modified_time" content="2023-09-22T15:27:29.991Z">
+<meta property="article:modified_time" content="2023-10-10T21:16:06.719Z">
 <meta property="article:author" content="Zitao">
 <meta property="article:tag" content="RxSwift">
 <meta property="article:tag" content="Subjects">
@@ -93,10 +93,10 @@
     <span id="actions">
       <ul>
         
-        <li><a class="icon" aria-label="Previous post" href="/2023/09/22/Reactive%20Programming/04.%20RxSwift%20(4)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/22/Reactive%20Programming/00.%20RxSwift/04.%20RxSwift%20(4)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
         
         
-        <li><a class="icon" aria-label="Next post" href="/2023/09/22/Reactive%20Programming/02.%20RxSwift%20(2)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2023/09/22/Reactive%20Programming/00.%20RxSwift/02.%20RxSwift%20(2)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -109,17 +109,17 @@
     <br/>
     <div id="share" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&text=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&is_video=false&description=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=03. RxSwift (3) ———— Concept of Subjects&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&name=03. RxSwift (3) ———— Concept of Subjects&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&t=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&text=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&is_video=false&description=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. RxSwift (3) ———— Concept of Subjects&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&name=03. RxSwift (3) ———— Concept of Subjects&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&t=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -153,7 +153,7 @@
       
         <time datetime="2023-09-22T15:00:00.000Z" class="dt-published" itemprop="datePublished">2023-09-22</time>
         
-        (Updated: <time datetime="2023-09-22T15:27:29.991Z" class="dt-updated" itemprop="dateModified">2023-09-22</time>)
+        (Updated: <time datetime="2023-10-10T21:16:06.719Z" class="dt-updated" itemprop="dateModified">2023-10-10</time>)
         
       
     </div>
@@ -162,7 +162,7 @@
       
     <div class="article-category">
         <i class="fa-solid fa-archive"></i>
-        <a class="category-link" href="/categories/Reactive-Programming/">Reactive Programming</a>
+        <a class="category-link" href="/categories/Reactive-Programming/">Reactive Programming</a> › <a class="category-link" href="/categories/Reactive-Programming/00-RxSwift/">00. RxSwift</a>
     </div>
 
 
@@ -206,6 +206,7 @@
 <p>Points to note:</p>
 <p>The cache of ReplaySubject is cached in the memory. Therefore, if the ReplaySubject sends pictures, the buffer size cannot be set too large, which can easily cause memory pressure. The same goes for sending an array. Therefore, you must pay attention to the content pressure and type here, and do not set the buffer size too large.</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">example14</span>() &#123;</span><br><span class="line">     <span class="keyword">let</span> subject <span class="operator">=</span> <span class="type">ReplaySubject</span>&lt;<span class="type">String</span>&gt;.create(bufferSize: <span class="number">2</span>)</span><br><span class="line">    </span><br><span class="line">     subject.onNext(<span class="string">&quot;1&quot;</span>)</span><br><span class="line">     subject.onNext(<span class="string">&quot;2&quot;</span>)</span><br><span class="line">     subject.onNext(<span class="string">&quot;3&quot;</span>)</span><br><span class="line">    </span><br><span class="line">     subject.subscribe(onNext: &#123; (element) <span class="keyword">in</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Subscriber one: &quot;</span> <span class="operator">+</span> element)</span><br><span class="line">     &#125;).disposed(by: disposeBag)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//Results of the</span></span><br><span class="line"><span class="type">Subscriber</span> <span class="type">One</span>: <span class="number">2</span></span><br><span class="line"><span class="type">Subscriber</span> <span class="type">One</span>: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
   </div>
 </article>
 
@@ -244,17 +245,17 @@
 
     <div id="share-footer" style="display: none">
       <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&text=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&is_video=false&description=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=03. RxSwift (3) ———— Concept of Subjects&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&name=03. RxSwift (3) ———— Concept of Subjects&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/03.%20RxSwift%20(3)/&t=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&text=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&is_video=false&description=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. RxSwift (3) ———— Concept of Subjects&body=Check out this article: https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&title=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&name=03. RxSwift (3) ———— Concept of Subjects&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/22/Reactive%20Programming/00.%20RxSwift/03.%20RxSwift%20(3)/&t=03. RxSwift (3) ———— Concept of Subjects"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
