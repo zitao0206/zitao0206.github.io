@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 10 minutes to finish reading this article. OverviewContinuing from the previous article, we will continue to introduce some common types in the Combine framework. 11. AnySubscriberS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03. Combine (3) ———— Common types (2)">
+<meta property="og:url" content="https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 10 minutes to finish reading this article. OverviewContinuing from the previous article, we will continue to introduce some common types in the Combine framework. 11. AnySubscriberS">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-20T21:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-20T15:35:04.750Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Combine">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>03. Combine (3) ———— Common types (2)</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/18/Reactive%20Programming/01.%20Combine/02.%20Combine%20(2)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&text=03. Combine (3) ———— Common types (2)"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&is_video=false&description=03. Combine (3) ———— Common types (2)"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Combine (3) ———— Common types (2)&body=Check out this article: https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&name=03. Combine (3) ———— Common types (2)&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&t=03. Combine (3) ———— Common types (2)"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-AnySubscriber"><span class="toc-number">2.</span> <span class="toc-text">11. AnySubscriber</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-Subject"><span class="toc-number">3.</span> <span class="toc-text">12. Subject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-Scheduler"><span class="toc-number">4.</span> <span class="toc-text">13. Scheduler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-ObservableObject"><span class="toc-number">5.</span> <span class="toc-text">14. ObservableObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#15-AsyncPublisher-AsyncThrowingPublisher"><span class="toc-number">6.</span> <span class="toc-text">15. AsyncPublisher&#x2F;AsyncThrowingPublisher</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#16-CustomCombineIdentifierConvertible"><span class="toc-number">7.</span> <span class="toc-text">16. CustomCombineIdentifierConvertible</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-The-Protocol-of-Subscription"><span class="toc-number">8.</span> <span class="toc-text">17. The Protocol of Subscription</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">9.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        03. Combine (3) ———— Common types (2)
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-20T21:00:00.000Z" class="dt-published" itemprop="datePublished">2023-10-20</time>
+        
+        (Updated: <time datetime="2023-10-20T15:35:04.750Z" class="dt-updated" itemprop="dateModified">2023-10-20</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Reactive-Programming/">Reactive Programming</a> › <a class="category-link" href="/categories/Reactive-Programming/01-Combine/">01. Combine</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Combine/" rel="tag">Combine</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 10 minutes to finish reading this article.</em></font></p>
+<h4 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a><font size=5 color=#4169E1>Overview</font></h4><p>Continuing from the previous article, we will continue to introduce some common types in the Combine framework.</p>
+<h4 id="11-AnySubscriber"><a href="#11-AnySubscriber" class="headerlink" title="11. AnySubscriber"></a><font size=5 color=#4169E1>11. AnySubscriber</font></h4><p>Subscriber type erasure (Type Erasure) version. Used to encapsulate subscribers and allow you to erase the specific type of Subscriber, thereby increasing the flexibility of the code. Normally, you don’t need to create an AnySubscriber object directly as it is usually used inside the Combine operator and the framework.</p>
+<p>An AnySubscriber object can be created by passing a specific subscriber to AnySubscriber’s initialization method. This will encapsulate the original subscriber and do type erasure.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">let</span> specificSubscriber <span class="operator">=</span> <span class="type">MySpecificSubscriber</span>&lt;<span class="type">Int</span>, <span class="type">Error</span>&gt;()</span><br><span class="line"><span class="keyword">let</span> anySubscriber <span class="operator">=</span> <span class="type">AnySubscriber</span>(specificSubscriber)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>AnySubscriber can be used to subscribe to Publisher like a normal subscriber, thereby receiving values and completion status in the data stream. You can pass AnySubscriber to operators such as sink and assign.</p>
+<h4 id="12-Subject"><a href="#12-Subject" class="headerlink" title="12. Subject"></a><font size=5 color=#4169E1>12. Subject</font></h4><p>Subject is a special kind of Publisher and Subscriber. It can be used to create and manage data flows, allowing you to post values manually or send external values into the data flow. Subject acts as a relay for data in Combine, allowing you to add, update, and distribute values in the data flow. It has 2 main types of Subject, each type has a different purpose.</p>
+<p><strong>1. PassthroughSubject:</strong></p>
+<p>PassthroughSubject is the most common Subject type, which passes the received value directly to its subscribers. It does not cache or replay values, it only delivers the current value to the subscriber.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Create PassthroughSubject, specify input and error type</span></span><br><span class="line"><span class="keyword">let</span> subject <span class="operator">=</span> <span class="type">PassthroughSubject</span>&lt;<span class="type">Int</span>, <span class="type">Never</span>&gt;()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subscribe to the Subject and process the received value</span></span><br><span class="line"><span class="keyword">let</span> cancelable <span class="operator">=</span> subject</span><br><span class="line">     .sink(receiveValue: &#123; value <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Received value: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">     &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Publish value to Subject</span></span><br><span class="line">subject.send(<span class="number">1</span>)</span><br><span class="line">subject.send(<span class="number">2</span>)</span><br><span class="line">subject.send(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// unsubscribe</span></span><br><span class="line">cancelable.cancel()</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. CurrentValueSubject:</strong></p>
+<p>CurrentValueSubject is similar to PassthroughSubject, but it has an initial value and sends the current value to new subscribers when subscribing. It can be used to represent an observable object with current state.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a CurrentValueSubject with an initial value</span></span><br><span class="line"><span class="keyword">let</span> subject <span class="operator">=</span> <span class="type">CurrentValueSubject</span>&lt;<span class="type">Int</span>, <span class="type">Never</span>&gt;(<span class="number">0</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subscribe to the Subject and process the received value</span></span><br><span class="line"><span class="keyword">let</span> cancelable <span class="operator">=</span> subject</span><br><span class="line">     .sink(receiveValue: &#123; value <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Received value: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">     &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Publish value to Subject</span></span><br><span class="line">subject.send(<span class="number">1</span>)</span><br><span class="line">subject.send(<span class="number">2</span>)</span><br><span class="line">subject.send(<span class="number">3</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// New subscribers will receive the initial value immediately</span></span><br><span class="line"><span class="keyword">let</span> newSubscriber <span class="operator">=</span> subject</span><br><span class="line">     .sink(receiveValue: &#123; value <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;New subscriber received value: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">     &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// unsubscribe</span></span><br><span class="line">cancelable.cancel()</span><br><span class="line">newSubscriber.cancel()</span><br></pre></td></tr></table></figure>
+
+<p>The result is:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Received</span> value: <span class="number">0</span></span><br><span class="line"><span class="type">Received</span> value: <span class="number">1</span></span><br><span class="line"><span class="type">Received</span> value: <span class="number">2</span></span><br><span class="line"><span class="type">Received</span> value: <span class="number">3</span></span><br><span class="line"><span class="type">New</span> subscriber received value: <span class="number">3</span></span><br></pre></td></tr></table></figure>
+
+<p>*** Note: ***<br>The @Published property wrapper is actually a property wrapper based on CurrentValueSubject, which enables changes to properties to be automatically published to subscribers.</p>
+<h4 id="13-Scheduler"><a href="#13-Scheduler" class="headerlink" title="13. Scheduler"></a><font size=5 color=#4169E1>13. Scheduler</font></h4><p>Scheduler is a protocol that defines when and how to execute a closure. It is a very important concept that is used to manage and control the execution of events in time. Scheduler is an abstract type used for scheduling tasks (usually asynchronous tasks), which defines when the task should be executed and on which thread or queue it should be executed. In Combine, Scheduler is usually used for operations such as operators, delays, timers, and subscriptions to ensure the order and timing of events.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">Scheduler</span>&lt;<span class="title class_">SchedulerTimeType</span>&gt;</span><br></pre></td></tr></table></figure>
+<p>Sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line">importFoundation</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a scheduler for the background queue</span></span><br><span class="line"><span class="keyword">let</span> scheduler <span class="operator">=</span> <span class="type">DispatchQueue</span>.global(qos: .background)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Use the scheduler to execute asynchronous tasks</span></span><br><span class="line"><span class="keyword">let</span> cancelable <span class="operator">=</span> scheduler.schedule &#123;</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&quot;Task executed on background queue.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Cancel task</span></span><br><span class="line">cancelable.cancel()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>Combine provides multiple types related to the Scheduler type, each type has different behaviors and uses. Here are some commonly used types:</p>
+<p><strong>1. ImmediateScheduler</strong></p>
+<p>A Scheduler type. Not introducing any latency or asynchronicity, it executes the task immediately on the current thread. This is useful for performing synchronous tasks or simulating immediate execution when testing.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create an ImmediateScheduler scheduler</span></span><br><span class="line"><span class="keyword">let</span> scheduler <span class="operator">=</span> <span class="type">ImmediateScheduler</span>.shared</span><br><span class="line"></span><br><span class="line"><span class="comment">//Use the scheduler to execute tasks</span></span><br><span class="line"><span class="keyword">let</span> cancelable <span class="operator">=</span> scheduler.schedule &#123;</span><br><span class="line">     <span class="built_in">print</span>(<span class="string">&quot;Task executed immediately.&quot;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//The task will be executed immediately without delay</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Cancel task</span></span><br><span class="line">cancelable.cancel()</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. SchedulerTimeIntervalConvertible</strong></p>
+<p>SchedulerTimeIntervalConvertible is a protocol. It defines a type that converts time intervals (time units) into specific time units for use in the Combine scheduler.<br>In Combine, time units are usually expressed as seconds (TimeInterval), but different schedulers may use different time units, such as milliseconds or microseconds. Therefore, SchedulerTimeIntervalConvertible provides a general method for converting time units to those appropriate for a specific scheduler.<br>The protocol defines the following methods:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">SchedulerTimeIntervalConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">seconds</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">Int</span>) -&gt; <span class="keyword">Self</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">seconds</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">Double</span>) -&gt; <span class="keyword">Self</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">milliseconds</span>(<span class="keyword">_</span> <span class="params">ms</span>: <span class="type">Int</span>) -&gt; <span class="keyword">Self</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">microseconds</span>(<span class="keyword">_</span> <span class="params">us</span>: <span class="type">Int</span>) -&gt; <span class="keyword">Self</span></span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">nanoseconds</span>(<span class="keyword">_</span> <span class="params">ns</span>: <span class="type">Int</span>) -&gt; <span class="keyword">Self</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>These methods allow you to convert time units (seconds, milliseconds, microseconds, nanoseconds) to time units suitable for the scheduler and create a type that implements the SchedulerTimeIntervalConvertible protocol. This is typically used in the context of a custom scheduler to ensure time unit consistency.</p>
+<p>Here is an example that demonstrates how to use the SchedulerTimeIntervalConvertible protocol to create a custom time unit type:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Customize time unit type and implement SchedulerTimeIntervalConvertible protocol</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyTimeUnit</span>: <span class="title class_">SchedulerTimeIntervalConvertible</span> &#123;</span><br><span class="line">     <span class="keyword">let</span> value: <span class="type">Int</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">seconds</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">Int</span>) -&gt; <span class="type">MyTimeUnit</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="type">MyTimeUnit</span>(value: s)</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">seconds</span>(<span class="keyword">_</span> <span class="params">s</span>: <span class="type">Double</span>) -&gt; <span class="type">MyTimeUnit</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="type">MyTimeUnit</span>(value: <span class="type">Int</span>(s))</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">milliseconds</span>(<span class="keyword">_</span> <span class="params">ms</span>: <span class="type">Int</span>) -&gt; <span class="type">MyTimeUnit</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="type">MyTimeUnit</span>(value: ms)</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">microseconds</span>(<span class="keyword">_</span> <span class="params">us</span>: <span class="type">Int</span>) -&gt; <span class="type">MyTimeUnit</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="type">MyTimeUnit</span>(value: us)</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">static</span> <span class="keyword">func</span> <span class="title function_">nanoseconds</span>(<span class="keyword">_</span> <span class="params">ns</span>: <span class="type">Int</span>) -&gt; <span class="type">MyTimeUnit</span> &#123;</span><br><span class="line">         <span class="keyword">return</span> <span class="type">MyTimeUnit</span>(value: ns)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use custom time unit type</span></span><br><span class="line"><span class="keyword">let</span> myTimeUnit <span class="operator">=</span> <span class="type">MyTimeUnit</span>.seconds(<span class="number">2</span>)</span><br><span class="line"><span class="built_in">print</span>(myTimeUnit.value) <span class="comment">// Output: 2</span></span><br></pre></td></tr></table></figure>
+
+
+<h4 id="14-ObservableObject"><a href="#14-ObservableObject" class="headerlink" title="14. ObservableObject"></a><font size=5 color=#4169E1>14. ObservableObject</font></h4><p>ObservableObject is a protocol in the SwiftUI framework built on Combine. It is used to create observable objects and is usually used to build responsive interfaces. It is one of the core concepts of data-driven interfaces in SwiftUI.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> SwiftUI</span><br><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a class that conforms to the ObservableObject protocol</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyViewModel</span>: <span class="title class_">ObservableObject</span> &#123;</span><br><span class="line">     <span class="comment">// Mark observable properties using the @Published property wrapper</span></span><br><span class="line">     <span class="meta">@Published</span> <span class="keyword">var</span> name: <span class="type">String</span> <span class="operator">=</span> <span class="string">&quot;John&quot;</span></span><br><span class="line">     <span class="meta">@Published</span> <span class="keyword">var</span> age: <span class="type">Int</span> <span class="operator">=</span> <span class="number">30</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">ContentView</span>: <span class="title class_">View</span> &#123;</span><br><span class="line">     <span class="comment">// Bind the ViewModel to the view using the @ObservedObject property wrapper</span></span><br><span class="line">     <span class="meta">@ObservedObject</span> <span class="keyword">var</span> viewModel <span class="operator">=</span> <span class="type">MyViewModel</span>()</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">var</span> body: <span class="keyword">some</span> <span class="type">View</span> &#123;</span><br><span class="line">         <span class="type">VStack</span> &#123;</span><br><span class="line">             <span class="type">Text</span>(<span class="string">&quot;Name: <span class="subst">\(viewModel.name)</span>&quot;</span>)</span><br><span class="line">             <span class="type">Text</span>(<span class="string">&quot;Age: <span class="subst">\(viewModel.age)</span>&quot;</span>)</span><br><span class="line">             <span class="type">Button</span>(<span class="string">&quot;Change Name&quot;</span>) &#123;</span><br><span class="line">                 <span class="comment">// Modify the properties in ViewModel and the interface will automatically update</span></span><br><span class="line">                 viewModel.name <span class="operator">=</span> <span class="string">&quot;Alice&quot;</span></span><br><span class="line">             &#125;</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In the above example, we have created a MyViewModel class that follows the ObservableObject protocol and marked two observable properties using the @Published property wrapper. Then, in the view ContentView, we use the @ObservedObject property wrapper to bind the viewModel to the view, making it an observable object. When properties in the viewModel are modified on button click, the view automatically updates to reflect the changes.</p>
+<h4 id="15-AsyncPublisher-AsyncThrowingPublisher"><a href="#15-AsyncPublisher-AsyncThrowingPublisher" class="headerlink" title="15. AsyncPublisher&#x2F;AsyncThrowingPublisher"></a><font size=5 color=#4169E1>15. AsyncPublisher&#x2F;AsyncThrowingPublisher</font></h4><p>AsyncPublisher&#x2F;AsyncThrowingPublisher It is a Publisher that exposes its elements in the form of (throwing) asynchronous sequences. It is defined as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">AsyncPublisher</span>&lt;<span class="title class_">P</span>&gt; <span class="title class_">where</span> <span class="title class_">P</span> : <span class="title class_">Publisher</span>, <span class="title class_">P</span>.<span class="title class_">Failure</span> == <span class="title class_">Never</span></span><br></pre></td></tr></table></figure>
+
+<p>The sample code is as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Create a simple publisher that will never fail (Failure == Never)</span></span><br><span class="line"><span class="keyword">let</span> simplePublisher <span class="operator">=</span> <span class="type">Just</span>(<span class="number">1</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use AsyncPublisher to wrap the publisher to make it an asynchronous sequence</span></span><br><span class="line"><span class="keyword">let</span> asyncSequence <span class="operator">=</span> simplePublisher.values</span><br><span class="line"></span><br><span class="line"><span class="comment">// Use for-await-in syntax to traverse the elements of an asynchronous sequence</span></span><br><span class="line"><span class="keyword">async</span> &#123;</span><br><span class="line">     <span class="keyword">do</span> &#123;</span><br><span class="line">         <span class="keyword">for</span> <span class="keyword">try</span> <span class="keyword">await</span> element <span class="keyword">in</span> asyncSequence &#123;</span><br><span class="line">             <span class="built_in">print</span>(<span class="string">&quot;Received element: <span class="subst">\(element)</span>&quot;</span>)</span><br><span class="line">         &#125;</span><br><span class="line">     &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Error: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="16-CustomCombineIdentifierConvertible"><a href="#16-CustomCombineIdentifierConvertible" class="headerlink" title="16. CustomCombineIdentifierConvertible"></a><font size=5 color=#4169E1>16. CustomCombineIdentifierConvertible</font></h4><p>It is a protocol in the Combine framework that is used to help uniquely identify publisher chains. This protocol is typically used when creating custom Subscriber or Subscription types so that development tools can uniquely identify these publisher chains within your application.</p>
+<p>If you create a custom subscription or subscriber type, you need to implement this protocol so that development tools can uniquely identify the publisher chain in your application. If your type is a class, Combine provides you with an implementation of combineIdentifier. If your type is a struct, set the identifier as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> combineIdentifier <span class="operator">=</span> <span class="type">CombineIdentifier</span>()</span><br></pre></td></tr></table></figure>
+<p>Where CombineIdentifier is the unique identifier used to identify the publisher’s information flow. Let’s look at a sample code:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Custom subscriber type, implement CustomCombineIdentifierConvertible protocol</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MySubscriber</span>&lt;<span class="title class_">Input</span>, <span class="title class_">Failure</span>: <span class="title class_">Error</span>&gt;: <span class="title class_">Subscriber</span>, <span class="title class_">CustomCombineIdentifierConvertible</span> &#123;</span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">ReceiveValueClosure</span> <span class="operator">=</span> (<span class="type">Input</span>) -&gt; <span class="type">Void</span></span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">CompletionClosure</span> <span class="operator">=</span> (<span class="type">Subscribers</span>.<span class="type">Completion</span>&lt;<span class="type">Failure</span>&gt;) -&gt; <span class="type">Void</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">let</span> receiveValue: <span class="type">ReceiveValueClosure</span></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">let</span> receiveCompletion: <span class="type">CompletionClosure</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">var</span> combineIdentifier: <span class="type">CombineIdentifier</span> <span class="comment">// Used to uniquely identify subscriptions</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">init</span>(<span class="params">receiveValue</span>: <span class="keyword">@escaping</span> <span class="type">ReceiveValueClosure</span>, <span class="params">receiveCompletion</span>: <span class="keyword">@escaping</span> <span class="type">CompletionClosure</span>) &#123;</span><br><span class="line">         <span class="keyword">self</span>.receiveValue <span class="operator">=</span> receiveValue</span><br><span class="line">         <span class="keyword">self</span>.receiveCompletion <span class="operator">=</span> receiveCompletion</span><br><span class="line">         <span class="keyword">self</span>.combineIdentifier <span class="operator">=</span> <span class="type">CombineIdentifier</span>()</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="params">subscription</span>: <span class="type">Subscription</span>) &#123;</span><br><span class="line">         subscription.request(.unlimited) <span class="comment">// Request an unlimited number of elements</span></span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="keyword">_</span> <span class="params">input</span>: <span class="type">Input</span>) -&gt; <span class="type">Subscribers</span>.<span class="type">Demand</span> &#123;</span><br><span class="line">         receiveValue(input)</span><br><span class="line">         <span class="keyword">return</span> .unlimited</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="params">completion</span>: <span class="type">Subscribers</span>.<span class="type">Completion</span>&lt;<span class="type">Failure</span>&gt;) &#123;</span><br><span class="line">         receiveCompletion(completion)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a publisher</span></span><br><span class="line"><span class="keyword">let</span> publisher <span class="operator">=</span> <span class="type">Just</span>(<span class="number">42</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a custom subscriber instance</span></span><br><span class="line"><span class="keyword">let</span> subscriber <span class="operator">=</span> <span class="type">MySubscriber</span>&lt;<span class="type">Int</span>, <span class="type">Never</span>&gt;(</span><br><span class="line">     receiveValue: &#123; value <span class="keyword">in</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Received value: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">     &#125;,</span><br><span class="line">     receiveCompletion: &#123; completion <span class="keyword">in</span></span><br><span class="line">         <span class="keyword">switch</span> completion &#123;</span><br><span class="line">         <span class="keyword">case</span> .finished:</span><br><span class="line">             <span class="built_in">print</span>(<span class="string">&quot;Subscription completed successfully.&quot;</span>)</span><br><span class="line">         <span class="keyword">case</span> .failure(<span class="keyword">let</span> error):</span><br><span class="line">             <span class="built_in">print</span>(<span class="string">&quot;Subscription failed with error: <span class="subst">\(error)</span>&quot;</span>)</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subscribe to the publisher</span></span><br><span class="line">publisher.subscribe(subscriber)</span><br></pre></td></tr></table></figure>
+<h4 id="17-The-Protocol-of-Subscription"><a href="#17-The-Protocol-of-Subscription" class="headerlink" title="17. The Protocol of Subscription"></a><font size=5 color=#4169E1>17. The Protocol of Subscription</font></h4><p>Subscription is a protocol that represents the subscription relationship between Subscriber and Publisher. Specifically, Subscription describes how to manage subscriptions, including operations such as canceling subscriptions and requesting elements.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">protocol</span> <span class="title class_">Subscription</span>: <span class="title class_">Cancellable</span>, <span class="title class_">CustomCombineIdentifierConvertible</span> &#123;</span><br><span class="line">    <span class="keyword">func</span> <span class="title function_">request</span>(<span class="keyword">_</span> <span class="params">demand</span>: <span class="type">Subscribers</span>.<span class="type">Demand</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>request(<em>:) method: By calling the request(</em>:) method, a subscriber can request to receive elements from the publisher. The request(_:) method accepts a parameter demand, which is a Subscribers.Demand enumeration value, indicating how many elements the subscriber wants to receive from the publisher. Publishers should send elements based on subscriber demand.</p>
+<p>The Subscription protocol is a very important part of Combine. It is responsible for managing the life cycle of subscriptions and the delivery of elements. Subscribers can use the request(_:) method to control the rate at which elements are received, while the cancel() method is used to cancel a subscription when it is no longer needed.</p>
+<p>In Combine, there is usually no need to manually implement the Subscription protocol because Combine provides many built-in operators and types to handle subscriptions. However, if you need to create a custom subscription, you may need to implement the Subscription protocol to define the behavior of the subscription.</p>
+<p>Below is a simple sample code that demonstrates how to create a custom subscription that conforms to the Subscription protocol and use it to manage the subscription’s lifecycle and request elements.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Combine</span><br><span class="line"></span><br><span class="line"><span class="comment">// Custom subscription type, consistent with Subscription protocol</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MySubscription</span>&lt;<span class="title class_">Input</span>, <span class="title class_">Failure</span>: <span class="title class_">Error</span>&gt;: <span class="title class_">Subscription</span> &#123;</span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">var</span> subscriber: <span class="type">AnySubscriber</span>&lt;<span class="type">Input</span>, <span class="type">Failure</span>&gt;?</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">init</span>&lt;<span class="type">S</span>&gt;(<span class="keyword">_</span> <span class="params">subscriber</span>: <span class="type">S</span>) <span class="keyword">where</span> <span class="type">S</span> : <span class="type">Subscriber</span>, <span class="type">S</span>.<span class="type">Input</span> <span class="operator">==</span> <span class="type">Input</span>, <span class="type">S</span>.<span class="type">Failure</span> <span class="operator">==</span> <span class="type">Failure</span> &#123;</span><br><span class="line">         <span class="keyword">self</span>.subscriber <span class="operator">=</span> <span class="type">AnySubscriber</span>(subscriber)</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">request</span>(<span class="keyword">_</span> <span class="params">demand</span>: <span class="type">Subscribers</span>.<span class="type">Demand</span>) &#123;</span><br><span class="line">         <span class="comment">// Simulate sending elements to subscribers</span></span><br><span class="line">         <span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">1</span><span class="operator">...</span>demand.max &#123;</span><br><span class="line">             <span class="keyword">_</span> <span class="operator">=</span> subscriber<span class="operator">?</span>.receive(i <span class="keyword">as!</span> <span class="type">Input</span>)</span><br><span class="line">         &#125;</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">cancel</span>() &#123;</span><br><span class="line">         <span class="comment">// unsubscribe</span></span><br><span class="line">         subscriber <span class="operator">=</span> <span class="literal">nil</span></span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a custom publisher</span></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">MyPublisher</span>: <span class="title class_">Publisher</span> &#123;</span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">Output</span> <span class="operator">=</span> <span class="type">Int</span></span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">Failure</span> <span class="operator">=</span> <span class="type">Never</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>&lt;<span class="type">S</span>&gt;(<span class="params">subscriber</span>: <span class="type">S</span>) <span class="keyword">where</span> <span class="type">S</span> : <span class="type">Subscriber</span>, <span class="type">Failure</span> <span class="operator">==</span> <span class="type">S</span>.<span class="type">Failure</span>, <span class="type">Output</span> <span class="operator">==</span> <span class="type">S</span>.<span class="type">Input</span> &#123;</span><br><span class="line">         <span class="comment">// Create a custom subscription and pass it to the subscriber</span></span><br><span class="line">         <span class="keyword">let</span> subscription <span class="operator">=</span> <span class="type">MySubscription</span>(subscriber)</span><br><span class="line">         subscriber.receive(subscription: subscription)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a custom subscriber</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MySubscriber</span>: <span class="title class_">Subscriber</span> &#123;</span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">Input</span> <span class="operator">=</span> <span class="type">Int</span></span><br><span class="line">     <span class="keyword">typealias</span> <span class="type">Failure</span> <span class="operator">=</span> <span class="type">Never</span></span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="params">subscription</span>: <span class="type">Subscription</span>) &#123;</span><br><span class="line">         <span class="comment">//Operation at the beginning of subscription</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Subscription started.&quot;</span>)</span><br><span class="line">         subscription.request(.max(<span class="number">5</span>)) <span class="comment">// Request up to 5 elements</span></span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="keyword">_</span> <span class="params">input</span>: <span class="type">Input</span>) -&gt; <span class="type">Subscribers</span>.<span class="type">Demand</span> &#123;</span><br><span class="line">         <span class="comment">// Process the received elements</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Received element: <span class="subst">\(input)</span>&quot;</span>)</span><br><span class="line">         <span class="keyword">return</span> .none</span><br><span class="line">     &#125;</span><br><span class="line">    </span><br><span class="line">     <span class="keyword">func</span> <span class="title function_">receive</span>(<span class="params">completion</span>: <span class="type">Subscribers</span>.<span class="type">Completion</span>&lt;<span class="type">Failure</span>&gt;) &#123;</span><br><span class="line">         <span class="comment">//Operation when subscription is completed</span></span><br><span class="line">         <span class="built_in">print</span>(<span class="string">&quot;Subscription completed.&quot;</span>)</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a custom publisher instance</span></span><br><span class="line"><span class="keyword">let</span> publisher <span class="operator">=</span> <span class="type">MyPublisher</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//Create a custom subscriber instance</span></span><br><span class="line"><span class="keyword">let</span> subscriber <span class="operator">=</span> <span class="type">MySubscriber</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// Subscribe to the publisher</span></span><br><span class="line">publisher.subscribe(subscriber)</span><br></pre></td></tr></table></figure>
+
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=6 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/combine">https://developer.apple.com/documentation/combine</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#Overview"><span class="toc-number">1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#11-AnySubscriber"><span class="toc-number">2.</span> <span class="toc-text">11. AnySubscriber</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#12-Subject"><span class="toc-number">3.</span> <span class="toc-text">12. Subject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#13-Scheduler"><span class="toc-number">4.</span> <span class="toc-text">13. Scheduler</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#14-ObservableObject"><span class="toc-number">5.</span> <span class="toc-text">14. ObservableObject</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#15-AsyncPublisher-AsyncThrowingPublisher"><span class="toc-number">6.</span> <span class="toc-text">15. AsyncPublisher&#x2F;AsyncThrowingPublisher</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#16-CustomCombineIdentifierConvertible"><span class="toc-number">7.</span> <span class="toc-text">16. CustomCombineIdentifierConvertible</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#17-The-Protocol-of-Subscription"><span class="toc-number">8.</span> <span class="toc-text">17. The Protocol of Subscription</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">9.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&text=03. Combine (3) ———— Common types (2)"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&is_video=false&description=03. Combine (3) ———— Common types (2)"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Combine (3) ———— Common types (2)&body=Check out this article: https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&title=03. Combine (3) ———— Common types (2)"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&name=03. Combine (3) ———— Common types (2)&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/&t=03. Combine (3) ———— Common types (2)"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
