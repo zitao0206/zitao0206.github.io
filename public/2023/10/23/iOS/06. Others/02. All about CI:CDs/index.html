@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. 1.What is the CI&#x2F;CD?CI&#x2F;CD refers to the abbreviation of Continuous Integration and Continuous Delivery&#x2F;Deployment. CI refers">
+<meta property="og:type" content="article">
+<meta property="og:title" content="02. All About CI&#x2F;CDs">
+<meta property="og:url" content="https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. 1.What is the CI&#x2F;CD?CI&#x2F;CD refers to the abbreviation of Continuous Integration and Continuous Delivery&#x2F;Deployment. CI refers">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-10-23T16:40:00.000Z">
+<meta property="article:modified_time" content="2023-10-23T16:45:06.911Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="CI&#x2F;CDs">
+<meta property="article:tag" content="Jenkins">
+<meta property="article:tag" content="Fastlane">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>02. All About CI/CDs</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/10/20/Reactive%20Programming/01.%20Combine/03.%20Combine%20(3)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&text=02. All About CI/CDs"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&is_video=false&description=02. All About CI/CDs"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. All About CI/CDs&body=Check out this article: https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&name=02. All About CI/CDs&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&t=02. All About CI/CDs"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-What-is-the-CI-CD"><span class="toc-number">1.</span> <span class="toc-text">1.What is the CI&#x2F;CD?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Continuous-Integration"><span class="toc-number">2.</span> <span class="toc-text">2. Continuous Integration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Continuous-Delivery-Deployment"><span class="toc-number">3.</span> <span class="toc-text">3. Continuous Delivery&#x2F;Deployment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Summary"><span class="toc-number">4.</span> <span class="toc-text">4. Summary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        02. All About CI/CDs
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-10-23T16:40:00.000Z" class="dt-published" itemprop="datePublished">2023-10-23</time>
+        
+        (Updated: <time datetime="2023-10-23T16:45:06.911Z" class="dt-updated" itemprop="dateModified">2023-10-23</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/06-Others/">06. Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/CI-CDs/" rel="tag">CI/CDs</a>, <a class="p-category" href="/tags/Fastlane/" rel="tag">Fastlane</a>, <a class="p-category" href="/tags/Jenkins/" rel="tag">Jenkins</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<h4 id="1-What-is-the-CI-CD"><a href="#1-What-is-the-CI-CD" class="headerlink" title="1.What is the CI&#x2F;CD?"></a><font size=6 color=#4169E1>1.What is the CI&#x2F;CD?</font></h4><p>CI&#x2F;CD refers to the abbreviation of Continuous Integration and Continuous Delivery&#x2F;Deployment.</p>
+<p>CI refers to automatically integrating developers’ code changes into a shared code warehouse, and verifying and building the code through automated testing, compilation, and building processes to quickly discover and solve code problems. CI helps speed up the speed and quality of code delivery and improves the collaboration efficiency of development teams.</p>
+<p>CD refers to the automatic deployment of CI-verified code into the production environment to achieve faster delivery and response to requirements. CD includes steps such as automated testing, building, deployment, and monitoring to ensure that the delivered code is stable, reliable, and secure.</p>
+<p>The CI&#x2F;CD process can help development teams deliver high-quality software more quickly and reliably while reducing the risks caused by coding errors and manual operations.</p>
+<h4 id="2-Continuous-Integration"><a href="#2-Continuous-Integration" class="headerlink" title="2. Continuous Integration"></a><font size=6 color=#4169E1>2. Continuous Integration</font></h4><p>We usually use the gitlab&#x2F;github platform to complete CI. The process is as follows:      </p>
+<p>(1) Create a GitLab project: Create a new project in GitLab and push the project code to the GitLab repository.</p>
+<p>(2) Configure GitLab Runner: GitLab Runner is a tool used to perform CI&#x2F;CD tasks and can run on Linux, Windows or macOS. You need to register a Runner in GitLab and configure the environment in which the Runner runs.</p>
+<p>(3) Configure the CI&#x2F;CD pipeline: Create a .gitlab-ci.yml file in the GitLab project to define the various stages, tasks and steps of the CI&#x2F;CD pipeline. Different scripting languages and commands can be used, such as Shell scripts, Python, Ruby, etc.</p>
+<p>(4) Trigger CI&#x2F;CD pipeline: When making code submission or merge request in GitLab project, the execution of CI&#x2F;CD pipeline will be automatically triggered. Pipeline execution can also be manually triggered for testing, building, and deployment.</p>
+<p>(5) Monitor and manage CI&#x2F;CD pipelines: You can view the execution status, logs and output information of the pipeline in GitLab for troubleshooting and problem analysis. You can also manage pipeline parameters, environment variables, scheduled tasks, etc.</p>
+<p>(6) Configure CD environment and automated deployment: You can use the automated deployment function of GitLab CI&#x2F;CD to deploy code to testing, pre-production and production environments. You can also use other CD tools, such as Kubernetes, Docker Swarm, etc., to achieve automated deployment and container orchestration.</p>
+<h4 id="3-Continuous-Delivery-Deployment"><a href="#3-Continuous-Delivery-Deployment" class="headerlink" title="3. Continuous Delivery&#x2F;Deployment"></a><font size=6 color=#4169E1>3. Continuous Delivery&#x2F;Deployment</font></h4><p>The entire CD process is usually completed with the help of the Jenkins+Fastlane+Pgyer tool set.</p>
+<p>Jenkins can be used to perform continuous integration and continuous delivery processes for the entire software project, including tasks such as building, testing, and deployment. </p>
+<p>Fastlane can be used as a step in the Jenkins pipeline to automate the build, test and release process of mobile applications. By using Jenkins and Fastlane together, development teams can automate the management of entire software projects and speed up software delivery.</p>
+<p>The installation package (ipa file) packaged by Jenkins+Fastlane is uploaded to the Pgyer platform.<br>The Pgyer platform is used for test distribution, user feedback and version management. Of course, there are other platforms that can be used, such as HockeyApp, AppCenter, Firebase App Distribution and of course TestFlight.</p>
+<p>It can be simply understood that Jenkins quickly helps you build a website and then calls Fastlane to help you export the installation package through a series of steps.</p>
+<p><strong>Tips:</strong></p>
+<p>Fastlane:</p>
+<p>Fastlane is a cross-platform continuous integration tool implemented using ruby. It is mainly used to support the continuous integration practice of Android and iOS mobile platform projects. Fastlane processing provides: initial setup, screenshots, packaging, uploading to the test platform, deployment, etc.</p>
+<p>Because the fastlane command is not very convenient for QA and other non-technical personnel to package, it needs to be called with the help of Jenkins.</p>
+<p>Jenkins: </p>
+<p>Jenkins is an independent open source software project. It is a continuous integration tool developed based on Java. It is used to monitor continuous repetitive work. It aims to provide an open and easy-to-use software platform to make continuous integration of software possible. Formerly known as Hudson, it is an extensible continuous integration engine. Can be used to automate various tasks such as building, testing and deploying software.</p>
+<h4 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a><font size=6 color=#4169E1>4. Summary</font></h4><p>In conclusion, We use Git&#x2F;Gitlab for project source code management, and use Jenkins as a trigger to capture push and other operations either regularly or manually to trigger packaging actions; execute Fastlane scripts for certificate management and packaging; and distribute through the Pgyer platform.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=5 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://www.pgyer.com/">https://www.pgyer.com/</a><br>[2] <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/633284341/">https://zhuanlan.zhihu.com/p/633284341/</a><br>[3] <a target="_blank" rel="noopener" href="https://developer.apple.com/testflight/">https://developer.apple.com/testflight/</a><br>[4] <a target="_blank" rel="noopener" href="https://firebase.google.com/products/app-distribution/">https://firebase.google.com/products/app-distribution/</a><br>[5] <a target="_blank" rel="noopener" href="https://www.hockeyapp.net/">https://www.hockeyapp.net/</a><br>[6] <a target="_blank" rel="noopener" href="https://appcenter.ms/">https://appcenter.ms/</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-What-is-the-CI-CD"><span class="toc-number">1.</span> <span class="toc-text">1.What is the CI&#x2F;CD?</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Continuous-Integration"><span class="toc-number">2.</span> <span class="toc-text">2. Continuous Integration</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Continuous-Delivery-Deployment"><span class="toc-number">3.</span> <span class="toc-text">3. Continuous Delivery&#x2F;Deployment</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Summary"><span class="toc-number">4.</span> <span class="toc-text">4. Summary</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&text=02. All About CI/CDs"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&is_video=false&description=02. All About CI/CDs"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=02. All About CI/CDs&body=Check out this article: https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&title=02. All About CI/CDs"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&name=02. All About CI/CDs&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/&t=02. All About CI/CDs"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
