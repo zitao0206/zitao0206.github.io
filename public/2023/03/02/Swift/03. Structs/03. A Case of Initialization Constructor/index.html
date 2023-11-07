@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 1 minutes to finish reading this article. We often use the following methods to initialize in OC. 12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+<meta property="og:type" content="article">
+<meta property="og:title" content="03. Property Defaults and Initialization Constructors">
+<meta property="og:url" content="https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 1 minutes to finish reading this article. We often use the following methods to initialize in OC. 12345678910111213141516171819202122232425262728293031323334353637383940414243444546">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-02T19:45:59.000Z">
+<meta property="article:modified_time" content="2023-11-07T13:55:54.306Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="struct">
+<meta property="article:tag" content="initialization">
+<meta property="article:tag" content="constructors">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>03. Property Defaults and Initialization Constructors</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/03/03/Swift/04.%20Enumerations/00.%20Summary%20of%20Enumerations/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/03/02/Swift/03.%20Structs/02.%20Performance%20Comparison%20Between%20Structure%20and%20Class/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&text=03. Property Defaults and Initialization Constructors"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&is_video=false&description=03. Property Defaults and Initialization Constructors"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Property Defaults and Initialization Constructors&body=Check out this article: https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&name=03. Property Defaults and Initialization Constructors&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&t=03. Property Defaults and Initialization Constructors"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        03. Property Defaults and Initialization Constructors
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-02T19:45:59.000Z" class="dt-published" itemprop="datePublished">2023-03-02</time>
+        
+        (Updated: <time datetime="2023-11-07T13:55:54.306Z" class="dt-updated" itemprop="dateModified">2023-11-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/03-Structs/">03. Structs</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/constructors/" rel="tag">constructors</a>, <a class="p-category" href="/tags/initialization/" rel="tag">initialization</a>, <a class="p-category" href="/tags/struct/" rel="tag">struct</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 1 minutes to finish reading this article.</em></font></p>
+<p>We often use the following methods to initialize in OC.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OCDemoModelBuilder.h</span></span><br><span class="line"><span class="meta">@interface</span> <span class="type">OCDemoModelBuilder</span> : <span class="type">NSObject</span></span><br><span class="line"><span class="meta">@property</span> (nonatomic, copy, nonnull) <span class="type">NSString</span> <span class="operator">*</span>a;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, copy, nonnull) <span class="type">NSString</span> <span class="operator">*</span>b;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, copy, nonnull) <span class="type">NSString</span> <span class="operator">*</span>c;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, copy, nonnull) <span class="type">NSString</span> <span class="operator">*</span>d;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, copy, nonnull) <span class="type">NSString</span> <span class="operator">*</span>e;</span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"><span class="comment">// OCDemoModelBuilder.m</span></span><br><span class="line"><span class="meta">@implementation</span> <span class="type">OCDemoModelBuilder</span></span><br><span class="line"></span><br><span class="line"><span class="operator">-</span> (instancetype)<span class="keyword">init</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> <span class="operator">=</span> [<span class="keyword">super</span> <span class="keyword">init</span>]) &#123;</span><br><span class="line">        _a <span class="operator">=</span> @<span class="string">&quot;a&quot;</span>;</span><br><span class="line">        _b <span class="operator">=</span> @<span class="string">&quot;b&quot;</span>;</span><br><span class="line">        _c <span class="operator">=</span> @<span class="string">&quot;c&quot;</span>;</span><br><span class="line">        _d <span class="operator">=</span> @<span class="string">&quot;d&quot;</span>;</span><br><span class="line">        _e <span class="operator">=</span> @<span class="string">&quot;e&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// OCDemoModel.h</span></span><br><span class="line"><span class="meta">@interface</span> <span class="type">OCDemoModel</span> : <span class="type">NSObject</span></span><br><span class="line"><span class="meta">@property</span> (nonatomic, readonly, nonnull) <span class="type">NSString</span> <span class="operator">*</span>a;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, readonly, nonnull) <span class="type">NSString</span> <span class="operator">*</span>b;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, readonly, nonnull) <span class="type">NSString</span> <span class="operator">*</span>c;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, readonly, nonnull) <span class="type">NSString</span> <span class="operator">*</span>d;</span><br><span class="line"><span class="meta">@property</span> (nonatomic, readonly, nonnull) <span class="type">NSString</span> <span class="operator">*</span>e;</span><br><span class="line"></span><br><span class="line"><span class="operator">-</span> (instancetype)initWithBuilder:(void(<span class="operator">^</span>)(<span class="type">OCDemoModelBuilder</span> <span class="operator">*</span>builder))builderBlock;</span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// OCDemoModel.m</span></span><br><span class="line"><span class="meta">@implementation</span> <span class="type">OCDemoModel</span></span><br><span class="line"><span class="operator">-</span> (instancetype)initWithBuilder:(void(<span class="operator">^</span>)(<span class="type">OCDemoModelBuilder</span> <span class="operator">*</span>builder))builderBlock &#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">self</span> <span class="operator">=</span> [<span class="keyword">super</span> <span class="keyword">init</span>]) &#123;</span><br><span class="line">        <span class="type">OCDemoModelBuilder</span> <span class="operator">*</span>builder <span class="operator">=</span> [[<span class="type">OCDemoModelBuilder</span> alloc] <span class="keyword">init</span>];</span><br><span class="line">        <span class="keyword">if</span> (builderBlock) &#123;</span><br><span class="line">            builderBlock(builder);</span><br><span class="line">        &#125;</span><br><span class="line">        _a <span class="operator">=</span> builder.a;</span><br><span class="line">        _b <span class="operator">=</span> builder.b;</span><br><span class="line">        _c <span class="operator">=</span> builder.c;</span><br><span class="line">        _d <span class="operator">=</span> builder.d;</span><br><span class="line">        _e <span class="operator">=</span> builder.e;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="type">OCDemoModel</span> <span class="operator">*</span>ret <span class="operator">=</span> [[<span class="type">OCDemoModel</span> alloc] initWithBuilder:<span class="operator">^</span>(<span class="type">OCDemoModelBuilder</span> <span class="operator">*</span> _Nonnull builder) &#123;</span><br><span class="line">    builder.b <span class="operator">=</span> @<span class="string">&quot;b1&quot;</span>;</span><br><span class="line">&#125;];</span><br></pre></td></tr></table></figure>
+<p>However, Swift’s Struct supports attribute default values and initialization constructors, which greatly simplifies the process. The code is as follows:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">SwiftDemoModel</span> &#123;</span><br><span class="line">    <span class="keyword">var</span> a <span class="operator">=</span> <span class="string">&quot;a&quot;</span></span><br><span class="line">    <span class="keyword">var</span> b <span class="operator">=</span> <span class="string">&quot;b&quot;</span></span><br><span class="line">    <span class="keyword">var</span> c <span class="operator">=</span> <span class="string">&quot;c&quot;</span></span><br><span class="line">    <span class="keyword">var</span> d <span class="operator">=</span> <span class="string">&quot;d&quot;</span></span><br><span class="line">    <span class="keyword">var</span> e <span class="operator">=</span> <span class="string">&quot;e&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage</span></span><br><span class="line"><span class="keyword">let</span> ret <span class="operator">=</span> <span class="type">SwiftDemoModel</span>(b: <span class="string">&quot;b1&quot;</span>)</span><br><span class="line"><span class="comment">// ret = a,b1,c,d,e</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&text=03. Property Defaults and Initialization Constructors"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&is_video=false&description=03. Property Defaults and Initialization Constructors"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=03. Property Defaults and Initialization Constructors&body=Check out this article: https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&title=03. Property Defaults and Initialization Constructors"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&name=03. Property Defaults and Initialization Constructors&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/02/Swift/03.%20Structs/03.%20A%20Case%20of%20Initialization%20Constructor/&t=03. Property Defaults and Initialization Constructors"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
