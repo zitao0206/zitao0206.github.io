@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 1 minutes to finish reading this article. In Swift, you can customize subscripting, which allows you to access elements in a collection, list, or other types using subscript syntax.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="12. How to customize subscripting in Swift?">
+<meta property="og:url" content="https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 1 minutes to finish reading this article. In Swift, you can customize subscripting, which allows you to access elements in a collection, list, or other types using subscript syntax.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-07T15:53:04.053Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="subscript">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>12. How to customize subscripting in Swift?</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/07/Swift/00.%20Fundamental%20Concepts/04.%20Optional%20type%20in%20Swift/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/07/Swift/00.%20Fundamental%20Concepts/03.%20The%20Self%20and%20self%20in%20Swift/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&text=12. How to customize subscripting in Swift?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&is_video=false&description=12. How to customize subscripting in Swift?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=12. How to customize subscripting in Swift?&body=Check out this article: https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&name=12. How to customize subscripting in Swift?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&t=12. How to customize subscripting in Swift?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        12. How to customize subscripting in Swift?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-07T16:00:00.000Z" class="dt-published" itemprop="datePublished">2023-11-07</time>
+        
+        (Updated: <time datetime="2023-11-07T15:53:04.053Z" class="dt-updated" itemprop="dateModified">2023-11-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/01-Tips/">01. Tips</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/subscript/" rel="tag">subscript</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 1 minutes to finish reading this article.</em></font></p>
+<p>In Swift, you can customize subscripting, which allows you to access elements in a collection, list, or other types using subscript syntax. Here is an example of how to customize subscripting:</p>
+<p>Example 00:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">MyList</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> list: [<span class="type">Int</span>] <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">subscript</span>(<span class="params">index</span>: <span class="type">Int</span>) -&gt; <span class="type">Int</span>? &#123;</span><br><span class="line">        <span class="keyword">guard</span> index <span class="operator">&gt;=</span> <span class="number">0</span> <span class="operator">&amp;&amp;</span> index <span class="operator">&lt;</span> list.count <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">nil</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> list[index]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> myList <span class="operator">=</span> <span class="type">MyList</span>()</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> value <span class="operator">=</span> myList[<span class="number">2</span>] &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Value at index 2: <span class="subst">\(value)</span>&quot;</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;Index out of range&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>In this example, we define a structure called <code>MyList</code> and implement a subscripting method within it. The subscripting method takes an <code>Int</code> parameter as the index and returns the value corresponding to the index. If the index is out of the range of the list, it returns <code>nil</code>.</p>
+<p>Example 01:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Matrix</span> &#123;</span><br><span class="line">   <span class="keyword">let</span> rows: <span class="type">Int</span>, columns: <span class="type">Int</span></span><br><span class="line">   <span class="keyword">var</span> grid: [<span class="type">Double</span>]</span><br><span class="line">   <span class="keyword">init</span>(<span class="params">rows</span>: <span class="type">Int</span>, <span class="params">columns</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">       <span class="keyword">self</span>.rows <span class="operator">=</span> rows</span><br><span class="line">       <span class="keyword">self</span>.columns <span class="operator">=</span> columns</span><br><span class="line">       grid <span class="operator">=</span> <span class="type">Array</span>(repeating: <span class="number">0.0</span>, count: rows <span class="operator">*</span> columns)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">subscript</span>(<span class="params">row</span>: <span class="type">Int</span>, <span class="params">column</span>: <span class="type">Int</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">       <span class="keyword">get</span> &#123;</span><br><span class="line">           <span class="keyword">return</span> grid[(row <span class="operator">*</span> columns) <span class="operator">+</span> column]</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">set</span> &#123;</span><br><span class="line">           grid[(row <span class="operator">*</span> columns) <span class="operator">+</span> column] <span class="operator">=</span> newValue</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In this example, a structure called Matrix is defined, which has a subscript that accepts two parameters of type Int. This subscript returns a value of type Double and is readable and writable.</p>
+<p>Example 02:</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Vector3D</span> &#123;</span><br><span class="line">   <span class="keyword">var</span> x <span class="operator">=</span> <span class="number">0.0</span>, y <span class="operator">=</span> <span class="number">0.0</span>, z <span class="operator">=</span> <span class="number">0.0</span></span><br><span class="line">   <span class="keyword">subscript</span>(<span class="params">index</span>: <span class="type">Int</span>) -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">       <span class="keyword">get</span> &#123;</span><br><span class="line">           <span class="keyword">switch</span> index &#123;</span><br><span class="line">           <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">               <span class="keyword">return</span> x</span><br><span class="line">           <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">               <span class="keyword">return</span> y</span><br><span class="line">           <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">               <span class="keyword">return</span> z</span><br><span class="line">           <span class="keyword">default</span>:</span><br><span class="line">               <span class="built_in">fatalError</span>(<span class="string">&quot;Invalid index&quot;</span>)</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">set</span> &#123;</span><br><span class="line">           <span class="keyword">switch</span> index &#123;</span><br><span class="line">           <span class="keyword">case</span> <span class="number">0</span>:</span><br><span class="line">               x <span class="operator">=</span> newValue</span><br><span class="line">           <span class="keyword">case</span> <span class="number">1</span>:</span><br><span class="line">               y <span class="operator">=</span> newValue</span><br><span class="line">           <span class="keyword">case</span> <span class="number">2</span>:</span><br><span class="line">               z <span class="operator">=</span> newValue</span><br><span class="line">           <span class="keyword">default</span>:</span><br><span class="line">               <span class="built_in">fatalError</span>(<span class="string">&quot;Invalid index&quot;</span>)</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br><span class="line">​</span><br><span class="line"><span class="keyword">var</span> v <span class="operator">=</span> <span class="type">Vector3D</span>()</span><br><span class="line">v[<span class="number">0</span>] <span class="operator">=</span> <span class="number">1.0</span></span><br><span class="line">v[<span class="number">1</span>] <span class="operator">=</span> <span class="number">2.0</span></span><br><span class="line">v[<span class="number">2</span>] <span class="operator">=</span> <span class="number">3.0</span></span><br><span class="line"><span class="built_in">print</span>(v[<span class="number">0</span>]) <span class="comment">// Output &quot;1.0&quot;</span></span><br><span class="line"><span class="built_in">print</span>(v[<span class="number">1</span>]) <span class="comment">// Output &quot;2.0&quot;</span></span><br><span class="line"><span class="built_in">print</span>(v[<span class="number">2</span>]) <span class="comment">// Output &quot;3.0&quot;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>In this example, a structure named Vector3D is defined and a subscript is defined that accepts a parameter of type Int. This subscript returns a value of type Double and is readable and writable. Then, an instance v of Vector3D is created, and subscripts are used to get and set the properties of v.</p>
+<p>Customizing subscripting allows your type to support subscript syntax similar to arrays or dictionaries, making it more convenient to access and manipulate elements in custom types.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&text=12. How to customize subscripting in Swift?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&is_video=false&description=12. How to customize subscripting in Swift?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=12. How to customize subscripting in Swift?&body=Check out this article: https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&title=12. How to customize subscripting in Swift?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&name=12. How to customize subscripting in Swift?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/07/Swift/01.%20Tips/12.%20How%20to%20customize%20subscripting%20in%20Swift?/&t=12. How to customize subscripting in Swift?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
