@@ -6,7 +6,7 @@ git add -A
 
 echo "-------Begin-------"
 
-git commit -am "Add New Codes."
+git commit -am "Add or Modify Articles."
 
 git push
 
