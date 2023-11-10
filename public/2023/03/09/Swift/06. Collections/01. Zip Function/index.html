@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. This zip function is not used to compress files. It is used to merge the elements of two sequences one by one to generate a new sequence.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. The Operations of zip function">
+<meta property="og:url" content="https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. This zip function is not used to compress files. It is used to merge the elements of two sequences one by one to generate a new sequence.">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-03-09T19:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-07T13:57:26.154Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="collection">
+<meta property="article:tag" content="zip">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. The Operations of zip function</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/03/10/Swift/08.%20Hybrid%20Programming/00.%20Call%20the%20Macro%20definition%20of%20Objective-C%20in%20Swift/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/03/08/iOS/01.%20Memory%20&%20Performance%20&%20Stability/00.%20Summary%20of%20Memory%20Leak/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&text=00. The Operations of zip function"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&is_video=false&description=00. The Operations of zip function"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. The Operations of zip function&body=Check out this article: https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&name=00. The Operations of zip function&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&t=00. The Operations of zip function"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Merge-two-arrays-into-a-new-tuple-array"><span class="toc-number">1.</span> <span class="toc-text"> 1. Merge two arrays into a new tuple array</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Creating-dictionaries-from-key-value-sequences"><span class="toc-number">2.</span> <span class="toc-text"> 2. Creating dictionaries from key value sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Merge-the-two-arrays-into-a-new-array"><span class="toc-number">3.</span> <span class="toc-text"> 3. Merge the two arrays into a new array</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Other-convenient-operations"><span class="toc-number">4.</span> <span class="toc-text"> 4. Other convenient operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. The Operations of zip function
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-09T19:00:00.000Z" class="dt-published" itemprop="datePublished">2023-03-09</time>
+        
+        (Updated: <time datetime="2023-11-07T13:57:26.154Z" class="dt-updated" itemprop="dateModified">2023-11-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Swift/">Swift</a> › <a class="category-link" href="/categories/Swift/06-Collections/">06. Collections</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/collection/" rel="tag">collection</a>, <a class="p-category" href="/tags/zip/" rel="tag">zip</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>This zip function is not used to compress files. It is used to merge the elements of two sequences one by one to generate a new sequence.</p>
+<h4 id="1-Merge-two-arrays-into-a-new-tuple-array"><a href="#1-Merge-two-arrays-into-a-new-tuple-array" class="headerlink" title=" 1. Merge two arrays into a new tuple array"></a><font size=3 color=#4169E1> 1. Merge two arrays into a new tuple array</font></h4><details>
+<summary>Details</summary>
+In the following code, we combine zip with map to generate a new array. Note: The number of new sequences generated by the zip function is the minimum of the original sequence.
+
+<p><strong> Example Code </strong></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>]</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> [ <span class="string">&quot;a&quot;</span> ,  <span class="string">&quot;b&quot;</span> ,  <span class="string">&quot;c&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="built_in">zip</span>(a, b).map&#123; <span class="variable">$0</span> &#125;</span><br><span class="line"><span class="built_in">print</span>(c)</span><br><span class="line"><span class="comment">//result: [(1, &quot;a&quot;), (2, &quot;b&quot;), (3, &quot;c&quot;)]</span></span><br></pre></td></tr></table></figure>
+<p>Since the whole operation will stop after a short sequence ends in the zip process, we can also use one-way intervals here. The running results of the following code are the same as those above.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> <span class="built_in">zip</span>(<span class="number">1</span><span class="operator">...</span>, b).map&#123; <span class="variable">$0</span> &#125;</span><br><span class="line"><span class="built_in">print</span>(c) </span><br><span class="line"><span class="comment">//result: [(1, &quot;a&quot;), (2, &quot;b&quot;), (3, &quot;c&quot;)]</span></span><br></pre></td></tr></table></figure>
+</details>
+
+
+<h4 id="2-Creating-dictionaries-from-key-value-sequences"><a href="#2-Creating-dictionaries-from-key-value-sequences" class="headerlink" title=" 2. Creating dictionaries from key value sequences"></a><font size=3 color=#4169E1> 2. Creating dictionaries from key value sequences</font></h4><details>
+<summary>Details</summary>
+
+<p>The following code combines the two arrays into a dictionary.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> names <span class="operator">=</span> [<span class="string">&quot;Apple&quot;</span>, <span class="string">&quot;Pear&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> prices <span class="operator">=</span> [<span class="number">7</span>, <span class="number">6</span>]</span><br><span class="line"><span class="keyword">let</span> dict <span class="operator">=</span>  <span class="type">Dictionary</span>(uniqueKeysWithValues:<span class="built_in">zip</span>(names, prices))</span><br><span class="line"><span class="built_in">print</span>(dict)</span><br><span class="line"><span class="comment">//result: [&quot;Apple&quot;: 7, &quot;Pear&quot;: 6]</span></span><br></pre></td></tr></table></figure>
+<p>Zip and shorthand + can be used to solve the problem of duplicate keys. For example, the array is converted into a dictionary. The dictionary key is the value of the array element, and the dictionary value is the number of occurrences of the element.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> array <span class="operator">=</span> [ <span class="string">&quot;Apple&quot;</span>,  <span class="string">&quot;Pear&quot;</span>,  <span class="string">&quot;Pear&quot;</span>,  <span class="string">&quot;Orange&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> dic <span class="operator">=</span> <span class="type">Dictionary</span>(<span class="built_in">zip</span>(array, <span class="built_in">repeatElement</span>(<span class="number">1</span>, count: array.count)), uniquingKeysWith: <span class="operator">+</span>)</span><br><span class="line">print (dic)</span><br><span class="line"><span class="comment">//result: [&quot;Pear&quot;: 2, &quot;Apple&quot;: 1, &quot;Orange&quot;: 1]</span></span><br></pre></td></tr></table></figure>
+</details>
+
+<h4 id="3-Merge-the-two-arrays-into-a-new-array"><a href="#3-Merge-the-two-arrays-into-a-new-array" class="headerlink" title=" 3. Merge the two arrays into a new array"></a><font size=3 color=#4169E1> 3. Merge the two arrays into a new array</font></h4><details>
+<summary>Details</summary>
+
+<p>We know that the flatMap function can also open arrays (two-dimensional arrays, N-dimensional arrays) containing arrays into a new array, but the order of elements in the new array is one after another according to the original array order.With zip, two array elements can be inserted at intervals. The following code compares the two methods.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> [<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;d&quot;</span>]</span><br><span class="line"><span class="keyword">let</span> b <span class="operator">=</span> [<span class="string">&quot;A&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;D&quot;</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> c <span class="operator">=</span> [a, b].flatMap(&#123; <span class="variable">$0</span> &#125;)</span><br><span class="line">print (<span class="string">&quot;c：<span class="subst">\(c)</span>&quot;</span> )</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> d <span class="operator">=</span> <span class="built_in">zip</span>(a, b).flatMap(&#123;[<span class="variable">$0</span>, <span class="variable">$1</span>]&#125;)</span><br><span class="line">print (<span class="string">&quot;d：<span class="subst">\(d)</span>&quot;</span> )</span><br><span class="line"><span class="comment">//result:</span></span><br><span class="line"><span class="comment">//c：[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;]</span></span><br><span class="line">d：[<span class="string">&quot;a&quot;</span>, <span class="string">&quot;A&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;B&quot;</span>, <span class="string">&quot;c&quot;</span>, <span class="string">&quot;C&quot;</span>, <span class="string">&quot;d&quot;</span>, <span class="string">&quot;D&quot;</span>]</span><br></pre></td></tr></table></figure>
+</details>
+
+<h4 id="4-Other-convenient-operations"><a href="#4-Other-convenient-operations" class="headerlink" title=" 4. Other convenient operations"></a><font size=3 color=#4169E1> 4. Other convenient operations</font></h4><details>
+<summary>Details</summary>
+
+<p>4.1 Generate the corresponding button array according to the String array.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> titles <span class="operator">=</span> [ <span class="string">&quot;Button 1&quot;</span> ,  <span class="string">&quot;Button 2&quot;</span> ,  <span class="string">&quot;Button 3&quot;</span> ]</span><br><span class="line"><span class="keyword">let</span> buttons <span class="operator">=</span> <span class="built_in">zip</span>(<span class="number">0</span><span class="operator">...</span>, titles).map &#123; (i, title) -&gt;  <span class="type">UIButton</span>  <span class="keyword">in</span></span><br><span class="line">     <span class="keyword">let</span> button <span class="operator">=</span>  <span class="type">UIButton</span> (type: .system)</span><br><span class="line">     button.setTitle(title,  for :.normal)</span><br><span class="line">     button.tag <span class="operator">=</span> i</span><br><span class="line">     <span class="keyword">return</span> button</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>4.2 Set the buttons in the button array to the colors in the corresponding color array</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">zip</span>(<span class="keyword">self</span>.buttons,  <span class="keyword">self</span>.colors).forEach &#123; (button, color)  <span class="keyword">in</span></span><br><span class="line">     button.backgroundColor <span class="operator">=</span> color</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//or</span></span><br><span class="line"><span class="built_in">zip</span>(<span class="keyword">self</span>.buttons,  <span class="keyword">self</span>.colors).forEach &#123;</span><br><span class="line">     <span class="variable">$0</span>.<span class="number">0</span>.backgroundColor <span class="operator">=</span> <span class="variable">$0</span>.<span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</details>
+
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://blog.csdn.net/mo_xiao_mo/article/details/78424769">https://blog.csdn.net/mo_xiao_mo/article/details/78424769</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Merge-two-arrays-into-a-new-tuple-array"><span class="toc-number">1.</span> <span class="toc-text"> 1. Merge two arrays into a new tuple array</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Creating-dictionaries-from-key-value-sequences"><span class="toc-number">2.</span> <span class="toc-text"> 2. Creating dictionaries from key value sequences</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Merge-the-two-arrays-into-a-new-array"><span class="toc-number">3.</span> <span class="toc-text"> 3. Merge the two arrays into a new array</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Other-convenient-operations"><span class="toc-number">4.</span> <span class="toc-text"> 4. Other convenient operations</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&text=00. The Operations of zip function"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&is_video=false&description=00. The Operations of zip function"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. The Operations of zip function&body=Check out this article: https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&title=00. The Operations of zip function"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&name=00. The Operations of zip function&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/03/09/Swift/06.%20Collections/01.%20Zip%20Function/&t=00. The Operations of zip function"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
