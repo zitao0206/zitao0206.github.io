@@ -14,7 +14,7 @@
 <meta property="og:description" content="It will take about 5 minutes to finish reading this article. Essentially, no matter which caching method is used, it will eventually be stored on the disk in the form of a file, but the upper layer pe">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-11-14T13:30:00.000Z">
-<meta property="article:modified_time" content="2023-11-14T14:06:14.269Z">
+<meta property="article:modified_time" content="2023-11-14T21:23:09.424Z">
 <meta property="article:author" content="Zitao">
 <meta property="article:tag" content="Data Persistence">
 <meta name="twitter:card" content="summary">
@@ -119,7 +119,7 @@
     
     
       <div id="toc">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-UserDefaults"><span class="toc-number">1.</span> <span class="toc-text"> 1. UserDefaults </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-File-Cache"><span class="toc-number">2.</span> <span class="toc-text"> 2. File Cache </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Keychain"><span class="toc-number">3.</span> <span class="toc-text"> 3. Keychain </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Core-Data"><span class="toc-number">4.</span> <span class="toc-text"> 4. Core Data </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Database-SQLite"><span class="toc-number">5.</span> <span class="toc-text"> 5. Database (SQLite) </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Core-Data"><span class="toc-number">6.</span> <span class="toc-text"> 6. Core Data </span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-UserDefaults"><span class="toc-number">1.</span> <span class="toc-text"> 1. UserDefaults </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-File-Cache"><span class="toc-number">2.</span> <span class="toc-text"> 2. File Cache </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Keychain"><span class="toc-number">3.</span> <span class="toc-text"> 3. Keychain </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Core-Data"><span class="toc-number">4.</span> <span class="toc-text"> 4. Core Data </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Database-SQLite"><span class="toc-number">5.</span> <span class="toc-text"> 5. Database (SQLite) </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Summary"><span class="toc-number">6.</span> <span class="toc-text"> 6. Summary </span></a></li></ol>
       </div>
     
   </span>
@@ -146,7 +146,7 @@
       
         <time datetime="2023-11-14T13:30:00.000Z" class="dt-published" itemprop="datePublished">2023-11-14</time>
         
-        (Updated: <time datetime="2023-11-14T14:06:14.269Z" class="dt-updated" itemprop="dateModified">2023-11-14</time>)
+        (Updated: <time datetime="2023-11-14T21:23:09.424Z" class="dt-updated" itemprop="dateModified">2023-11-14</time>)
         
       
     </div>
@@ -175,7 +175,7 @@
 <p>Essentially, no matter which caching method is used, it will eventually be stored on the disk in the form of a file, but the upper layer performs some kind of “encapsulation” or “abstraction”, so it is still classified. Currently, iOS local persistent Cache has the following forms:</p>
 <p><strong>1. UserDefaults</strong><br><strong>2. File Cache</strong><br><strong>3. Keychain</strong><br><strong>4. Core Data</strong><br><strong>5. Database (SQLite)</strong>    </p>
 <p>Note: What is discussed here is only the persistent cache. If we simply discuss the cache, strictly speaking, memory caches such as NSCache, NSURLCache, etc. should also be taken into consideration. Below we will introduce these caching mechanisms from the aspects of principles, sample code, precautions, etc.</p>
-<h4 id="1-UserDefaults"><a href="#1-UserDefaults" class="headerlink" title=" 1. UserDefaults "></a><font size=3 color=#4169E1> 1. UserDefaults </font></h4><p>UserDefaults is a common lightweight caching mechanism in iOS. It can be used to store application configuration information, user preferences, temporary cache data, etc.</p>
+<h4 id="1-UserDefaults"><a href="#1-UserDefaults" class="headerlink" title=" 1. UserDefaults "></a><font size=5 color=#4169E1> 1. UserDefaults </font></h4><p>UserDefaults is a common lightweight caching mechanism in iOS. It can be used to store application configuration information, user preferences, temporary cache data, etc.</p>
 <p><strong>Principle description:</strong></p>
 <p>UserDefaults uses plist files for storage, which saves cached data in the file in the form of key-value. This file is stored in the Library&#x2F;Preferences directory in the application sandbox and is automatically managed by the system.</p>
 <p><strong>Sample Code:</strong></p>
@@ -188,7 +188,7 @@
 <p>When using UserDefaults to store sensitive data, encryption is required to ensure data security.</p>
 <p><strong>Summarize:</strong></p>
 <p>UserDefaults is a common lightweight caching mechanism in iOS. It uses plist files for storage and supports the storage of basic data types and some object types in the Foundation framework. It is easy to use and simple, but you need to pay attention to the limitations of stored data types and data security. question.</p>
-<h4 id="2-File-Cache"><a href="#2-File-Cache" class="headerlink" title=" 2. File Cache "></a><font size=3 color=#4169E1> 2. File Cache </font></h4><p>The file caching mechanism is also a common caching method.</p>
+<h4 id="2-File-Cache"><a href="#2-File-Cache" class="headerlink" title=" 2. File Cache "></a><font size=5 color=#4169E1> 2. File Cache </font></h4><p>The file caching mechanism is also a common caching method.</p>
 <p><strong>Principle Description:</strong></p>
 <p>It is a method of permanently saving an application’s data in the local file system so that the data can be read quickly the next time the application is launched. This caching mechanism works by saving data to the application’s sandbox directory and reading that data the next time the application starts.</p>
 <p><strong>Sample Code:</strong></p>
@@ -234,7 +234,7 @@
 <p>(2) KeyedArchiver will serialize objects into binary data, so you need to pay attention to memory consumption issues.</p>
 <p>(3) For some sensitive data, data security needs to be considered. Encryption algorithms can be used to protect data security.</p>
 <p>(4) Pay attention to errors when handling file reading and writing to avoid program crashes or data loss.</p>
-<h4 id="3-Keychain"><a href="#3-Keychain" class="headerlink" title=" 3. Keychain "></a><font size=3 color=#4169E1> 3. Keychain </font></h4><p>Keychain is a persistent caching mechanism for iOS and part of the security framework in iOS, providing an API for storing and retrieving data in a secure manner.</p>
+<h4 id="3-Keychain"><a href="#3-Keychain" class="headerlink" title=" 3. Keychain "></a><font size=5 color=#4169E1> 3. Keychain </font></h4><p>Keychain is a persistent caching mechanism for iOS and part of the security framework in iOS, providing an API for storing and retrieving data in a secure manner.</p>
 <p><strong>Principle Description:</strong></p>
 <p>Data in Keychain is stored in a protected system area, which is completely isolated and data cannot be shared between different applications. Each application has its own Keychain, which can only access its own data and not other applications’ data. This isolation ensures the security of Keychain storage.</p>
 <p>It guarantees secure storage and retrieval of sensitive data between application launch and device restart. It stores data such as passwords, encryption keys, and other credentials in an encrypted manner so that it cannot be accessed by other applications and systems.</p>
@@ -270,7 +270,7 @@
 <p>(4) Keychain is a secure storage mechanism, but it is not perfect. For example, a jailbroken device can access data stored in Keychain. Therefore, highly sensitive data should not be stored in Keychain. So sensitive information still needs to be used and stored with caution.</p>
 <p>(5) When handling Keychain, attention should be paid to handling possible errors to avoid program crash or data loss.</p>
 <p>Apple also provides a wealth of development documentation for keychain, including Keychain Services Programming Guide: the article includes keychain development using mac and ios.</p>
-<h4 id="4-Core-Data"><a href="#4-Core-Data" class="headerlink" title=" 4. Core Data "></a><font size=3 color=#4169E1> 4. Core Data </font></h4><p>Core Data is a data management framework provided by Apple that provides a convenient way to manage and manipulate data in applications. The most important feature is persistent storage, which stores data in local files so that it can be used the next time the application starts.</p>
+<h4 id="4-Core-Data"><a href="#4-Core-Data" class="headerlink" title=" 4. Core Data "></a><font size=5 color=#4169E1> 4. Core Data </font></h4><p>Core Data is a data management framework provided by Apple that provides a convenient way to manage and manipulate data in applications. The most important feature is persistent storage, which stores data in local files so that it can be used the next time the application starts.</p>
 <p><strong>Principle Description:</strong></p>
 <p>In Core Data, persistent storage is implemented using a SQLite database. SQLite is a lightweight embedded database that can be easily embedded into applications, providing an efficient and reliable way to store data.</p>
 <p><strong>Usage example:</strong></p>
@@ -286,7 +286,7 @@
 <p>(2) Core Data provides a variety of persistent storage methods, such as SQLite, binary files, XML files, etc. Developers need to choose the appropriate storage method based on specific needs.</p>
 <p>(3) Core Data is a thread-safe framework, but multi-threaded programming still requires attention to thread safety issues. It is recommended to create a separate managed object context in each thread.</p>
 <p>In short, Core Data is a powerful persistent storage in iOS.</p>
-<h4 id="5-Database-SQLite"><a href="#5-Database-SQLite" class="headerlink" title=" 5. Database (SQLite) "></a><font size=3 color=#4169E1> 5. Database (SQLite) </font></h4><p>In iOS, SQLite is a lightweight database engine that is widely used for persistent storage. SQLite uses files as data storage media to store and read data by encoding and decoding data. In iOS, SQLite is used to develop native applications to store large amounts of structured data.</p>
+<h4 id="5-Database-SQLite"><a href="#5-Database-SQLite" class="headerlink" title=" 5. Database (SQLite) "></a><font size=5 color=#4169E1> 5. Database (SQLite) </font></h4><p>In iOS, SQLite is a lightweight database engine that is widely used for persistent storage. SQLite uses files as data storage media to store and read data by encoding and decoding data. In iOS, SQLite is used to develop native applications to store large amounts of structured data.</p>
 <p><strong>Principle Description</strong></p>
 <p>SQLite is a disk-based relational database that supports SQL language operations. SQLite stores all data in a single file that can be easily copied, backed up, and transferred. SQLite is characterized by occupying very little memory and being fast, making it suitable for resource-constrained environments such as mobile devices.</p>
 <p><strong>Usage example:</strong></p>
@@ -305,7 +305,7 @@
 <p>(1) It is necessary to manually write SQL statements to perform data operations, which may be difficult for developers who are not familiar with the SQL language.</p>
 <p>(2) Thread safety needs to be ensured when performing data operations. You can use the transaction mechanism provided by SQLite to perform data operations to avoid data damage or loss.</p>
 <p>(3) SQLite database files can be easily copied, backed up and transferred, but data security issues need to be paid attention to.</p>
-<h4 id="6-Core-Data"><a href="#6-Core-Data" class="headerlink" title=" 6. Core Data "></a><font size=3 color=#4169E1> 6. Core Data </font></h4><p>Summarize<br>After the above introduction, we can summarize it as follows:</p>
+<h4 id="6-Summary"><a href="#6-Summary" class="headerlink" title=" 6. Summary "></a><font size=5 color=#4169E1> 6. Summary </font></h4><p>After the above introduction, we can summarize it as follows:</p>
 <p><strong>UserDefaults</strong></p>
 <p>UserDefaults is a lightweight persistent storage method suitable for storing some simple configuration information or user preferences. Its advantage is that it is simple and easy to use, without having to consider issues such as data models and data migration. But its disadvantage is that it can only store some basic data types and cannot support complex data structures.</p>
 <p>Best application scenario: Suitable for storing a small amount of simple configuration information or user preferences.</p>
@@ -353,7 +353,7 @@
     
     
       <div id="toc-footer" style="display: none">
-        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-UserDefaults"><span class="toc-number">1.</span> <span class="toc-text"> 1. UserDefaults </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-File-Cache"><span class="toc-number">2.</span> <span class="toc-text"> 2. File Cache </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Keychain"><span class="toc-number">3.</span> <span class="toc-text"> 3. Keychain </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Core-Data"><span class="toc-number">4.</span> <span class="toc-text"> 4. Core Data </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Database-SQLite"><span class="toc-number">5.</span> <span class="toc-text"> 5. Database (SQLite) </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Core-Data"><span class="toc-number">6.</span> <span class="toc-text"> 6. Core Data </span></a></li></ol>
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-UserDefaults"><span class="toc-number">1.</span> <span class="toc-text"> 1. UserDefaults </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-File-Cache"><span class="toc-number">2.</span> <span class="toc-text"> 2. File Cache </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Keychain"><span class="toc-number">3.</span> <span class="toc-text"> 3. Keychain </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-Core-Data"><span class="toc-number">4.</span> <span class="toc-text"> 4. Core Data </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-Database-SQLite"><span class="toc-number">5.</span> <span class="toc-text"> 5. Database (SQLite) </span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Summary"><span class="toc-number">6.</span> <span class="toc-text"> 6. Summary </span></a></li></ol>
       </div>
     
 
