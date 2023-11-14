@@ -11,11 +11,16 @@ else
     input="$1"
 fi
 
+sleep 3
+
 if [ "$input" ]; then
     git commit -am "$input"
 else
     git commit -am "Publish or edit articles."
 fi
+
+sleep 3
+
 git push
 
 echo "--------End--------"
