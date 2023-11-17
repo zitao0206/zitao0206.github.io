@@ -13,18 +13,18 @@
 <meta property="og:site_name" content="iOS Hunter Notes">
 <meta property="og:description" content="It will take about 5 minutes to finish reading this article. 1. Code Merge Commands1.1 git merge  For merging changes from one branch to another, execute the following command on the target branch. It">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/03_gitlog.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/04_gitshortlog.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/05_gitshow.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/06_gitblame.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/07_gitreflog.png">
-<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/08_gitshortlogsn.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/03_gitlog.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/04_gitshortlog.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/05_gitshow.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/06_gitblame.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/07_gitreflog.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/08_gitshortlogsn.png">
 <meta property="article:published_time" content="2023-11-16T14:00:00.000Z">
-<meta property="article:modified_time" content="2023-11-16T10:20:29.828Z">
+<meta property="article:modified_time" content="2023-11-17T10:22:46.974Z">
 <meta property="article:author" content="Zitao">
 <meta property="article:tag" content="git">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/03_gitlog.png">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/00/03_gitlog.png">
     
     
       
@@ -95,6 +95,8 @@
     <span id="actions">
       <ul>
         
+        <li><a class="icon" aria-label="Previous post" href="/2023/11/17/iOS/04.%20Tools%20&%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
         
         <li><a class="icon" aria-label="Next post" href="/2023/11/14/iOS/01.%20Memory%20&%20Performance%20&%20Stability/02.%20Summary%20of%20Local%20Data%20Persistence%20Solutions/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
@@ -153,7 +155,7 @@
       
         <time datetime="2023-11-16T14:00:00.000Z" class="dt-published" itemprop="datePublished">2023-11-16</time>
         
-        (Updated: <time datetime="2023-11-16T10:20:29.828Z" class="dt-updated" itemprop="dateModified">2023-11-16</time>)
+        (Updated: <time datetime="2023-11-17T10:22:46.974Z" class="dt-updated" itemprop="dateModified">2023-11-17</time>)
         
       
     </div>
@@ -243,31 +245,31 @@
 <p>‘git status’ is used to view the status of the workspace and staging area, showing which files have been modified, which files have been staged, and whether there are untracked files.</p>
 <p><font size=4><strong>2.2 git log</strong></font> </p>
 <p>Used to view submission history and display detailed information of all submissions, including submitter, submission time, submission information, etc.</p>
-<img src="/assets/iOS/Tools&Configurations/03_gitlog.png" class="">   
+<img src="/assets/iOS/Tools&Configurations/00/03_gitlog.png" class="">   
 
 <p><font size=4><strong>2.3 git shortlog</strong></font></p>
 <p>Used to generate a brief log of submitters and display submission information grouped by submitters.</p>
-<img src="/assets/iOS/Tools&Configurations/04_gitshortlog.png" class="">   
+<img src="/assets/iOS/Tools&Configurations/00/04_gitshortlog.png" class="">   
 
 <p><font size=4><strong>2.4 git show</strong></font></p>
 <p>Used to display details of a single commit, including changes to the commit’s content.</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show 1eb6b3788eaf9545c4b44aa5ef6193a9613abbf4</span><br></pre></td></tr></table></figure>
 
-<img src="/assets/iOS/Tools&Configurations/05_gitshow.png" class=""> 
+<img src="/assets/iOS/Tools&Configurations/00/05_gitshow.png" class=""> 
 
 <p><font size=4><strong>2.5 git blame</strong></font></p>
 <p>Used to display the modification history of a file line by line, showing who modified each line in which commit.</p>
 <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git blame <span class="type">LocalPods</span><span class="operator">/</span><span class="type">CodeFavorites</span><span class="operator">/</span><span class="type">CodeFavorites</span>.podspec</span><br></pre></td></tr></table></figure>
 
-<img src="/assets/iOS/Tools&Configurations/06_gitblame.png" class=""> 
+<img src="/assets/iOS/Tools&Configurations/00/06_gitblame.png" class=""> 
 
 <p><font size=4><strong>2.6 git reflog</strong></font></p>
 <p>Used to display the recent commit history of the current branch.</p>
-<img src="/assets/iOS/Tools&Configurations/07_gitreflog.png" class=""> 
+<img src="/assets/iOS/Tools&Configurations/00/07_gitreflog.png" class=""> 
 
 <p><font size=4><strong>2.7 git shortlog -sn</strong></font></p>
 <p>Display all users who have submitted, sorted by number of submissions</p>
-<img src="/assets/iOS/Tools&Configurations/08_gitshortlogsn.png" class=""> 
+<img src="/assets/iOS/Tools&Configurations/00/08_gitshortlogsn.png" class=""> 
 
 <p><font size=4><strong>2.8 git diff</strong></font></p>
 <p><strong>git diff</strong></p>

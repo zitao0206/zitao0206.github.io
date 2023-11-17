@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. In iOS App development, users are often faced with various network environments. If you want a better experience, you must not only be able">
+<meta property="og:type" content="article">
+<meta property="og:title" content="01. How to simulate a weak network environment in iOS?">
+<meta property="og:url" content="https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. In iOS App development, users are often faced with various network environments. If you want a better experience, you must not only be able">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/00.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/01.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/02.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/03.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/04.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/05.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/06.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/07.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/08.png">
+<meta property="og:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/09.png">
+<meta property="article:published_time" content="2023-11-17T10:00:00.000Z">
+<meta property="article:modified_time" content="2023-11-17T10:45:07.776Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="weak network">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://zitao0206.github.io/assets/iOS/Tools&Configurations/01/00.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>01. How to simulate a weak network environment in iOS?</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/16/iOS/04.%20Tools%20&%20Configurations/00.%20Common%20Git%20Commands/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&text=01. How to simulate a weak network environment in iOS?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&is_video=false&description=01. How to simulate a weak network environment in iOS?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. How to simulate a weak network environment in iOS?&body=Check out this article: https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&name=01. How to simulate a weak network environment in iOS?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&t=01. How to simulate a weak network environment in iOS?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-The-built-in-network-link-regulator-on-iOS"><span class="toc-number">1.</span> <span class="toc-text">1. The built-in network link regulator on iOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Use-Charles-to-simulate-a-weak-network"><span class="toc-number">2.</span> <span class="toc-text">2. Use Charles to simulate a weak network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Mac-computer-configuration-weak-network"><span class="toc-number">3.</span> <span class="toc-text">3. Mac computer configuration weak network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        01. How to simulate a weak network environment in iOS?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-17T10:00:00.000Z" class="dt-published" itemprop="datePublished">2023-11-17</time>
+        
+        (Updated: <time datetime="2023-11-17T10:45:07.776Z" class="dt-updated" itemprop="dateModified">2023-11-17</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/04-Tools-Configurations/">04. Tools & Configurations</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/weak-network/" rel="tag">weak network</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>In iOS App development, users are often faced with various network environments. If you want a better experience, you must not only be able to run normally in a normal network environment, but also in a weak network environment.</p>
+<p>Here are several ways to simulate a weak network environment.</p>
+<h4 id="1-The-built-in-network-link-regulator-on-iOS"><a href="#1-The-built-in-network-link-regulator-on-iOS" class="headerlink" title="1. The built-in network link regulator on iOS"></a><font size=5 color=#4169E1>1. The built-in network link regulator on iOS</font></h4><p>The iOS settings come with a network regulator for development by default, which can be used to simulate a weak network environment. Open the phone system settings, scroll down, and find the <code>Developer</code>.</p>
+<img src="/assets/iOS/Tools&Configurations/01/00.png" class=""> 
+
+<p>If you don’t see this option in your phone’s settings, you can open Xcode first, then connect it to your phone with a data cable, and you’ll see the developer options after a while.</p>
+<p><strong>Note: For iOS 16 and above, you need to turn on the developer mode in Privacy and Security in settings.</strong></p>
+<p>Click on the <code>Developer</code> and you can see the <code>Network link Conditioner</code> column. Click on it again to simulate various network scenarios.</p>
+<img src="/assets/iOS/Tools&Configurations/01/01.png" class=""> 
+
+<p>You can find some of the system’s default network configurations (100% loss, 3G network, Wi-Fi, etc.) on this page. First turn on the enable switch, and then click on one of the presets to select the default network.</p>
+<img src="/assets/iOS/Tools&Configurations/01/02.png" class=""> 
+
+<p>Now you can test your app in this network state.</p>
+<p>Click the information button to the right of the preset to see the specific parameters of this network configuration, but they cannot be modified.</p>
+<p>If these preset configurations cannot meet your needs, you can also click the <code>Add a profile</code> button below to customize a configuration. You can customize bandwidth, packet loss, delay and other parameters.</p>
+<img src="/assets/iOS/Tools&Configurations/01/03.png" class=""> 
+
+
+<h4 id="2-Use-Charles-to-simulate-a-weak-network"><a href="#2-Use-Charles-to-simulate-a-weak-network" class="headerlink" title="2. Use Charles to simulate a weak network"></a><font size=5 color=#4169E1>2. Use Charles to simulate a weak network</font></h4><p>You can also use packet capture tools such as Charles to simulate weak networks. First, open the Charles client on your computer. After configuring the <code>Proxy</code>, select Proxy on the top toolbar, and then click <code>Throttle Settings</code> in the drop-down menu.</p>
+<img src="/assets/iOS/Tools&Configurations/01/04.png" class=""> 
+
+<p>In the pop-up page, just make settings. You can directly select the Throttle preset option, or directly customize the values in the bandwidth, packet loss, etc. input boxes below.</p>
+<img src="/assets/iOS/Tools&Configurations/01/05.png" class=""> 
+
+<p>After clicking OK, you can perform a weak network test in the App.</p>
+<h4 id="3-Mac-computer-configuration-weak-network"><a href="#3-Mac-computer-configuration-weak-network" class="headerlink" title="3. Mac computer configuration weak network"></a><font size=5 color=#4169E1>3. Mac computer configuration weak network</font></h4><p>In addition to the above two methods, if you want to run tests in the simulator, you may need to simulate a weak network on your Mac. Xcode has some additional tools to do this.</p>
+<p>Open Xcode and click on the top menu Xcode -&gt; Open Developer Tool -&gt; More Developer Tool. By default, the browser will open and jump to Apple’s download website <a target="_blank" rel="noopener" href="https://developer.apple.com/download/all">https://developer.apple.com/download/all</a>. After entering, you need to Log in to your developer account.</p>
+<img src="/assets/iOS/Tools&Configurations/01/06.png" class=""> 
+
+<p>Then search for network tool in the input box. Xcode’s Additional Tools will appear in the search results. Click to download.</p>
+<img src="/assets/iOS/Tools&Configurations/01/07.png" class=""> 
+
+
+<p>After downloading, open this file on your computer, then open the Hardware folder, and you will see the <code>Network Link Conditioner.perfPane</code> file. Double-click it to open it and follow the prompts to install it.</p>
+<img src="/assets/iOS/Tools&Configurations/01/08.png" class=""> 
+
+<p>After installation, you can see more <code>Network Link Conditioner</code> options in the system settings. After clicking on it, you can operate the weak network in the same way as on your mobile phone.</p>
+<img src="/assets/iOS/Tools&Configurations/01/09.png" class=""> 
+
+<p>You can also manage and add customized configurations by clicking <code>Manage Profiles</code> in the lower right corner.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=5 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/AQ8YS83FPCzj7HnoxyyybA">https://mp.weixin.qq.com/s/AQ8YS83FPCzj7HnoxyyybA</a>
+ </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-The-built-in-network-link-regulator-on-iOS"><span class="toc-number">1.</span> <span class="toc-text">1. The built-in network link regulator on iOS</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Use-Charles-to-simulate-a-weak-network"><span class="toc-number">2.</span> <span class="toc-text">2. Use Charles to simulate a weak network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Mac-computer-configuration-weak-network"><span class="toc-number">3.</span> <span class="toc-text">3. Mac computer configuration weak network</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&text=01. How to simulate a weak network environment in iOS?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&is_video=false&description=01. How to simulate a weak network environment in iOS?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=01. How to simulate a weak network environment in iOS?&body=Check out this article: https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&title=01. How to simulate a weak network environment in iOS?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&name=01. How to simulate a weak network environment in iOS?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/17/iOS/04.%20Tools%20&amp;%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/&t=01. How to simulate a weak network environment in iOS?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
