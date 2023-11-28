@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. Here is a summary of all the possible reasons for publishing failure in Hexo. 1. MVC(Model-View-Controller)Model: Responsible for the data">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. Common Architectural Design Patterns">
+<meta property="og:url" content="https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&%20Design/00.%20Common%20Architectural%20Design%20Patterns/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. Here is a summary of all the possible reasons for publishing failure in Hexo. 1. MVC(Model-View-Controller)Model: Responsible for the data">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-11-28T17:20:00.000Z">
+<meta property="article:modified_time" content="2023-11-28T17:40:01.837Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="MVC">
+<meta property="article:tag" content="MVVM">
+<meta property="article:tag" content="MVP">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. Common Architectural Design Patterns</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/17/iOS/04.%20Tools%20&%20Configurations/01.%20How%20to%20simulate%20a%20weak%20network%20environment%20in%20iOS/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&text=00. Common Architectural Design Patterns"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&is_video=false&description=00. Common Architectural Design Patterns"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Common Architectural Design Patterns&body=Check out this article: https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&name=00. Common Architectural Design Patterns&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&t=00. Common Architectural Design Patterns"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-MVC-Model-View-Controller"><span class="toc-number">1.</span> <span class="toc-text">1. MVC(Model-View-Controller)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-MVP-Model-View-Presenter"><span class="toc-number">2.</span> <span class="toc-text">2. MVP (Model-View-Presenter)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-MVVM-Model-View-ViewModel"><span class="toc-number">3.</span> <span class="toc-text">3. MVVM(Model-View-ViewModel)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. Common Architectural Design Patterns
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-11-28T17:20:00.000Z" class="dt-published" itemprop="datePublished">2023-11-28</time>
+        
+        (Updated: <time datetime="2023-11-28T17:40:01.837Z" class="dt-updated" itemprop="dateModified">2023-11-28</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/02-Architecture-Design/">02. Architecture & Design</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/MVC/" rel="tag">MVC</a>, <a class="p-category" href="/tags/MVP/" rel="tag">MVP</a>, <a class="p-category" href="/tags/MVVM/" rel="tag">MVVM</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p>
+<h4 id="1-MVC-Model-View-Controller"><a href="#1-MVC-Model-View-Controller" class="headerlink" title="1. MVC(Model-View-Controller)"></a><font size=5 color=#4169E1>1. MVC(Model-View-Controller)</font></h4><p><strong>Model:</strong> Responsible for the data and business logic of the application.</p>
+<p><strong>View:</strong> Responsible for displaying the user interface and receiving user input.</p>
+<p><strong>Controller:</strong> handles user input, updates the model, and updates the view when the model changes.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">      <span class="type">Model</span></span><br><span class="line">        <span class="operator">|</span></span><br><span class="line">   <span class="operator">+----+----+</span></span><br><span class="line">   <span class="operator">|</span>         <span class="operator">|</span></span><br><span class="line">   <span class="type">V</span>         <span class="type">V</span></span><br><span class="line"><span class="type">View</span>      <span class="type">Controller</span></span><br></pre></td></tr></table></figure>
+<p><strong>Problem-solving:</strong></p>
+<p>Separation of concerns: Divides the application into components with distinct responsibilities.<br>Code organization: Improves maintainability and scalability by organizing code into three interconnected components.</p>
+<p><strong>Scenes:</strong></p>
+<p>(1) UIKit Applications:</p>
+<ul>
+<li>MVC is widely used in UIKit-based iOS applications. Views are responsible for presenting the user interface, controllers handle user input and application logic, and models manage data and business logic.</li>
+</ul>
+<p>(2) Table View Controllers:</p>
+<ul>
+<li>In applications with lists or tables of data, such as contact lists or news feeds, MVC is commonly employed. The table view itself is the view, the view controller manages the table view and user interactions, and the model holds the data.</li>
+</ul>
+<p>(3) Form-Based Apps:</p>
+<ul>
+<li>Applications that involve forms and input fields, like login screens or user profile editing, can benefit from MVC. Views represent the form elements, controllers manage user input, and models handle data validation and storage.</li>
+</ul>
+<p>Best suited for applications with a rich user interface.<br>Commonly used in web development frameworks like Ruby on Rails, Django, and ASP.NET.</p>
+<p><strong>Pros and Cons:</strong></p>
+<p>Pros:</p>
+<p>Separation of concerns enhances code maintainability.<br>Reusable components make code more modular.<br>Well-established pattern with a long history of usage.</p>
+<p>Cons:</p>
+<p>Can lead to complex and tightly coupled code.<br>Controller logic may become bloated over time.</p>
+<h4 id="2-MVP-Model-View-Presenter"><a href="#2-MVP-Model-View-Presenter" class="headerlink" title="2. MVP (Model-View-Presenter)"></a><font size=5 color=#4169E1>2. MVP (Model-View-Presenter)</font></h4><p><strong>Model:</strong> Represents the application’s data and business logic.</p>
+<p><strong>View:</strong> Displays the data to the user and handles user input.</p>
+<p><strong>Presenter:</strong> Acts as an intermediary between the Model and the View, handling user input and updating the Model.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">     <span class="type">Model</span></span><br><span class="line">       <span class="operator">|</span></span><br><span class="line">  <span class="operator">+----+----+</span></span><br><span class="line">  <span class="operator">|</span>         <span class="operator">|</span></span><br><span class="line">  <span class="type">V</span>         <span class="type">V</span></span><br><span class="line"><span class="type">View</span> <span class="operator">&lt;----</span> <span class="type">Presenter</span></span><br></pre></td></tr></table></figure>
+<p><strong>Problem-solving:</strong></p>
+<p>Separation of concerns: Similar to MVC, it separates the application into distinct components.<br>Testability: Easier to unit test the Presenter due to its isolation from the View.</p>
+<p><strong>Scenes:</strong></p>
+<p>(1) iOS Forms and Input Processing:</p>
+<ul>
+<li>MVP can be beneficial when dealing with complex forms or input processing. The view manages the UI, the presenter handles user input and validation, and the model deals with data storage.</li>
+</ul>
+<p>(2) Interactive UI Elements:</p>
+<ul>
+<li>When UI elements require more interactivity and logic, such as dynamically updating views based on user input, MVP can provide a clear separation of concerns. The presenter acts as an intermediary, updating the view based on changes in the model.</li>
+</ul>
+<p>(3) Unit Testing View Logic:</p>
+<ul>
+<li>MVP allows for easier unit testing of the presenter, as it encapsulates the logic that would traditionally be in the controller. This is particularly useful in scenarios where extensive UI testing is not practical.</li>
+</ul>
+<p>Well-suited for scenarios where the logic related to user input is complex.<br>Often used in desktop and web applications.</p>
+<p><strong>Pros and Cons:</strong></p>
+<p>Pros:</p>
+<p>Improved testability due to the separation of concerns.<br>Easier to maintain and understand than some variations of MVC.</p>
+<p>Cons:<br>Can still result in tight coupling between the View and Presenter.<br>The Presenter may become a “God” class if not managed carefully.</p>
+<h4 id="3-MVVM-Model-View-ViewModel"><a href="#3-MVVM-Model-View-ViewModel" class="headerlink" title="3. MVVM(Model-View-ViewModel)"></a><font size=5 color=#4169E1>3. MVVM(Model-View-ViewModel)</font></h4><p><strong>Model:</strong> Responsible for the data and business logic of the application.</p>
+<p><strong>View:</strong> Responsible for displaying the user interface and receiving user input.</p>
+<p><strong>ViewModel:</strong> Abstracts the state and behavior of the view and is responsible for processing the data required by the view.</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">     <span class="type">Model</span></span><br><span class="line">       <span class="operator">|</span></span><br><span class="line">  <span class="operator">+----+----+</span></span><br><span class="line">  <span class="operator">|</span>         <span class="operator">|</span></span><br><span class="line">  <span class="type">V</span>         <span class="type">V</span></span><br><span class="line"><span class="type">View</span> <span class="operator">&lt;----</span> <span class="type">ViewModel</span></span><br></pre></td></tr></table></figure>
+<p><strong>Problem-solving:</strong></p>
+<p>Declarative UI: Enhances the separation of concerns by allowing a more declarative definition of the user interface.<br>Testability: Promotes easier unit testing of the ViewModel.</p>
+<p><strong>Scenes:</strong></p>
+<p>(1) Data-Driven Applications:</p>
+<ul>
+<li>MVVM is well-suited for data-driven applications where the UI elements need to be dynamically updated based on changes in the underlying data. This is common in applications displaying real-time data, such as financial apps or news readers.</li>
+</ul>
+<p>(2) Reactive Programming:</p>
+<ul>
+<li>MVVM pairs well with reactive programming frameworks like RxSwift. The ViewModel can be used to represent and transform data streams, providing a seamless way to update the UI based on changes in the model.</li>
+</ul>
+<p>(3) Complex UIs with Binding:</p>
+<ul>
+<li>Applications with complex user interfaces, especially those involving multiple interconnected elements, benefit from MVVM. The binding mechanism simplifies the synchronization of the view with the ViewModel, reducing boilerplate code.</li>
+</ul>
+<p>Particularly effective in data-binding frameworks (e.g., Angular, React, Vue.js).<br>Commonly used in modern mobile and web applications.</p>
+<p><strong>Pros and Cons:</strong></p>
+<p>Pros:</p>
+<p>Improved separation of concerns with a focus on data binding.<br>Easier to unit test due to the ViewModel’s isolation from the View.<br>Well-suited for modern, data-driven applications.</p>
+<p>Cons:</p>
+<p>Learning curve for developers unfamiliar with data-binding concepts.<br>Overuse of two-way data binding can lead to performance issues.</p>
+<h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=5 color=gray><em>Reference</em></font></h4><p>[1] <a target="_blank" rel="noopener" href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/</a><br>[2] <a target="_blank" rel="noopener" href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-MVC-Model-View-Controller"><span class="toc-number">1.</span> <span class="toc-text">1. MVC(Model-View-Controller)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-MVP-Model-View-Presenter"><span class="toc-number">2.</span> <span class="toc-text">2. MVP (Model-View-Presenter)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-MVVM-Model-View-ViewModel"><span class="toc-number">3.</span> <span class="toc-text">3. MVVM(Model-View-ViewModel)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&text=00. Common Architectural Design Patterns"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&is_video=false&description=00. Common Architectural Design Patterns"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Common Architectural Design Patterns&body=Check out this article: https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&title=00. Common Architectural Design Patterns"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&name=00. Common Architectural Design Patterns&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/11/28/iOS/02.%20Architecture%20&amp;%20Design/00.%20Common%20Architectural%20Design%20Patterns/&t=00. Common Architectural Design Patterns"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
