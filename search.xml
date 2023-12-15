@@ -40,7 +40,7 @@
           
           <category> iOS </category>
           
-          <category> 02. Architecture &amp; Design </category>
+          <category> Architecture &amp; Design </category>
           
       </categories>
       
@@ -71,7 +71,7 @@
           
           <category> iOS </category>
           
-          <category> 04. Tools &amp; Configurations </category>
+          <category> Tools &amp; Configurations </category>
           
       </categories>
       
@@ -98,7 +98,7 @@
           
           <category> iOS </category>
           
-          <category> 04. Tools &amp; Configurations </category>
+          <category> Tools &amp; Configurations </category>
           
       </categories>
       
@@ -125,7 +125,7 @@
           
           <category> iOS </category>
           
-          <category> 01. Memory &amp; Performance &amp; Stability </category>
+          <category> Memory &amp; Performance &amp; Stability </category>
           
       </categories>
       
@@ -152,7 +152,7 @@
           
           <category> iOS </category>
           
-          <category> 00. Tips </category>
+          <category> Tips </category>
           
       </categories>
       
@@ -542,8 +542,8 @@
     
     <entry>
       <title>02. All About CI/CDs</title>
-      <link href="/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/"/>
-      <url>/2023/10/23/iOS/06.%20Others/02.%20All%20about%20CI:CDs/</url>
+      <link href="/2023/10/23/iOS/07.%20Others/02.%20All%20about%20CI:CDs/"/>
+      <url>/2023/10/23/iOS/07.%20Others/02.%20All%20about%20CI:CDs/</url>
       
         <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><h4 id="1-What-is-the-CI-CD"><a href="#1-What-is-the-CI-CD" class="headerlink" title="1.What is the CI&#x2F;CD?"></a><font size=6 color=#4169E1>1.What is the CI&#x2F;CD?</font></h4><p>CI&#x2F;CD refers to the abbreviation of Continuous Integration and Continuous Delivery&#x2F;Deployment.</p><p>CI refers to automatically integrating developers’ code changes into a shared code warehouse, and verifying and building the code through automated testing, compilation, and building processes to quickly discover and solve code problems. CI helps speed up the speed and quality of code delivery and improves the collaboration efficiency of development teams.</p><p>CD refers to the automatic deployment of CI-verified code into the production environment to achieve faster delivery and response to requirements. CD includes steps such as automated testing, building, deployment, and monitoring to ensure that the delivered code is stable, reliable, and secure.</p><p>The CI&#x2F;CD process can help development teams deliver high-quality software more quickly and reliably while reducing the risks caused by coding errors and manual operations.</p><h4 id="2-Continuous-Integration"><a href="#2-Continuous-Integration" class="headerlink" title="2. Continuous Integration"></a><font size=6 color=#4169E1>2. Continuous Integration</font></h4><p>We usually use the gitlab&#x2F;github platform to complete CI. The process is as follows:      </p><p>(1) Create a GitLab project: Create a new project in GitLab and push the project code to the GitLab repository.</p><p>(2) Configure GitLab Runner: GitLab Runner is a tool used to perform CI&#x2F;CD tasks and can run on Linux, Windows or macOS. You need to register a Runner in GitLab and configure the environment in which the Runner runs.</p><p>(3) Configure the CI&#x2F;CD pipeline: Create a .gitlab-ci.yml file in the GitLab project to define the various stages, tasks and steps of the CI&#x2F;CD pipeline. Different scripting languages and commands can be used, such as Shell scripts, Python, Ruby, etc.</p><p>(4) Trigger CI&#x2F;CD pipeline: When making code submission or merge request in GitLab project, the execution of CI&#x2F;CD pipeline will be automatically triggered. Pipeline execution can also be manually triggered for testing, building, and deployment.</p><p>(5) Monitor and manage CI&#x2F;CD pipelines: You can view the execution status, logs and output information of the pipeline in GitLab for troubleshooting and problem analysis. You can also manage pipeline parameters, environment variables, scheduled tasks, etc.</p><p>(6) Configure CD environment and automated deployment: You can use the automated deployment function of GitLab CI&#x2F;CD to deploy code to testing, pre-production and production environments. You can also use other CD tools, such as Kubernetes, Docker Swarm, etc., to achieve automated deployment and container orchestration.</p><h4 id="3-Continuous-Delivery-Deployment"><a href="#3-Continuous-Delivery-Deployment" class="headerlink" title="3. Continuous Delivery&#x2F;Deployment"></a><font size=6 color=#4169E1>3. Continuous Delivery&#x2F;Deployment</font></h4><p>The entire CD process is usually completed with the help of the Jenkins+Fastlane+Pgyer tool set.</p><p>Jenkins can be used to perform continuous integration and continuous delivery processes for the entire software project, including tasks such as building, testing, and deployment. </p><p>Fastlane can be used as a step in the Jenkins pipeline to automate the build, test and release process of mobile applications. By using Jenkins and Fastlane together, development teams can automate the management of entire software projects and speed up software delivery.</p><p>The installation package (ipa file) packaged by Jenkins+Fastlane is uploaded to the Pgyer platform.<br>The Pgyer platform is used for test distribution, user feedback and version management. Of course, there are other platforms that can be used, such as HockeyApp, AppCenter, Firebase App Distribution and of course TestFlight.</p><p>It can be simply understood that Jenkins quickly helps you build a website and then calls Fastlane to help you export the installation package through a series of steps.</p><p><strong>Tips:</strong></p><p>Fastlane:</p><p>Fastlane is a cross-platform continuous integration tool implemented using ruby. It is mainly used to support the continuous integration practice of Android and iOS mobile platform projects. Fastlane processing provides: initial setup, screenshots, packaging, uploading to the test platform, deployment, etc.</p><p>Because the fastlane command is not very convenient for QA and other non-technical personnel to package, it needs to be called with the help of Jenkins.</p><p>Jenkins: </p><p>Jenkins is an independent open source software project. It is a continuous integration tool developed based on Java. It is used to monitor continuous repetitive work. It aims to provide an open and easy-to-use software platform to make continuous integration of software possible. Formerly known as Hudson, it is an extensible continuous integration engine. Can be used to automate various tasks such as building, testing and deploying software.</p><h4 id="4-Summary"><a href="#4-Summary" class="headerlink" title="4. Summary"></a><font size=6 color=#4169E1>4. Summary</font></h4><p>In conclusion, We use Git&#x2F;Gitlab for project source code management, and use Jenkins as a trigger to capture push and other operations either regularly or manually to trigger packaging actions; execute Fastlane scripts for certificate management and packaging; and distribute through the Pgyer platform.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=5 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://www.pgyer.com/">https://www.pgyer.com/</a><br>[2] <a href="https://zhuanlan.zhihu.com/p/633284341/">https://zhuanlan.zhihu.com/p/633284341/</a><br>[3] <a href="https://developer.apple.com/testflight/">https://developer.apple.com/testflight/</a><br>[4] <a href="https://firebase.google.com/products/app-distribution/">https://firebase.google.com/products/app-distribution/</a><br>[5] <a href="https://www.hockeyapp.net/">https://www.hockeyapp.net/</a><br>[6] <a href="https://appcenter.ms/">https://appcenter.ms/</a></p>]]></content>
       
@@ -552,7 +552,7 @@
           
           <category> iOS </category>
           
-          <category> 06. Others </category>
+          <category> Others </category>
           
       </categories>
       
@@ -664,7 +664,7 @@
           
           <category> iOS </category>
           
-          <category> 05. Projects &amp; Issues </category>
+          <category> Projects &amp; Issues </category>
           
       </categories>
       
@@ -1011,8 +1011,8 @@
     
     <entry>
       <title>01. All we need to know about Restful API</title>
-      <link href="/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"/>
-      <url>/2023/09/07/iOS/06.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/</url>
+      <link href="/2023/09/07/iOS/07.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/"/>
+      <url>/2023/09/07/iOS/07.%20Others/01.%20All%20we%20need%20to%20know%20about%20Restful%20API/</url>
       
         <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Restful API is also one of the necessary knowledge points on the mobile terminal, but only need to understand is enough.</p><h4 id="1-What-is-Restful-API"><a href="#1-What-is-Restful-API" class="headerlink" title="1. What is Restful API?"></a><font size=3 color=#4169E1>1. What is Restful API?</font></h4><p>Restful (Representational State Transfer presentation layer state transition) is currently the most popular interface design specifications. Restful is a design style (a design style rather than a standard) for creating reliable, scalable and easy-to-maintain Web services. It follows the REST architectural style and is resource-centric, communicating via the HTTP protocol.</p><p>The Restful API is based on a request and response model between the client and the server. Client requests resources from the server by request methods (GET, POST, PUT, DELETE, etc.) The server responds according to the request method and the requested resource path, and returns the corresponding resource or status code. The request and response data format of a Restful API is usually JSON or XML.</p><h4 id="2-Features-of-Restful-API"><a href="#2-Features-of-Restful-API" class="headerlink" title="2. Features of Restful API"></a><font size=3 color=#4169E1>2. Features of Restful API</font></h4><p>It has several features:        </p><p>Based on HTTP protocol:<br>RESTful API uses HTTP protocol as a communication protocol, the client sends a request to the server via HTTP protocol and the server sends a response to the client via HTTP protocol.</p><p>Statelessness:<br>RESTful APIs are stateless, and each request contains enough information so that the server does not need to save any state information about the client.</p><p>Resource Oriented:<br>RESTful API is a resource-oriented API that treats all operations as operations on resources. Each resource has a unique identifier (URI) and the client can request a representation of the resource via the URI.</p><p>Unified Interface:<br>The RESTful API uses a standard set of HTTP methods (GET, POST, PUT, DELETE, etc.) to manipulate resources, and the client performs operations on the resources through these methods.</p><p>Cacheability:<br>The RESTful API supports a caching mechanism where the client can cache responses to improve performance and the server can use caching to reduce the load.</p><p>Hierarchical systems:<br>The RESTful API supports a hierarchical system, which allows the server to distribute the load across multiple hierarchies and allows clients to access resources by accessing different hierarchies.</p><p>Common status codes for Restful API:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">200</span> <span class="type">OK</span>: indicates that the request was successful.</span><br><span class="line"><span class="number">201</span> <span class="type">Created</span>: indicates that the resource was successfully created.</span><br><span class="line"><span class="number">204</span> <span class="type">No</span> <span class="type">Content</span>: <span class="type">The</span> request was executed successfully, but no content was returned.</span><br><span class="line"><span class="number">400</span> <span class="type">Bad</span> <span class="type">Request</span>: <span class="type">Indicates</span> an error <span class="keyword">in</span> the request, such <span class="keyword">as</span> an incorrectly formatted or missing request parameter.</span><br><span class="line"><span class="number">401</span> <span class="type">Unauthorized</span>: indicates unauthorized access and requires valid credentials to access the resource.</span><br><span class="line"><span class="number">403</span> <span class="type">Forbidden</span>: indicates that access has been authorized, but access to the resource <span class="keyword">is</span> not allowed.</span><br><span class="line"><span class="number">404</span> <span class="type">Not</span> <span class="type">Found</span>: indicates that the requested resource does not exist.</span><br><span class="line"><span class="number">405</span> <span class="type">Method</span> <span class="type">Not</span> <span class="type">Allowed</span>: indicates that the requested <span class="type">HTTP</span> method does not support the resource, such <span class="keyword">as</span> using <span class="type">POST</span> to request a read<span class="operator">-</span>only resource.</span><br><span class="line"><span class="number">409</span> <span class="type">Conflict</span>: indicates a request conflict, such <span class="keyword">as</span> a version conflict when updating a resource.</span><br><span class="line"><span class="number">500</span> <span class="type">Internal</span> <span class="type">Server</span> <span class="type">Error</span>: <span class="type">Indicates</span> an <span class="keyword">internal</span> server error, such <span class="keyword">as</span> an inability to connect to the database or an exception when processing a request.</span><br></pre></td></tr></table></figure><h4 id="3-Swift-call-Restful-API-sample-code"><a href="#3-Swift-call-Restful-API-sample-code" class="headerlink" title="3. Swift call Restful API sample code"></a><font size=3 color=#4169E1>3. Swift call Restful API sample code</font></h4><p>The following is sample code for a Restful API style request:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Foundation</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> url <span class="operator">=</span> <span class="type">URL</span>(string: <span class="string">&quot;https://example.com/api/users/1&quot;</span>)<span class="operator">!</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> request <span class="operator">=</span> <span class="type">URLRequest</span>(url: url)</span><br><span class="line">request.httpMethod <span class="operator">=</span> <span class="string">&quot;GET&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> task <span class="operator">=</span> <span class="type">URLSession</span>.shared.dataTask(with: request) &#123; data, response, error <span class="keyword">in</span></span><br><span class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> data <span class="operator">=</span> data, <span class="keyword">let</span> response <span class="operator">=</span> response <span class="keyword">as?</span> <span class="type">HTTPURLResponse</span>, error <span class="operator">==</span> <span class="literal">nil</span> <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error: <span class="subst">\(error<span class="operator">?</span>.localizedDescription <span class="operator">??</span> <span class="string">&quot;Unknown error&quot;</span>)</span>&quot;</span>)</span><br><span class="line">        <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="number">200</span><span class="operator">..&lt;</span><span class="number">300</span>).contains(response.statusCode) &#123;</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">let</span> jsonObject <span class="operator">=</span> <span class="keyword">try?</span> <span class="type">JSONSerialization</span>.jsonObject(with: data) &#123;</span><br><span class="line">            <span class="built_in">print</span>(jsonObject)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Error: <span class="subst">\(response.statusCode)</span>&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">task.resume()</span><br></pre></td></tr></table></figure><p>The above code is an example of a GET request, requesting information about a user resource via a URL and printing the response data.</p><p>The code uses Swift’s URLSession for the network request, where the dataTask method creates and executes an HTTP&#x2F;HTTPS request, and calls a callback function to process the response data when the request is complete.</p><h4 id="4-Pros-and-Cons-of-Restful-API"><a href="#4-Pros-and-Cons-of-Restful-API" class="headerlink" title="4. Pros and Cons of Restful API"></a><font size=3 color=#4169E1>4. Pros and Cons of Restful API</font></h4><p><font size=3 color=#4169E1>4.1 Advantages of the Restful API include:</font><br>Simple to use:<br>The Restful API follows the HTTP protocol and is easy to understand and implement.</p><p>Extensible:<br>The resource-centric design of the Restful API makes it easy for the server side to add or remove resources, while the client side simply gets the resources it needs via a URL.</p><p>Cacheable:<br>Restful API supports caching, which can improve performance and reduce network transfers.</p><p>Cross-platform compatible:<br>The Restful API supports a variety of data formats, such as JSON, XML, etc., and can interact with different platforms and languages.</p><p><font size=3 color=#4169E1>4.2 Disadvantages of the Restful API include: </font><br>Security:<br>Restful APIs are usually based on the HTTP protocol, which can be a security risk during transmission.</p><p>Performance issues:<br>Since the Restful API is based on the HTTP protocol, a connection needs to be established for each request, and there may be a performance bottleneck for a large number of concurrent requests or a large amount of data transfer.</p><h4 id="5-Other-ways"><a href="#5-Other-ways" class="headerlink" title="5. Other ways"></a><font size=3 color=#4169E1>5. Other ways</font></h4><p>However, it is important to note that Restful APIs are not the only way to communicate and exchange data.Other common ways are RPC, WebSocket, etc.</p><p><font size=3 color=#4169E1>5.1 RPC</font><br>Remote procedure calls, a standard that shields the underlying communication details and can be called directly.<br>Simply, RPC is to call a function or method (collectively referred to as a service) on another machine (server) from one machine (client) by passing parameters and get the returned result. RPC is used to call remote functions (or methods) just like calling local functions (or methods).</p><p>There is such a principle: internal service: first use RPC, RPC is suitable for internal, efficient and fast communication. The disadvantage is that it is best to use Java systems on both sides. External service: RESTful is the first to be used. REST is suitable for external use, easy to use, and cross-language. The disadvantage is that the operation is limited (CRUD), and it is not efficient enough. Therefore, RPC tends to be applied to scenarios with high performance and reliability requirements such as microservice architecture, distributed systems, database access, and high-performance computing.</p><p><font size=3 color=#4169E1>5.2 WebSocket</font><br>WebSocket is a full-duplex communication protocol over a single TCP connection that allows a persistent connection between a client and a server for real-time data transfer.</p><p>WebSocket can be realized through a simple API, supporting cross-platform and cross-browser use. Therefore, WebSocket is more suitable for some scenarios such as instant messaging (online chatting), real-time data pushing (stock data), remote monitoring and controlling real-time collaboration.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=3 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://zhuanlan.zhihu.com/p/334809573">https://zhuanlan.zhihu.com/p/334809573</a><br>[2] <a href="https://blog.csdn.net/The_Time_Runner/article/details/86518448">https://blog.csdn.net/The_Time_Runner/article/details/86518448</a><br>[3] <a href="https://www.cnblogs.com/zhongyuanzhao000/p/11700815.html">https://www.cnblogs.com/zhongyuanzhao000/p/11700815.html</a></p>]]></content>
       
@@ -1021,7 +1021,7 @@
           
           <category> iOS </category>
           
-          <category> 06. Others </category>
+          <category> Others </category>
           
       </categories>
       
@@ -1102,8 +1102,8 @@
     
     <entry>
       <title>00. Waterfall development vs Agile development</title>
-      <link href="/2023/09/06/iOS/06.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"/>
-      <url>/2023/09/06/iOS/06.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/</url>
+      <link href="/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"/>
+      <url>/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/</url>
       
         <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><h4 id="1-Waterfall-development"><a href="#1-Waterfall-development" class="headerlink" title="1. Waterfall development"></a><font size=3 color=#4169E1>1. Waterfall development</font></h4><p>In the waterfall development model, there are several distinguishing features:</p><p>(1) Emphasis on documentation, with a particular focus on detailed documentation, especially the project requirements document, both for the development team and the test team is particularly important, high-quality documentation for the latter processes are critical.</p><p>(2) Longer Cycles and Larger Manpower Sizes: Development cycles are fixed and lengthy, often measured in months, and team members must follow project schedules and various specifications.</p><p>(3) Fixed requirements: requirement changes, and rework issues tend to be more costly.</p><h4 id="2-Agile-development"><a href="#2-Agile-development" class="headerlink" title="2. Agile development"></a><font size=3 color=#4169E1>2. Agile development</font></h4><p>It is a human-centered, iterative, step-by-step development pattern. In Agile development, it aims to deliver core functionality quickly and continuously improve it by slicing up the project into smaller parts and delivering and testing them incrementally. Instead of emphasizing perfect design and coding, it seeks to quickly release usable versions and then continuously iterate and improve. </p><p>Agile development mainly includes SCRUM, XP (Extreme Programming), Crystal Methods, FDD (Feature Driven Development) and so on. And we mainly use Scrum model in actual development.</p><p>Agile development has different forms for different teams and different companies. For example, some teams like “War Room” very much ( Gather all interested parties or key members of the project team into a small room or conference room so they can work closely together, communicate, and solve problems)  Their ultimate goal is to be able to develop products quickly.</p><p>The Scrum workflow model also needs to be built on top of well-established specifications, development tools and facilities (Git&#x2F;Jenkins&#x2F;Cocoapods&#x2F;Coding specifications, etc.). It has the following main elements:</p><p>(1) Product Owner’s clarity on requirements, including prioritization, resource dependencies, etc.</p><p>(2) Developer’s task splitting, including clear prioritization, deadline, manpower allocation, etc.</p><p>(3) Daily meeting for all parties to update the status of each task (ToDo, Doing, Done) and discuss issues, etc.</p><p>(4) Tasks completed by developers can be prioritized for delivery to product owners for experience and testers for testing; with the help of the company’s CI&#x2F;CD tools.</p><p>(5) Review meetings are held to summarize the problems that occurred in the middle and how to avoid them.</p><h4 id="3-Waterfall-development-vs-Agile-development"><a href="#3-Waterfall-development-vs-Agile-development" class="headerlink" title="3. Waterfall development vs Agile development"></a><font size=3 color=#4169E1>3. Waterfall development vs Agile development</font></h4><p>In a team, not one model dominates, which model to take depends on the situation.</p><p>For some of the more core features that require high quality (e.g., payment business), cross-team, third-party, and other collaboration scenarios where communication is not very efficient, waterfall development can still be adopted.</p><p>Agile development can be adopted when the product’s scenarios are time-sensitive and need to be validated and market captured quickly, with all the people available for quick face-to-face communication.</p>]]></content>
       
@@ -1112,7 +1112,7 @@
           
           <category> iOS </category>
           
-          <category> 06. Others </category>
+          <category> Others </category>
           
       </categories>
       
@@ -1195,7 +1195,7 @@
           
           <category> iOS </category>
           
-          <category> 05. Projects &amp; Issues </category>
+          <category> Projects &amp; Issues </category>
           
       </categories>
       
@@ -1307,7 +1307,7 @@
           
           <category> iOS </category>
           
-          <category> 00. Tips </category>
+          <category> Tips </category>
           
       </categories>
       
@@ -1334,7 +1334,7 @@
           
           <category> iOS </category>
           
-          <category> 01. Memory &amp; Performance &amp; Stability </category>
+          <category> Memory &amp; Performance &amp; Stability </category>
           
       </categories>
       
@@ -1419,7 +1419,7 @@
           
           <category> iOS </category>
           
-          <category> 01. Memory &amp; Performance &amp; Stability </category>
+          <category> Memory &amp; Performance &amp; Stability </category>
           
       </categories>
       
@@ -2167,6 +2167,27 @@
             <tag> tool </tag>
             
         </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>00. What happens when you enter the URL in the browser and press Enter?</title>
+      <link href="/2023/01/15/iOS/06.%20Network/00.%20What%20happens%20when%20you%20enter%20the%20URL%20in%20the%20browser%20and%20press%20Enter/"/>
+      <url>/2023/01/15/iOS/06.%20Network/00.%20What%20happens%20when%20you%20enter%20the%20URL%20in%20the%20browser%20and%20press%20Enter/</url>
+      
+        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p><p>Here is a summary of all the possible reasons for publishing failure in Hexo.</p><h4 id="1-Header-information-is-incorrect"><a href="#1-Header-information-is-incorrect" class="headerlink" title="1. Header information is incorrect"></a><font size=5 color=#4169E1>1. Header information is incorrect</font></h4><p><font size=4><strong>1.1 Header format</strong></font>  </p><p>Please strictly follow the header format:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">---</span></span><br><span class="line">title: <span class="number">00</span>. <span class="type">Article</span> publishing failure problem summary</span><br><span class="line">date: <span class="number">2023</span><span class="operator">-</span><span class="number">01</span><span class="operator">-</span><span class="number">15</span> <span class="number">14</span>:<span class="number">00</span>:<span class="number">00</span></span><br><span class="line">categories: </span><br><span class="line"><span class="operator">-</span> [<span class="type">Others</span>, <span class="number">00</span>. others]</span><br><span class="line">tags:</span><br><span class="line"><span class="operator">-</span> hexo</span><br><span class="line"><span class="operator">-</span> configuration</span><br><span class="line"><span class="operator">-</span> tool</span><br><span class="line"><span class="operator">---</span></span><br></pre></td></tr></table></figure><p><strong>Note:</strong><br><strong>After the second &#96;&#96;&#96; there is no space.</strong>  </p><p><font size=4><strong>1.2 Note</strong></font>  </p><p><strong>Note:</strong><br><strong>There are no empty lines in the first row.</strong><br><strong>All the keywords ‘title’,’date’,’categories’,’tags’ must be in lower case.</strong></p><h4 id="2-Picture-does-not-show"><a href="#2-Picture-does-not-show" class="headerlink" title="2. Picture does not show"></a><font size=5 color=#4169E1>2. Picture does not show</font></h4><p>The correct image format is as follows:   </p><img src="/assets/Demo/wallpaper-2311325.jpg" class="">    <img src="/assets/Demo/wallpaper-878514.jpg" class=""><h4 id="3-Change-the-font"><a href="#3-Change-the-font" class="headerlink" title="3. Change the font"></a><font size=5 color=#4169E1>3. Change the font</font></h4><p>On the basis of this article below:<br><a href="https://blog.csdn.net/Reinhart_L/article/details/122587975">https://blog.csdn.net/Reinhart_L/article/details/122587975</a><br>(1) Enter. &#x2F; themes&#x2F;cactus&#x2F;source&#x2F;CSS &#x2F; _variables styl, can change the font;<br>(2) The available fonts are in . &#x2F;themes&#x2F;cactus&#x2F;source&#x2F;lib&#x2F;, cactus comes with only two kinds of ‘meslo-LG’ and ‘vazir-font’, you can download them yourself if you need.</p><h4 id="4-Opening-a-link-doesn’t-make-it-jump-it-downloads-it-instead"><a href="#4-Opening-a-link-doesn’t-make-it-jump-it-downloads-it-instead" class="headerlink" title="4. Opening a link doesn’t make it jump, it downloads it instead."></a><font size=5 color=#4169E1>4. Opening a link doesn’t make it jump, it downloads it instead.</font></h4><p>The name of your article cannot contain ‘?’, and you had better also not contain other special characters for insurance.<br>But, you can contain ‘?’ in your article title.</p><h4 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a><font size=5 color=gray><em>Reference</em></font></h4><p>[1] <a href="https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/">https://ohmyswift.com/blog/2020/01/10/why-should-we-avoid-using-closures-in-swift-structs/</a><br>[2] <a href="https://github.com/probberechts/hexo-theme-cactus">https://github.com/probberechts/hexo-theme-cactus</a></p>]]></content>
+      
+      
+      <categories>
+          
+          <category> iOS </category>
+          
+          <category> Network </category>
+          
+      </categories>
+      
       
     </entry>
     
