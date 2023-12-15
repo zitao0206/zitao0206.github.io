@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 3 minutes to finish reading this article. 1. Waterfall developmentIn the waterfall development model, there are several distinguishing features: (1) Emphasis on documentation, with">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. Waterfall development vs Agile development">
+<meta property="og:url" content="https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 3 minutes to finish reading this article. 1. Waterfall developmentIn the waterfall development model, there are several distinguishing features: (1) Emphasis on documentation, with">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-09-06T14:31:00.000Z">
+<meta property="article:modified_time" content="2023-12-15T14:44:49.351Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="Agile">
+<meta property="article:tag" content="waterfall">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. Waterfall development vs Agile development</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/09/06/SwiftUI/02.%20Basic%20Concepts%20of%20SwiftUI%20(2)/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/09/03/SwiftUI/01.%20Basic%20Concepts%20of%20SwiftUI%20(1)/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&text=00. Waterfall development vs Agile development"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&is_video=false&description=00. Waterfall development vs Agile development"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Waterfall development vs Agile development&body=Check out this article: https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&name=00. Waterfall development vs Agile development&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&t=00. Waterfall development vs Agile development"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Waterfall-development"><span class="toc-number">1.</span> <span class="toc-text">1. Waterfall development</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Agile-development"><span class="toc-number">2.</span> <span class="toc-text">2. Agile development</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Waterfall-development-vs-Agile-development"><span class="toc-number">3.</span> <span class="toc-text">3. Waterfall development vs Agile development</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. Waterfall development vs Agile development
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-09-06T14:31:00.000Z" class="dt-published" itemprop="datePublished">2023-09-06</time>
+        
+        (Updated: <time datetime="2023-12-15T14:44:49.351Z" class="dt-updated" itemprop="dateModified">2023-12-15</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/iOS/">iOS</a> › <a class="category-link" href="/categories/iOS/07-Others/">07. Others</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/Agile/" rel="tag">Agile</a>, <a class="p-category" href="/tags/waterfall/" rel="tag">waterfall</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 3 minutes to finish reading this article.</em></font></p>
+<h4 id="1-Waterfall-development"><a href="#1-Waterfall-development" class="headerlink" title="1. Waterfall development"></a><font size=3 color=#4169E1>1. Waterfall development</font></h4><p>In the waterfall development model, there are several distinguishing features:</p>
+<p>(1) Emphasis on documentation, with a particular focus on detailed documentation, especially the project requirements document, both for the development team and the test team is particularly important, high-quality documentation for the latter processes are critical.</p>
+<p>(2) Longer Cycles and Larger Manpower Sizes: Development cycles are fixed and lengthy, often measured in months, and team members must follow project schedules and various specifications.</p>
+<p>(3) Fixed requirements: requirement changes, and rework issues tend to be more costly.</p>
+<h4 id="2-Agile-development"><a href="#2-Agile-development" class="headerlink" title="2. Agile development"></a><font size=3 color=#4169E1>2. Agile development</font></h4><p>It is a human-centered, iterative, step-by-step development pattern. In Agile development, it aims to deliver core functionality quickly and continuously improve it by slicing up the project into smaller parts and delivering and testing them incrementally. Instead of emphasizing perfect design and coding, it seeks to quickly release usable versions and then continuously iterate and improve. </p>
+<p>Agile development mainly includes SCRUM, XP (Extreme Programming), Crystal Methods, FDD (Feature Driven Development) and so on. And we mainly use Scrum model in actual development.</p>
+<p>Agile development has different forms for different teams and different companies. For example, some teams like “War Room” very much ( Gather all interested parties or key members of the project team into a small room or conference room so they can work closely together, communicate, and solve problems)  Their ultimate goal is to be able to develop products quickly.</p>
+<p>The Scrum workflow model also needs to be built on top of well-established specifications, development tools and facilities (Git&#x2F;Jenkins&#x2F;Cocoapods&#x2F;Coding specifications, etc.). It has the following main elements:</p>
+<p>(1) Product Owner’s clarity on requirements, including prioritization, resource dependencies, etc.</p>
+<p>(2) Developer’s task splitting, including clear prioritization, deadline, manpower allocation, etc.</p>
+<p>(3) Daily meeting for all parties to update the status of each task (ToDo, Doing, Done) and discuss issues, etc.</p>
+<p>(4) Tasks completed by developers can be prioritized for delivery to product owners for experience and testers for testing; with the help of the company’s CI&#x2F;CD tools.</p>
+<p>(5) Review meetings are held to summarize the problems that occurred in the middle and how to avoid them.</p>
+<h4 id="3-Waterfall-development-vs-Agile-development"><a href="#3-Waterfall-development-vs-Agile-development" class="headerlink" title="3. Waterfall development vs Agile development"></a><font size=3 color=#4169E1>3. Waterfall development vs Agile development</font></h4><p>In a team, not one model dominates, which model to take depends on the situation.</p>
+<p>For some of the more core features that require high quality (e.g., payment business), cross-team, third-party, and other collaboration scenarios where communication is not very efficient, waterfall development can still be adopted.</p>
+<p>Agile development can be adopted when the product’s scenarios are time-sensitive and need to be validated and market captured quickly, with all the people available for quick face-to-face communication.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-Waterfall-development"><span class="toc-number">1.</span> <span class="toc-text">1. Waterfall development</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-Agile-development"><span class="toc-number">2.</span> <span class="toc-text">2. Agile development</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Waterfall-development-vs-Agile-development"><span class="toc-number">3.</span> <span class="toc-text">3. Waterfall development vs Agile development</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&text=00. Waterfall development vs Agile development"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&is_video=false&description=00. Waterfall development vs Agile development"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. Waterfall development vs Agile development&body=Check out this article: https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&title=00. Waterfall development vs Agile development"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&name=00. Waterfall development vs Agile development&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/09/06/iOS/07.%20Others/00.%20Waterfall%20development%20vs%20Agile%20development/&t=00. Waterfall development vs Agile development"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
