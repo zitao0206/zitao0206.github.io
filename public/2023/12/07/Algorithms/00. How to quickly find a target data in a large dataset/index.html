@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="It will take about 1 minutes to finish reading this article. In a large dataset, quickly finding a target data typically involves using efficient data structures and algorithms. Here are some common s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="00. How to quickly find a target data in a large dataset?">
+<meta property="og:url" content="https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/">
+<meta property="og:site_name" content="iOS Hunter Notes">
+<meta property="og:description" content="It will take about 1 minutes to finish reading this article. In a large dataset, quickly finding a target data typically involves using efficient data structures and algorithms. Here are some common s">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-12-07T13:00:00.000Z">
+<meta property="article:modified_time" content="2023-12-07T13:02:32.466Z">
+<meta property="article:author" content="Zitao">
+<meta property="article:tag" content="lookup algorithm">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>00. How to quickly find a target data in a large dataset?</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+</head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/11/28/iOS/02.%20Architecture%20&%20Design/00.%20Common%20Architectural%20Design%20Patterns/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&text=00. How to quickly find a target data in a large dataset?"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&is_video=false&description=00. How to quickly find a target data in a large dataset?"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. How to quickly find a target data in a large dataset?&body=Check out this article: https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&name=00. How to quickly find a target data in a large dataset?&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&t=00. How to quickly find a target data in a large dataset?"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        00. How to quickly find a target data in a large dataset?
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Zitao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-12-07T13:00:00.000Z" class="dt-published" itemprop="datePublished">2023-12-07</time>
+        
+        (Updated: <time datetime="2023-12-07T13:02:32.466Z" class="dt-updated" itemprop="dateModified">2023-12-07</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Algorithms/">Algorithms</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/lookup-algorithm/" rel="tag">lookup algorithm</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p><font color=gray size=2><em>It will take about 1 minutes to finish reading this article.</em></font></p>
+<p>In a large dataset, quickly finding a target data typically involves using efficient data structures and algorithms. Here are some common strategies and methods:</p>
+<ol>
+<li><p><strong>Binary Search:</strong></p>
+<ul>
+<li>For ordered datasets, binary search is an efficient method. It has a time complexity of O(log n), where n is the size of the dataset. This method requires the dataset to be sorted.</li>
+</ul>
+</li>
+<li><p><strong>Hash Table (Hashing):</strong></p>
+<ul>
+<li>Using a hash function to map data to array indices can achieve constant-time average case lookup. The performance of hash tables depends significantly on the quality of the hash function and collision resolution methods.</li>
+</ul>
+</li>
+<li><p><strong>Tree Structures:</strong></p>
+<ul>
+<li>Tree structures like Binary Search Trees (BST), Balanced Binary Search Trees (AVL Tree, Red-Black Tree), provide fast search performance with an average time complexity of O(log n).</li>
+</ul>
+</li>
+<li><p><strong>Skip List:</strong></p>
+<ul>
+<li>A skip list is a data structure that accelerates searches by adding multiple layers of indexing. In some cases, skip lists can outperform balanced binary search trees.</li>
+</ul>
+</li>
+<li><p><strong>Linear Search Optimization:</strong></p>
+<ul>
+<li>If the dataset is unsorted, linear search with optimizations such as secondary indices or block search can be employed to enhance efficiency.</li>
+</ul>
+</li>
+<li><p><strong>Divide and Conquer:</strong></p>
+<ul>
+<li>By dividing the dataset into smaller subproblems, the divide and conquer approach can speed up searches. Classic examples include merge sort and quicksort.</li>
+</ul>
+</li>
+<li><p><strong>Bitmap Index:</strong></p>
+<ul>
+<li>For specific data types like boolean data, bitmap indexes can be used to accelerate searches.</li>
+</ul>
+</li>
+<li><p><strong>Parallel Algorithms:</strong></p>
+<ul>
+<li>In multi-core or distributed systems, parallel algorithms can be used to speed up the search process by dividing the dataset into multiple parts and searching concurrently.</li>
+</ul>
+</li>
+<li><p><strong>Approximation Algorithms:</strong></p>
+<ul>
+<li>If exact matching is not crucial, approximation algorithms can be considered, sacrificing some accuracy for faster search speeds.</li>
+</ul>
+</li>
+</ol>
+<p>Choosing the right method depends on the characteristics of the dataset, search requirements, memory constraints, and other contextual factors. In practical applications, a combination of factors may need to be considered to select the most suitable strategy.</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">Home</a></li>
+        
+          <li><a href="/categories">Categories</a></li>
+        
+          <li><a href="/tags">Tags</a></li>
+        
+          <li><a href="/search">Search</a></li>
+        
+          <li><a href="/archives">Archives</a></li>
+        
+          <li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li>
+        
+          <li><a href="/about">Others</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&text=00. How to quickly find a target data in a large dataset?"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&is_video=false&description=00. How to quickly find a target data in a large dataset?"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=00. How to quickly find a target data in a large dataset?&body=Check out this article: https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&title=00. How to quickly find a target data in a large dataset?"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&name=00. How to quickly find a target data in a large dataset?&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2023/12/07/Algorithms/00.%20How%20to%20quickly%20find%20a%20target%20data%20in%20a%20large%20dataset/&t=00. How to quickly find a target data in a large dataset?"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023-2033
+    Zitao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/categories">Categories</a></li><!--
+     --><!--
+       --><li><a href="/tags">Tags</a></li><!--
+     --><!--
+       --><li><a href="/search">Search</a></li><!--
+     --><!--
+       --><li><a href="/archives">Archives</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="https://github.com/zitao0206">Projects</a></li><!--
+     --><!--
+       --><li><a href="/about">Others</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+ 
+  <link
+    rel="preload"
+    href="/lib/font-awesome/css/all.min.css"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript
+    ><link
+      rel="stylesheet"
+      href="/lib/font-awesome/css/all.min.css"
+  /></noscript>
+
+
+    <!-- jquery -->
+
+  
+<script src="/lib/jquery/jquery.min.js"></script>
+
+
+
+
+
+<!-- clipboard -->
+
+  
+    
+<script src="/lib/clipboard/clipboard.min.js"></script>
+
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
