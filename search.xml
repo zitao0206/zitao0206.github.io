@@ -85,33 +85,6 @@
     
     
     <entry>
-      <title>02. An Ideal High-quality Mobile Application Architecture</title>
-      <link href="/2024/02/12/iOS/05.%20Projects%20&amp;%20Issues/02.%20An%20Ideal%20High-quality%20Mobile%20Application%20Architecture/"/>
-      <url>/2024/02/12/iOS/05.%20Projects%20&amp;%20Issues/02.%20An%20Ideal%20High-quality%20Mobile%20Application%20Architecture/</url>
-      
-        <content type="html"><![CDATA[<p><font color=gray size=2><em>It will take about 10 minutes to finish reading this article.</em></font></p><h4 id="1-Background"><a href="#1-Background" class="headerlink" title="1. Background"></a><font size=3 color=#4169E1>1. Background</font></h4><p>A High-quality Mobile Application Architecture is crucial for a mobile development team. It can not only greatly improve our development efficiency, but also achieve good code isolation, thereby improving the quality of our code. </p><p>For a company, or a team, the earlier the application architecture is planned, the more efficient it will be. Conversely, if you refactor after accumulating a large amount of code, the time and manpower costs will be significant and you will not like it.</p><p>The architecture introduction of this article is based on a collection of multiple applications of a video editing company. Because I used to be the application architect of this company, I was responsible for most of the code reconstruction and optimization work. The efficiency improvement and quality it achieved Optimization is proven.</p><p>The architecture is common to iOS and Android. But the code and component management tools for iOS are based on Cocoapods, while Android is based on Gradle or Maven.</p><h4 id="2-Architecture-Design-Diagram"><a href="#2-Architecture-Design-Diagram" class="headerlink" title="2. Architecture Design Diagram"></a><font size=3 color=#4169E1>2. Architecture Design Diagram</font></h4><p>I will introduce it directly based on the picture below.</p><img src="/assets/iOS/Projects&Issues/008.jpg" class="">   <p>(1) All the code of a mobile team should be divided into the following layers: Shell Projects Layer, Business Code Layer, Basic Business Layer, Common Component Layer, Basic Support Layer. There are 5 layers in total from top to bottom according to dependencies. Of course, 4 layers or 6 floors are also available. These levels are levels of dependencies that can be manually configured to ensure dependencies in conjunction with Podfile&#x2F;Podspec files, or dependencies can be automatically guaranteed through CI&#x2F;CDs.</p><p>(2) HomePage, Feedback, Setting, etc. in the picture are all business code modules. They are distributed in different Pods and managed separately through versions. They may not be reused, but they can be released separately, reducing code dependencies and improving development efficiency. as follows:</p><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">pod &#x27;<span class="type">HomePage</span>&#x27;, &#x27;<span class="number">1.0</span>.<span class="number">31</span>&#x27;</span><br><span class="line">pod &#x27;<span class="type">Feedback</span>&#x27;, &#x27;<span class="number">2.0</span>.<span class="number">1</span>&#x27;</span><br><span class="line">pod &#x27;<span class="type">Setting</span>&#x27;, &#x27;<span class="number">1.0</span>.<span class="number">3</span>&#x27;</span><br></pre></td></tr></table></figure><p>(3) The Support on the side refers to the company’s support services, because for application architecture, it is not just code, but also many company platform tools, such as CI&#x2F;CDs platform, code hosting platform gitlab, etc.</p><p>(4) The Developing Apps module in the figure represents new applications under development. As time accumulates, more and more basic business function modules will accumulate in the Basic Business Layer. These modules are mature, stable, and reusable. When we create a new app, with the help of these mature functions, we can quickly build an app prototype, and on this basis, we can quickly develop it. On this basis, the team I once worked for was able to quickly develop a new app within a month.</p><h4 id="3-Summary-Cautions"><a href="#3-Summary-Cautions" class="headerlink" title="3. Summary &amp;&amp; Cautions"></a><font size=3 color=#4169E1>3. Summary &amp;&amp; Cautions</font></h4><p>(1) Pay attention to the granularity when splitting components. If you split them too finely, your Podfile will easily expand.</p><p>(2) The process of componentization is often very long. It is recommended to use version iteration and progressive componentization;</p><p>(3) It is not recommended to use third-party code directly, otherwise its upgrades and updates will bring massive changes to your project. It is recommended to use it indirectly through a layer of encapsulation.</p>]]></content>
-      
-      
-      <categories>
-          
-          <category> iOS </category>
-          
-          <category> 05. Projects &amp; Issues </category>
-          
-      </categories>
-      
-      
-        <tags>
-            
-            <tag> architecture </tag>
-            
-        </tags>
-      
-    </entry>
-    
-    
-    
-    <entry>
       <title>01. Common Http Protocol Operation Methods</title>
       <link href="/2023/12/20/iOS/06.%20Network/01.%20Common%20Http%20protocol%20Operation%20methods/"/>
       <url>/2023/12/20/iOS/06.%20Network/01.%20Common%20Http%20protocol%20Operation%20methods/</url>
