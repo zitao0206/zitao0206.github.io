@@ -40,6 +40,7 @@ search:
   field: post         # 搜索范围：post（文章）、page（页面）、all（所有）
   content: true       # 是否包含文章全文，设为 false 则只搜索标题
   format: striptags   # 从 HTML 中提取纯文本内容
+  limit: 100       # 搜索结果最大数量
 
 local_search:
   enable: true
