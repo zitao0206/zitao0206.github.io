@@ -3,9 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: My Notes
+title: Zitao' Thought Notes
 subtitle: ''
-description: 'this is my notes'
+description: 'As an iOS developer with nearly 10 years of experience, I worked for several major Chinese internet companies and participated in multiple core projects. I used to be a frontline technical practitioner.<br><br>Now I no longer confine myself to iOS development. I jot down summaries and reflections on programming, algorithms, AI and other fields that spark my interest here. <br><br>Feel free to reach out if you wish to exchange ideas.'
+
 keywords:
 author: Zitao
 language: en
@@ -35,7 +36,7 @@ nav:
 
 # Search
 search:
-  path: search.json   # 生成的文件名，建议用 .json 格式，体积更小
+  path: search.xml   # 生成的文件名，建议用 .json 格式，体积更小
   field: post         # 搜索范围：post（文章）、page（页面）、all（所有）
   content: true       # 是否包含文章全文，设为 false 则只搜索标题
   format: striptags   # 从 HTML 中提取纯文本内容
