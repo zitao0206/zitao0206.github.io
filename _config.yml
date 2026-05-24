@@ -152,4 +152,4 @@ grayout: true
 deploy:
   type: git
   repo: git@github.com:zitao0206/zitao0206.github.io.git
-  branch: main
+  branch: site
