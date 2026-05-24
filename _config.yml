@@ -152,4 +152,4 @@ grayout: true
 deploy:
   type: git
   repo: git@github.com:zitao0206/zitao0206.github.io.git
-  branch: site
+  branch: site # 注意：site分支是用来发布用，主代码在main分支。他们代码不相关。
