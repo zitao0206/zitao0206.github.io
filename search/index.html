@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="this is my notes">
+    <meta name="description" content="As an iOS developer with nearly 10 years of experience, I worked for several major Chinese internet companies and participated in multiple core projects. I used to be a frontline technical practitione">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Search">
 <meta property="og:url" content="https://zitao0206.github.io/search/index.html">
-<meta property="og:site_name" content="My Notes">
-<meta property="og:description" content="this is my notes">
+<meta property="og:site_name" content="Zitao&#39; Thought Notes">
+<meta property="og:description" content="As an iOS developer with nearly 10 years of experience, I worked for several major Chinese internet companies and participated in multiple core projects. I used to be a frontline technical practitione">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2023-08-14T06:12:21.000Z">
 <meta property="article:modified_time" content="2026-05-22T07:01:12.000Z">
@@ -69,7 +69,7 @@
     
   
     <div id="title">
-      <h1 class="p-name">My Notes</h1>
+      <h1 class="p-name">Zitao&#39; Thought Notes</h1>
     </div>
   </a>
   <div id="nav">
@@ -80,11 +80,11 @@
       <!--
      --><li><a href="/">Home</a></li><!--
    --><!--
-     --><li><a href="/categories/">Categories</a></li><!--
+     --><li><a href="/search/">Search</a></li><!--
    --><!--
      --><li><a href="/archives/">Archives</a></li><!--
    --><!--
-     --><li><a href="/search/">Search</a></li><!--
+     --><li><a href="/categories/">Categories</a></li><!--
    --><!--
      --><li><a href="/about/">About</a></li><!--
    -->
@@ -93,23 +93,115 @@
 </header>
 
         
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  
-
-  <div class="content" itemprop="articleBody">
-      
-        <section id="search">
-  <form>
-    <input type="text" class="search-input" id="search-input" placeholder="Search...">
-  </form>
-  <div id="search-result"></div>
-  <p class="search-no-result">No results found.</p>
-</section>
-
-      
+        <article class="post">
+  <div class="content">
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="Enter the keywords..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
   </div>
 </article>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  var searchInput = $('#search-input');
+  var searchResults = $('#search-results');
+  
+  $.ajax({
+    url: '/search.xml',
+    dataType: 'xml',
+    success: function(xmlResponse) {
+      var datas = $('entry', xmlResponse).map(function() {
+        return {
+          title: $('title', this).text() || 'No Title',
+          url: $('url', this).text(),
+          content: $('content', this).text()
+        };
+      }).get();
+      
+      searchInput.on('input', function() {
+        var keyword = $(this).val().trim().toLowerCase();
+        if (keyword === '') {
+          searchResults.html('');
+          return;
+        }
+        
+        var results = [];
+        datas.forEach(function(data) {
+          if (data.title.toLowerCase().indexOf(keyword) !== -1 || 
+              data.content.toLowerCase().indexOf(keyword) !== -1) {
+            results.push(data);
+          }
+        });
+        
+        if (results.length === 0) {
+          searchResults.html('<p>No results.</p>');
+          return;
+        }
+        
+        var html = '<ul class="search-result-list">';
+        results.forEach(function(result) {
+          html += '<li>' +
+            '<a href="' + result.url + '">' + result.title + '</a>' +
+            '<p>' + result.content.substring(0, 150) + '...</p>' +
+            '</li>';
+        });
+        html += '</ul>';
+        searchResults.html(html);
+      });
+    },
+    error: function() {
+      searchResults.html('<p>Search failed.</p>');
+    }
+  });
+});
+</script>
+
+<style>
+#search-container {
+  max-width: 600px;
+  margin: 0;
+  padding-top: 20px;
+}
+#search-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+.search-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.search-result-list li {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+.search-result-list li:last-child {
+  border-bottom: none;
+}
+.search-result-list a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0366d6;
+  text-decoration: none;
+}
+.search-result-list a:hover {
+  text-decoration: underline;
+}
+.search-result-list p {
+  margin-top: 6px;
+  color: #586069;
+  font-size: 12px;
+  line-height: 1.5;
+}
+</style>
         
         <footer id="footer">
   <div class="footer-left">
@@ -125,11 +217,11 @@
         <!--
        --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/categories/">Categories</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/archives/">Archives</a></li><!--
      --><!--
-       --><li><a href="/search/">Search</a></li><!--
+       --><li><a href="/categories/">Categories</a></li><!--
      --><!--
        --><li><a href="/about/">About</a></li><!--
      -->
@@ -159,45 +251,6 @@
 <script src="/js/main.js"></script>
 
 <!-- search -->
-
-  
-<script src="/js/search.js"></script>
-
-  <script type="text/javascript">
-  $(function() {
-
-    var $inputArea = $("input#search-input");
-    var $resultArea = document.querySelector("div#search-result");
-
-    $inputArea.focus(function() {
-      var search_path = "search.xml";
-      if (search_path.length == 0) {
-        search_path = "search.xml";
-      }
-      var path = "/" + search_path;
-      searchFunc(path, 'search-input', 'search-result');
-    });
-
-    $inputArea.keydown(function(e) {
-      if (e.which == 13) {
-        e.preventDefault();
-      }
-    });
-
-    var observer = new MutationObserver(function(mutationsList, observer) {
-      if (mutationsList.length == 1) {
-        if (mutationsList[0].addedNodes.length) {
-          $(".search-no-result").hide();
-        } else if (mutationsList[0].removedNodes.length) {
-          $(".search-no-result").show(200);
-        }
-      }
-    });
-
-    observer.observe($resultArea, { childList: true });
-
-  });
-  </script>
 
 <!-- Baidu Analytics -->
 

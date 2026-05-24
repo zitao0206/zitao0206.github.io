@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="Description 每当递归函数调用自身时，它都会将给定的问题拆解为子问题。递归调用继续进行，直到到子问题成为一个不可以拆分的、可以直接求解的最简单问题。 为了确保递归函数不会导致无限循环，它需要包含： 一个简单的基本案例（basic case）（或一些案例）， 能够不使用递归来产生答案的终止方案。一组规则，也称作递推关系（recurrence relation），可将所有其他情况拆分到基本案">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My Notes">
+<meta property="og:title" content="Zitao&#39; Thought Notes">
 <meta property="og:url" content="https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/index.html">
-<meta property="og:site_name" content="My Notes">
+<meta property="og:site_name" content="Zitao&#39; Thought Notes">
 <meta property="og:description" content="Description 每当递归函数调用自身时，它都会将给定的问题拆解为子问题。递归调用继续进行，直到到子问题成为一个不可以拆分的、可以直接求解的最简单问题。 为了确保递归函数不会导致无限循环，它需要包含： 一个简单的基本案例（basic case）（或一些案例）， 能够不使用递归来产生答案的终止方案。一组规则，也称作递推关系（recurrence relation），可将所有其他情况拆分到基本案">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-05-23T15:25:21.436Z">
@@ -36,7 +36,7 @@
       
     
     <!-- title -->
-    <title>My Notes</title>
+    <title>Zitao&#39; Thought Notes</title>
     <!-- async scripts -->
     <!-- Google Analytics -->
 
@@ -69,11 +69,11 @@
         <!--
        --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/categories/">Categories</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/archives/">Archives</a></li><!--
      --><!--
-       --><li><a href="/search/">Search</a></li><!--
+       --><li><a href="/categories/">Categories</a></li><!--
      --><!--
        --><li><a href="/about/">About</a></li><!--
      -->
@@ -98,7 +98,7 @@
     </span>
     <br/>
     <div id="share" style="display: none">
-      <!-- <ul>
+      <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
@@ -110,7 +110,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul> -->
+</ul>
 
     </div>
     
@@ -175,11 +175,11 @@
         
           <li><a href="/">Home</a></li>
         
-          <li><a href="/categories/">Categories</a></li>
+          <li><a href="/search/">Search</a></li>
         
           <li><a href="/archives/">Archives</a></li>
         
-          <li><a href="/search/">Search</a></li>
+          <li><a href="/categories/">Categories</a></li>
         
           <li><a href="/about/">About</a></li>
         
@@ -194,7 +194,7 @@
     
 
     <div id="share-footer" style="display: none">
-      <!-- <ul>
+      <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
@@ -206,7 +206,7 @@
   <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
   <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://zitao0206.github.io/2026/05/23/Algorithms/Recursion%20/00.%20Description/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul> -->
+</ul>
 
     </div>
 
@@ -237,11 +237,11 @@
         <!--
        --><li><a href="/">Home</a></li><!--
      --><!--
-       --><li><a href="/categories/">Categories</a></li><!--
+       --><li><a href="/search/">Search</a></li><!--
      --><!--
        --><li><a href="/archives/">Archives</a></li><!--
      --><!--
-       --><li><a href="/search/">Search</a></li><!--
+       --><li><a href="/categories/">Categories</a></li><!--
      --><!--
        --><li><a href="/about/">About</a></li><!--
      -->
