@@ -1,0 +1,39 @@
+<div id="categories">
+  <!-- 分类列表区域（显示所有分类及文章数量） -->
+  <div class="category-list-wrap">
+    <h2 class="category-title">所有分类</h2>
+    <ul class="category-list">
+      <% site.categories.sort('name').each(function(category) { %>
+        <li class="category-list-item">
+          <a href="<%- url_for(category.path) %>" class="category-list-link">
+            <span class="category-list-name"><%= category.name %></span>
+            <span class="category-list-count"><%= category.posts.length %></span>
+          </a>
+        </li>
+      <% }); %>
+    </ul>
+  </div>
+
+  <!-- 文章列表区域（按分类分组展示所有文章） -->
+  <div class="post-list-wrap">
+    <% var field_sort = theme.archive.sort_updated ? 'updated' : 'date' %>
+    <% site.categories.sort('name').each(function(category) { %>
+      <% if (category.posts.length > 0) { %>
+        <div class="category-group">
+          <h2 class="category-group-title" id="<%= category.name %>">
+            <a href="<%- url_for(category.path) %>"><%= category.name %></a>
+            <span class="category-count"><%= category.posts.length %></span>
+          </h2>
+          <ul class="post-list">
+            <% category.posts.sort(field_sort, 'desc').each(function(post) { %>
+              <li class="post-item">
+                <%- partial('_partial/post/date', { post: post, class_name: 'meta' }) %>
+                <span><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
+              </li>
+            <% }); %>
+          </ul>
+        </div>
+      <% } %>
+    <% }); %>
+  </div>
+</div>

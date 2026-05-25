@@ -1,0 +1,110 @@
+
+<article class="post">
+  <div class="content">
+    <div id="search-container">
+      <input type="text" id="search-input" placeholder="Search..." autocomplete="off">
+      <div id="search-results"></div>
+    </div>
+  </div>
+</article>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+$(document).ready(function() {
+  var searchInput = $('#search-input');
+  var searchResults = $('#search-results');
+  
+  $.ajax({
+    url: '/search.xml',
+    dataType: 'xml',
+    success: function(xmlResponse) {
+      var datas = $('entry', xmlResponse).map(function() {
+        return {
+          title: $('title', this).text() || '无标题',
+          url: $('url', this).text(),
+          content: $('content', this).text()
+        };
+      }).get();
+      
+      searchInput.on('input', function() {
+        var keyword = $(this).val().trim().toLowerCase();
+        if (keyword === '') {
+          searchResults.html('');
+          return;
+        }
+        
+        var results = [];
+        datas.forEach(function(data) {
+          if (data.title.toLowerCase().indexOf(keyword) !== -1 || 
+              data.content.toLowerCase().indexOf(keyword) !== -1) {
+            results.push(data);
+          }
+        });
+        
+        if (results.length === 0) {
+          searchResults.html('<p>未找到相关文章</p>');
+          return;
+        }
+        
+        var html = '<ul class="search-result-list">';
+        results.forEach(function(result) {
+          html += '<li>' +
+            '<a href="' + result.url + '">' + result.title + '</a>' +
+            '<p>' + result.content.substring(0, 150) + '...</p>' +
+            '</li>';
+        });
+        html += '</ul>';
+        searchResults.html(html);
+      });
+    },
+    error: function() {
+      searchResults.html('<p>搜索功能加载失败</p>');
+    }
+  });
+});
+</script>
+
+<style>
+#search-container {
+  max-width: 600px;
+  margin: 0;
+  padding-top: 20px;
+}
+#search-input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+}
+.search-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.search-result-list li {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+.search-result-list li:last-child {
+  border-bottom: none;
+}
+.search-result-list a {
+  font-size: 16px;
+  font-weight: 600;
+  color: #0366d6;
+  text-decoration: none;
+}
+.search-result-list a:hover {
+  text-decoration: underline;
+}
+.search-result-list p {
+  margin-top: 6px;
+  color: #586069;
+  font-size: 12px;
+  line-height: 1.5;
+}
+</style>

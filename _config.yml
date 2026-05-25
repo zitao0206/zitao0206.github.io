@@ -142,7 +142,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: cactus
+theme: Cactus_2.0
 # themes/cactus/_config.yml
 colorscheme: dark
 page_width: 48
