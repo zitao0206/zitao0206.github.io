@@ -1,39 +1,139 @@
 <div id="categories">
-  <!-- 分类列表区域（显示所有分类及文章数量） -->
+  <!-- 分类列表区域：树形嵌套结构 -->
   <div class="category-list-wrap">
     <h2 class="category-title">所有分类</h2>
     <ul class="category-list">
-      <% site.categories.sort('name').each(function(category) { %>
-        <li class="category-list-item">
-          <a href="<%- url_for(category.path) %>" class="category-list-link">
-            <span class="category-list-name"><%= category.name %></span>
-            <span class="category-list-count"><%= category.posts.length %></span>
-          </a>
-        </li>
-      <% }); %>
+      <%
+        // 方案：基于分类名称的包含关系来建立父子关系
+        var allCats = [];
+        site.categories.each(function(cat) {
+          allCats.push(cat);
+        });
+        
+        // 按分类名称长度排序（长的在前面，这样 "iOS/Swift" 会被优先处理）
+        allCats.sort(function(a, b) {
+          return b.name.length - a.name.length;
+        });
+        
+        // 建立父子关系映射
+        var childrenOf = {};
+        var hasParent = {};
+        
+        for (var i = 0; i < allCats.length; i++) {
+          var cat = allCats[i];
+          childrenOf[cat.name] = [];
+          hasParent[cat.name] = false;
+        }
+        
+        // 通过分析文章的分类来确定父子关系
+        site.posts.each(function(post) {
+          if (post.categories && post.categories.length) {
+            var categories = post.categories.toArray();
+            // 如果一篇文章有多个分类，按照层级顺序处理
+            for (var i = 0; i < categories.length; i++) {
+              if (i > 0) {
+                var parentName = categories[i-1].name;
+                var childName = categories[i].name;
+                // 避免重复添加
+                if (childrenOf[parentName].indexOf(childName) === -1) {
+                  childrenOf[parentName].push(childName);
+                  hasParent[childName] = true;
+                }
+              }
+            }
+          }
+        });
+        
+        // 获取顶级分类
+        var topCategories = [];
+        for (var i = 0; i < allCats.length; i++) {
+          var cat = allCats[i];
+          if (!hasParent[cat.name]) {
+            topCategories.push(cat);
+          }
+        }
+        
+        // 按名称排序
+        topCategories.sort(function(a, b) {
+          return a.name.localeCompare(b.name);
+        });
+        
+        // 递归渲染
+        function renderTree(catName) {
+          // 找到分类对象
+          var catObj = null;
+          for (var i = 0; i < allCats.length; i++) {
+            if (allCats[i].name === catName) {
+              catObj = allCats[i];
+              break;
+            }
+          }
+          if (!catObj) return '';
+          
+          var html = '<li class="category-list-item">';
+          html += '<a href="' + url_for(catObj.path) + '" class="category-list-link">';
+          html += '<span class="category-list-name">' + catObj.name + '</span>';
+          // 修改点：使用单括号，格式为 (数字)
+          html += '<span class="category-list-count">(' + catObj.posts.length + ')</span>';
+          html += '</a>';
+          
+          var children = childrenOf[catName];
+          if (children && children.length > 0) {
+            children.sort();
+            html += '<ul class="category-child-list">';
+            for (var i = 0; i < children.length; i++) {
+              html += renderTree(children[i]);
+            }
+            html += '</ul>';
+          }
+          html += '</li>';
+          return html;
+        }
+      %>
+      
+      <% for (var i = 0; i < topCategories.length; i++) { %>
+        <%- renderTree(topCategories[i].name) %>
+      <% } %>
     </ul>
   </div>
-
-  <!-- 文章列表区域（按分类分组展示所有文章） -->
-  <div class="post-list-wrap">
-    <% var field_sort = theme.archive.sort_updated ? 'updated' : 'date' %>
-    <% site.categories.sort('name').each(function(category) { %>
-      <% if (category.posts.length > 0) { %>
-        <div class="category-group">
-          <h2 class="category-group-title" id="<%= category.name %>">
-            <a href="<%- url_for(category.path) %>"><%= category.name %></a>
-            <span class="category-count"><%= category.posts.length %></span>
-          </h2>
-          <ul class="post-list">
-            <% category.posts.sort(field_sort, 'desc').each(function(post) { %>
-              <li class="post-item">
-                <%- partial('_partial/post/date', { post: post, class_name: 'meta' }) %>
-                <span><%- partial('_partial/post/title', { post: post, index: true, class_name: '' }) %></span>
-              </li>
-            <% }); %>
-          </ul>
-        </div>
-      <% } %>
-    <% }); %>
-  </div>
 </div>
+
+<style>
+/* 树形嵌套样式 */
+.category-list {
+  list-style: none;
+  padding-left: 0 !important;
+}
+
+.category-child-list {
+  list-style: none;
+  padding-left: 1.5rem !important;
+  margin: 0.25rem 0 0 0;
+}
+
+.category-list-item {
+  margin: 0.5rem 0;
+  list-style: none;
+}
+
+.category-list-link {
+  text-decoration: none;
+  color: #0366d6;
+  display: inline-block;
+}
+
+.category-list-link:hover {
+  text-decoration: underline;
+}
+
+.category-list-count {
+  color: #586069;
+  font-size: 0.85em;
+  margin-left: 0.25rem;
+}
+
+/* 确保没有额外的浏览器默认样式覆盖 */
+ul, li {
+  list-style: none;
+}
+</style>

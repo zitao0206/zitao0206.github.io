@@ -104,8 +104,21 @@ category_generator:
   per_page: 10
   order_by: -date
 
-default_category: uncategorized
+plugins:
+  - hexo-auto-category
+
+# 配置 auto_category（注意是 auto_category，不是 directory_category）
+auto_category:
+  enable: true               # 启用
+  depth: 3                   # 最大分类层级，3表示最多3级
+
+# 插件配置项
+directory_category: true          # 启用自动分类
+category_prefix: ""               # 分类前缀
+
+default_category: Others
 category_map:
+
 tag_map:
 
 # Metadata elements

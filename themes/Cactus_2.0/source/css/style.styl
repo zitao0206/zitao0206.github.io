@@ -233,3 +233,17 @@ code
 
 #header-post #actions
   direction: ltr !important
+
+/* 修复分类数字的括号显示 - 覆盖主题默认样式 */
+.category-list-count::before {
+  content: "" !important;
+}
+
+.category-list-count::after {
+  content: "" !important;
+}
+
+.category-list-count {
+  /* 确保括号不会重复添加 */
+  display: inline-block;
+}
